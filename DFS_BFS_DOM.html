@@ -1,0 +1,94 @@
+<!--
+Knowledge:
+
+ Regex:
+  'meteroite is a big meter'.match(/meter/gi) -- ['meter', 'meter'] (the first match is from the first word meteroite)
+  'meteroite'.match(/meter/gi) = [meter]
+  But if you want onnly the whole word to match, two options
+  1) Using Anchors ^ and $
+      'meteroite is a big meter'.match(/^meter$/gi) -- [null]
+      'meter'.match(/^meter$/gi) -- [meter]
+  2) using word boundaries meta character
+      'meteroite is a big meter'.match(/\bmeter\b/gi) -- [meter] (last word in the string)
+
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DFS BFS</title>
+        <script>
+          window.onload = function() {
+            var elems = document.getElementsByTagName('body')[0];
+            console.log(elems.children)
+
+            //http://stackoverflow.com/questions/39503861/javascript-only-dom-tree-traversal-dfs-and-bfs
+            /*
+            DFS - DFS will always go to the next level of nodes first, and only if there are no more un-traversed child nodes will it step to a next node on the current level.
+
+            BFS -  BFS will always traverse all the nodes in the current level first and only after that will it go to the next level of nodes.
+            Queue is used to develop BFS
+             */
+
+            /* Depth first search (DFS)    */
+            var str = "";
+            function visitDfs(node) {
+              str += node.nodeName + " ";
+              for(var i=0; i<node.children.length; i++) {
+                visitDfs(node.children[i]);
+              }
+              return str;
+            }
+            visitDfs(elems)
+            console.log(str);
+
+            //BFS using queue (non-recursion)
+            var str = "";
+            function visitBfs(node) {
+              var q = [node];
+              while (q.length > 0) {
+                node = q.shift();
+
+                str += node.nodeName + ' ';
+
+                for(var i=0; i<node.children.length; i++) {
+                  q.push(node.children[i]);
+                  /*
+                    //check if span tag exists
+                    if(node.children[i].nodeName.match(/\bspan\b/i) !== null)
+                      console.log("d")
+                  }
+                  */
+                }
+            }
+            visitBfs(elems)
+            console.log(str);
+          }
+        </script>
+    </head>
+    <body>
+      <div>
+        <header>Hello</header>
+        <nav>
+          <ul>
+            <li>1</li>
+            <li>2</li>
+          </ul>
+        </nav>
+        <div>
+          <p>paragraph</p>
+        </div>
+      </div>
+      <p>Her<span>Hello</span>lafd</p>
+    </body>
+    <!--
+            body
+         |        |
+        div       p
+      |  |  |     |
+     hd  nv dv   span
+         |   |
+         ul  p
+        | |
+        li li
+    -->
+</html>

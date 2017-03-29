@@ -1,0 +1,56 @@
+<!-- Source:  http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs -->
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+  var app = angular.module('myApp', []);
+  app.controller('myCtrl', ['$scope', function ($scope) {
+    $scope.arrayOfBrandsPrimitive = ['Bata', 'Nike', 'Adidas', 'ASICS'];
+    $scope.arrayOfBrandsObject = [
+      {id: 1, name: "Bata"},
+      {id: 2, name: "Nike"},
+      {id: 3, name: "Adidas"},
+      {id: 4, name: "ASICS"}
+    ];
+
+    $scope.display = function(brand) {
+      brand.showEdit = true;
+    }
+  }]);
+</script>
+<body>
+
+  <div ng-app="myApp" ng-controller="myCtrl">
+    <h4>Parent scope arrayOfBrandsPrimitive = {{arrayOfBrandsPrimitive}}</h4>
+    <ul>
+      <li ng-repeat="brand in arrayOfBrandsPrimitive" ng-init="showEdit=false">
+        {{brand}}
+        <a href="" ng-click="display(this)">Edit</a>
+        <input type="text" ng-model="brand" ng-show="showEdit">
+      </li>
+    </ul>
+
+    <h4>Parent scope arrayOfBrandsObject = {{arrayOfBrandsObject}}</h4>
+    <ul>
+      <li ng-repeat="brand in arrayOfBrandsObject" ng-init="showEdit=false">
+        {{brand.name}}
+        <a href="" ng-click="display(this)">Edit</a>
+        <input type="text" ng-model="brand.name" ng-show="showEdit">
+      </li>
+    </ul>
+
+    <!--
+    We know that each repeated item has it's own scope created for it, which prototypically inherits from the parent scope.
+    If we could pass this scope to a method defined on the parent scope, then we'd be able to do what we want with it in terms of manipulating or adding properties.
+    It turn out this can be done by passing this as an argument.
+
+    For each item/iteration, ng-repeat creates a new scope, which prototypically inherits from the parent scope.
+    --If item is a primitive (as in arrayOfBrandsPrimitive), essentially a copy of the value is assigned to the new child scope property.
+    Changing the child scope property's value (i.e., using ng-model, hence child scope num) does not change the array the parent scope references.
+    --If item is an object, a reference to the original object (not a copy) is assigned to the new child scope property.
+    Changing the child scope property's value (i.e., using ng-model, hence obj.num) does change the object the parent scope references.
+    -->
+
+  </div>
+</body>
+</html>

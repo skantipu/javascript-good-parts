@@ -1,0 +1,153 @@
+<!-- http://stackoverflow.com/questions/15792794/convert-parent-child-array-to-tree -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Array to Tree</title>
+  <script>
+    window.onload = function() {
+      var input = [
+        {
+          "name":"b2",
+          "parentAreaRef":{
+            "id":"b1_id",
+          },
+          "_id":"b2_id",
+        },
+        {
+          "name":"root",
+          "_id":"root_id" //one root node, it does not have parentAreaRef object
+        },
+        {
+          "name":"a2",
+          "parentAreaRef":{
+            "id":"a1_id",
+          },
+          "_id":"a2_id",
+        },
+        {
+          "name":"a3",
+          "parentAreaRef":{
+            "id":"a2_id",
+          },
+          "_id":"a3_id",
+        },
+        {
+          "name":"b1",
+          "parentAreaRef":{
+            "id":"root_id",
+          },
+          "_id":"b1_id",
+        },
+        {
+          "name":"a1",
+          "parentAreaRef":{
+            "id":"root_id"
+          },
+          "_id":"a1_id"
+        },
+        {
+          "name":"b3",
+          "parentAreaRef":{
+            "id":"b1_id",
+          },
+          "_id":"b3_id",
+        }
+      ];
+
+      /*
+      Desired Output
+
+      {
+        "name": "root",
+        "_id":"root_id",
+        "children": [
+          {
+            "name": "a1",
+            "_id":"a1_id",
+            "children" : [
+              {
+                "name" : "a2",
+                "_id":"a2_id",
+                "children" : [
+                  {
+                    "name" : "a3"
+                    "_id":"a3_id"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "b1",
+            "_id":"b1_id",
+            "children" : [
+              {
+                "name" : "b2"
+                "_id":"b2_id"
+              },
+              {
+                "name" : "b3"
+                "_id":"b3_id"
+              }
+            ]
+          }
+        ]
+      }
+
+
+       root
+       |
+       -- a1
+       |   |
+       |   -- a2
+       |       |
+       |       -- a3
+       |
+       -- b1
+           |
+           -- b2
+           -- b3
+
+       */
+      var map = {};
+
+      input.forEach(function(node) {
+        map[node._id] = JSON.parse(JSON.stringify(node));  //deep cloning, so not to affect original input
+        map[node._id]['children'] = [];
+      });
+
+      var root_id;
+
+      input.forEach(function(node) {
+        if(node.parentAreaRef) {
+          var id = node.parentAreaRef.id;
+          map[id]['children'].push(map[node._id])
+        }
+        else {
+          //it's a root node
+          root_id = node._id;
+        }
+      });
+      console.log(map[root_id]);
+      //DFS
+      var htmlStr = "";
+      function treeify(node) {
+        htmlStr += "<ul>";
+        htmlStr += "<li>" + node.name + "</li>";
+        for (var i = 0; i < node.children.length; i++) {
+          treeify(node.children[i]);
+        }
+        htmlStr += "</ul>";
+        return htmlStr;
+      }
+
+      document.getElementById("res").innerHTML = treeify(map[root_id])
+    }
+  </script>
+
+
+</head>
+<body>
+<div id="res"></div>
+</body>
+</html>

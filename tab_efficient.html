@@ -1,0 +1,156 @@
+<!-- Tab component code in pure JS -->
+<!-- Knowledge
+  NodeList vs HTML Collection
+  childNodes property retrieves a node's child nodes as a NodeList. NodeList is a list of any type of node. A node can be element, text node, comment.
+  Note that whitespace is considered as a text node.
+  Ex1:
+  <a>
+   <span>
+      Hello
+   </span>
+  </a>
+  Now if you retrieve <a> elements childNodes, it has 3 nodes - one text node, span element node, and one text node.
+  Span nodeList has one text node with innerHTML as "   Hello    " and innerText as "Hello"
+
+  Ex2:  <a><span>Hello<span><a>  -- <a> childNodes has one child node - span.
+
+  Ex3: <a><span>
+            Hello
+          <span><a>  -- <a> childNodes has one child node - span.
+
+  children property of an element retrieves a node's children as a HTMLCollection. HTMLCollection is a list of only elements and does not contain text nodes and comments.
+  For ex1 and ex2, <a> children has just one element span.
+
+  Similarly-
+    firstChild, lastChild, nextSibling, previousSibling properties return that corresponding node (can be text, comment or element)
+    firstElementChild, lastElementChild, nextElementSibling, previousElementSibling properties return that corresponding element (excludes text and comment nodes)
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab</title>
+  <style>
+    .tab {
+      background: lightgrey;
+      border: 1px solid grey;
+    }
+    .tab .tablinks {
+      float: left; /* using display: inline-block works, but there is a space between blocks */
+      /* If you use float:left, no space between floated blocks and then as a last row, add an empty row with clear:both */
+      padding: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      color: white;
+    }
+    .tab::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .tablinks.active {
+      background-color: #7F7F7F;
+    }
+    .tablinks:hover:not(.active) {
+      background-color: #C8C8C8;
+    }
+    .tabcontent {
+      display: none;
+    }
+
+  </style>
+  <script>
+    window.onload = function() {
+
+      var Tabs = (function(){
+        var tabLinks, tabContents, prevLink;
+
+        function hidePrevTabContent() {
+          document.getElementById(prevLink.dataset.id).style.display = "none";
+        }
+
+        function hidePrevTabLink() {
+          prevLink.classList.remove('active');
+        }
+
+        function activateTabLink(tabLink) {
+          tabLink.classList.add('active');
+          prevLink = tabLink;
+        }
+
+        function displayTabContent(id) {
+          var myTabContent = document.getElementById(id);
+          myTabContent.style.display = "block";
+        }
+
+        function displayTab(tabLink, contentId) {
+          prevLink = prevLink || tabLink;
+          console.log(prevLink)
+          //show that particular tab with the id as the parameter and hide others
+          hidePrevTabContent();
+          hidePrevTabLink();
+          displayTabContent(contentId);
+          activateTabLink(tabLink);
+        }
+
+        function init() {
+          tabLinks = document.querySelectorAll('.tablinks');
+          tabContents = document.querySelectorAll('.tabcontent');
+          //attach click event handler function
+          for(var i=0; i<tabLinks.length; i++) {
+            tabLinks[i].onclick = function() {
+              displayTab(this, this.dataset.id);  //this refers to that tabLink element
+            }
+          }
+          // hideAllTabContents();
+          /*
+           if I execute hideAllTabContents() at this point of time, not a good practise. It runs when the page is fully loaded, and now you are hiding all
+           tab contents, so you may see it for a split second before they are hidden. Better practise is in CSS, use display none initially for all tab contents.
+           */
+
+          // displayTab(tabLinks[0], tabLinks[0].dataset.id);  //if you want to enable first tab by default
+
+        } //end of init
+
+        return {
+          init: init
+        };
+
+      })();
+      Tabs.init();
+
+      console.log(document.querySelectorAll('.tab')); //expand it in browser and observe
+    }
+  </script>
+</head>
+<body>
+<nav class="tab">
+  <a href="#" class="tablinks" data-id="about">About Us</a>
+  <a href="#" class="tablinks" data-id="products">Products</a>
+  <a href="#" class="tablinks" data-id="team">Team</a>
+  <a href="#" class="tablinks" data-id="contact">Contact Us</a>
+</nav>
+
+<div id="about" class="tabcontent">
+  <h3>About Us</h3>
+  <p>We are the greatest company on the planet bla bla bla</p>
+</div>
+
+<div id="products" class="tabcontent">
+  <h3>Products</h3>
+  <p>We deliver the greatest products on the planet with exceptional quality bla bla bla</p>
+</div>
+
+<div id="team" class="tabcontent">
+  <h3>Team</h3>
+  <p>Never ever in the history of silicon valley, a team like this gathered together on a unified mission blah blah blah</p>
+</div>
+
+<div id="contact" class="tabcontent">
+  <h3>Contact Us</h3>
+  <p>Contact us anytime but don't except us to pick up, as we never had a business to start with ha ha ha</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!-- NOTE: appendChild() return value is a node object, representing the appended node. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document Fragment</title>
+  <script>
+    window.onload = function() {
+      var DocumentFragment = (function() {
+        var snacks = ["Coffee", "Puff", "Milk", "Samosa", "Biscuit", "Pudding", "Cereal", "Coffee", "Puff", "Milk", "Samosa", "Biscuit", "Pudding", "Cereal", "Coffee", "Puff", "Milk", "Samosa", "Biscuit", "Pudding", "Cereal", "Coffee", "Puff", "Milk", "Samosa", "Biscuit", "Pudding", "Cereal", "Coffee", "Puff", "Milk", "Samosa", "Biscuit", "Pudding", "Cereal", "Coffee", "Puff"];
+
+        function withoutDocFrag() {
+          //Approach 1 - updating DOM multiple times
+          var ul = document.getElementById("list1").appendChild(document.createElement("ul"));
+          for(var i=0; i<snacks.length; i++) {
+            var li = document.createElement("li");
+            var textNode = document.createTextNode(snacks[i]);
+            li.appendChild(textNode);
+            ul.appendChild(li);
+          }
+        }
+        /*
+         PROBLEM with the above approach (withoutDocFrag()) is adding each element one at a time causes many document reflows — affects performance of the page
+         Good strategy is to update elements in a batch. You can update all DOM elements in a single operation.
+         YOU SHOULD MINIMIZE THE NUMBER OF TIMES YOU TOUCH THE DOM
+         A single reflow can be implemented using a DOM fragment and building the nodes in memory first.
+         */
+
+        function withDocFrag() {
+          var fragmentElem = document.createDocumentFragment();
+          var ul = fragmentElem.appendChild(document.createElement("ul"));
+          for(var i=0; i<snacks.length; i++) {
+            var liElem = document.createElement("li");
+            var textElem = document.createTextNode(snacks[i]);
+            liElem.appendChild(textElem);
+            ul.appendChild(liElem);
+          }
+          document.getElementById("list2").appendChild(fragmentElem);
+        }
+
+        function eval() {
+          var t0, t1;
+
+          t0 = performance.now();
+          withoutDocFrag();
+          t1 = performance.now();
+          console.log("Without Doc Fragment ", t1-t0);
+
+          t0 = performance.now();
+          withDocFrag();
+          t1 = performance.now();
+          console.log("With Doc Fragment ", t1-t0);
+        }
+        return {
+          eval: eval
+        };
+      })();
+
+      DocumentFragment.eval();
+    }
+  </script>
+</head>
+<body>
+<div id="list1"></div>
+<hr>
+<div id="list2"></div>
+</body>
+</html>

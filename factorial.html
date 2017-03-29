@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Factorial</title>
+    <script>
+        window.onload = function() { //don't forget this. Alternatively, you can write script before body closing tag
+            var resultElem = document.getElementById("res");
+            var button = document.getElementsByTagName("button")[0];
+            var inputElement = document.getElementsByName("factorialInput")[0];
+            var errorElement = document.getElementById("error");
+            document.getElementById("myForm").onsubmit = function() {
+                resultElem.innerHTML="";
+                result();
+                return false; //without this, form will be submitted or posted back to the same page (since action="" or missing action attribute altogether)
+            }
+            errorElement.style.display = "none";
+
+            inputElement.addEventListener("focus", function(){
+                errorElement.style.display = "none";
+            });
+
+            function result() {
+                var input = inputElement.value;
+                if(input.search(/^\d+$/) === -1) {  //by default inputElement.value returns string, so check if the string contains only numbers
+                    errorElement.style.display = "block";
+                    return;
+                }
+                input = parseInt(input);
+                if(input < 0) {
+                    errorElement.style.display = "block";
+                    return;
+                }
+               // var res = findFactorial(input);
+                var res = factorialRecursive(input);
+                resultElem.innerHTML = res;
+            }
+
+            function findFactorial(input) {
+                var res = 1;
+                var n=input;
+                while(n>1) {
+                    res =  res * n;
+                    n--;
+                }
+                return res;
+            }
+
+            function factorialRecursive(n) {
+                if(n==1) {
+                    return 1;
+                }
+                else {
+                    return n * factorialRecursive(n-1);
+                }
+
+            }
+        }
+
+
+    </script>
+    <style>
+        input, button {
+            display: block;
+            margin: 5px;
+        }
+        input {
+            height: 20px;
+            width: 220px;
+        }
+        button {
+            background: blue;
+            background: -webkit-linear-gradient(cornflowerblue,lightblue);
+            background:    -moz-linear-gradient(cornflowerblue,lightblue);
+            background:      -o-linear-gradient(cornflowerblue,lightblue);
+            background:         linear-gradient(cornflowerblue,lightblue);
+            color: darkblue;
+            border-radius: 3px;
+            width: 80px;
+            height: 30px;
+            border: none;
+        }
+        p {
+            margin: 10px;
+        }
+        #error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form id="myForm" novalidate>
+        <input type="number" name="factorialInput" placeholder="Please enter a number to find Factorial">
+        <button>Click</button>
+        <p id="error">Please enter only natural numbers</p>
+        <p id="res"></p>
+    </form>
+</body>
+</html>

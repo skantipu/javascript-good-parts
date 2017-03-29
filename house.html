@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>House</title>
+    <style>
+        /* mind you, it's box-sizing, not box-styling. If you have this set, then two widths of 50% (and zeroed out margin and padding of body)
+        with any padding inside it, will fill full width of the page. It's because paddings and borders are part of the width. */
+        * {
+            -webkit-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .house {
+            width: 80%;
+            height: 70%;
+            border: 1px dashed grey;
+        }
+        .room {
+            width: 44%; /* (100-12 = 88/2 = 44);  12 = 3%(marginLeft of kitchen) + 3%(marginRight of kitchen) + 3%(marginLeft of bedroom) + 3%(marginRight of bedroom)*/
+            height: 65%;
+            border: 1px solid black;
+            float: left;
+            margin: 2% 3% 10px; /* top right/left bottom */
+        }
+        #master-switch, .switch, .clapper {
+            width: 20px;
+            height: 40px;
+        }
+        #master-switch {
+            clear: both;
+            margin-left: 3%;
+        }
+        .switch, .clapper {
+            float: left;
+            margin: 3px;
+            border: 1px solid darkgrey;
+        }
+        .clapper {
+            border-color: black;
+        }
+        .switch.on, .clapper.on {
+            background: -webkit-linear-gradient(top, white, darkgray); /* vendor prefix important here. Top means FROM top color 1 to color 2*/
+            background:     -ms-linear-gradient(top, white, darkgray);
+            background:         linear-gradient(top, white, darkgray);
+        }
+        .switch.off, .clapper.off {
+            background: -webkit-linear-gradient(top, darkgray, white); /* vendor prefix important here. Top means FROM top color 1 to color 2*/
+            background:     -ms-linear-gradient(top, darkgray, white);
+            background:         linear-gradient(top, darkgray, white);
+        }
+        #master-switch.off {
+            background: -webkit-linear-gradient(top, red, orange);
+            background:     -ms-linear-gradient(top, red, orange);
+            background:         linear-gradient(top, red, orange);
+        }
+        #master-switch.on {
+            background: -webkit-linear-gradient(top, orange, red);
+            background:     -ms-linear-gradient(top, orange, red);
+            background:         linear-gradient(top, orange, red);
+        }
+        .lightbulb {
+            width: 30px;
+            height: 30px;
+            margin: 3px;
+            margin-bottom: 10px;
+        }
+        .lightbulb.on {
+            background: yellow;
+            border: 1px solid orange;
+        }
+        .lightbulb.off {
+            background: lightgrey;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+         /*   $(".switch, .clapper").click(function() {
+                var $bulb = $(this).closest(".room").find(".lightbulb");
+                if($(this).is(".on")) {
+                    $(this).removeClass("on").addClass("off");
+                    $bulb.removeClass("on").addClass("off");
+                }
+                else {
+                    $(this).removeClass("off").addClass("on");
+                    $bulb.removeClass("off").addClass("on");
+                }
+            });
+            $("#master-switch").click(function() {
+                var $bulbs = $(".house").find(".lightbulb");
+                if($(this).is(".on")) {
+                    $(this).removeClass("on").addClass("off");
+                    $bulbs.each(function() {
+                        $(this).removeClass("on").addClass("off");
+                    });
+                }
+                else {
+                    $(this).removeClass("off").addClass("on");
+                    $bulbs.each(function() {
+                        $(this).removeClass("off").addClass("on");
+                    });
+                }
+            }); */
+
+            $( ".lightbulb" ).on( "light:toggle", function( event ) {
+                var light = $( this );
+                if ( light.is( ".on" ) ) {
+                    light.trigger( "light:off" );
+                } else {
+                    light.trigger( "light:on" );
+                }
+            }).on( "light:on", function( event ) {
+                $( this ).removeClass( "off" ).addClass( "on" );
+            }).on( "light:off", function( event ) {
+                $( this ).removeClass( "on" ).addClass( "off" );
+            });
+
+            $( ".switch, .clapper" ).click(function() {
+                var room = $( this ).closest( ".room" );
+                room.find( ".lightbulb" ).trigger( "light:toggle" );
+            });
+
+            $( "#master-switch" ).click(function() {
+                var lightbulbs = $( ".lightbulb" );
+                console.log(lightbulbs);
+                // Check if any lightbulbs are on
+                if ( lightbulbs.is( ".on" ) ) {
+                    console.log("on");
+                }
+                else {
+                    console.log("off");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="house" id="kantipudi-villa">
+        <div class="room" id="kitchen"> KITCHEN
+            <div class="lightbulb off"></div>
+            <div class="switch off"></div>
+            <div class="switch off"></div>
+            <div class="clapper off"></div>
+        </div>
+        <div class="room" id="bedroom"> BEDROOM
+            <div class="lightbulb on"></div>
+            <div class="switch off"></div>
+            <div class="switch off"></div>
+            <div class="clapper off"></div>
+        </div>
+        <div id="master-switch" class="off"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+z`<!-- Note how tick mark is generated within CSS itself without using any image -->
+<!-- JavaScript element classList property. Ex: document.getElementById("demo").classList.add("listed"); -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To do list</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        ul {
+            list-style-type: none;
+            width: 25%;
+            margin: 0 auto;  /* to center ul */
+            padding-left: 0;  /* to remove left padding within ul */
+        }
+        ul li {
+            font-size: 20px;
+            margin: 3px;
+            background-color: lightgray;
+            padding: 0.5em 2em;
+            position: relative;
+        }
+        li:hover {
+            cursor: pointer;
+        }
+        .clicked {
+            background: grey;
+            color: white;
+        }
+        .clicked::before {
+            content: " ";
+            display: block;
+            width: 0.5em;
+            height: 1em;
+            position: absolute;
+            left: 0.8em;
+            top: 0.3em;
+            border-style: solid;
+            border-color: white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+    <ul>
+        <li>Buy milk</li>
+        <li>Take the dog for a walk</li>
+        <li>Exercise</li>
+        <li>Write code</li>
+        <li>Play music</li>
+        <li>Relax</li>
+    </ul>
+    <script>
+        var items = document.querySelectorAll('li');
+
+        for(var i=0; i<items.length; i++) {
+            items[i].onclick = function() {
+                this.classList.toggle("clicked");
+            }
+        }
+
+    </script>
+</body>
+</html>

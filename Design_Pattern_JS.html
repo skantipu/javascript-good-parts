@@ -1,0 +1,123 @@
+<!--
+  Design Patterns in JavaScript
+  1) Revealing Module Pattern.
+    -Provides modularity - keeps your piece of code independent of other components
+    -Does not pollute the global name space
+    -Provides better data encapsulation - you can only expose public methods and hide all private properties
+    -Disadv: Cannot access private properties (methods/variables that are not exposed), so difficult to write unit tests on them.
+
+  2) Observer Pattern
+    In Angular - you can use $scope.$broadcast (dispathces an event downward the scope chain), $scope.$emit (dispatches an event upward the scope chain) for
+    sending out events, and $scope.$on for listening to events.
+
+    In JS, you can use the below.
+
+    Disadv: As number of watchers increases, it affects performance.
+
+ 3) Singleton Pattern
+    The Singleton Pattern limits the number of instances of a particular object to just ONE. This single instance is called the singleton.
+    You can instantiate the object only once.
+
+    Ex: One example is using an office printer. If there are ten people in an office, and they all use one printer, ten computers share one printer
+
+    In AngularJS, Singletons are prevalent, the most notable being services, factories, and providers. Since they maintain state and provides resource accessing,
+    creating two instances defeats the point of a shared service/factory/provider.
+
+    Disadv: Race conditions occur in multi-threaded applications when more than one thread tries to access the same resource.
+    Singletons are susceptible to race conditions, such that if no instance were initialized first, two threads could then create two objects instead of
+    returning and instance. This defeats the purpose of a singleton.
+    Therefore, developers must be privy to synchronization when implementing singletons in multithreaded applications.
+    In Java, you can use 'synchronized' block and you can keep shared resources.
+
+    The good news is that JavaScript is single threaded; this means that solutions will generally work well with "shared" variables, i.e. no mutex locks are required.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <script>
+          window.onload = function() {
+
+            //OBSERVER pattern (Source: https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
+
+            function Observer() {
+              this.notify = function(i) {
+                console.log("Observer " + i + " is notifed");
+              }
+            }
+
+            function Subject() {
+              this.observers = [];
+              this.subscribeObserver = function(observer) {
+                this.observers.push(observer);
+              }
+              this.unSubscribeObserver = function(observer) {
+                var index = this.observers.indexOf(observer);
+                if(index > -1) {
+                  this.observers.splice(index, 1);
+                }
+              }
+              this.notifyObserver = function(observer) {
+                var index = this.observers.indexOf(observer) + 1;
+                observer.notify(index);
+              }
+              this.notifyAllObservers = function() {
+                for(var i = 0; i < this.observers.length; i++){
+                  this.observers[i].notify(i);
+                };
+              }
+            }
+
+            var sub = new Subject();
+            var obs1 = new Observer();
+            var obs2 = new Observer();
+            var obs3 = new Observer();
+
+            sub.subscribeObserver(obs1);
+            sub.subscribeObserver(obs2);
+            sub.subscribeObserver(obs3);
+
+            console.log(sub, obs1, obs2);
+
+            sub.notifyObserver(obs3);
+
+ // ------------------------------------------------------------------------------------------------------------------------------------------
+
+            //Singleton Pattern (http://www.dofactory.com/javascript/singleton-design-pattern)
+
+            var Singleton = (function () {
+              var instance;
+
+              function createInstance() {
+                var object = new Object("I am the instance");
+                return object;
+              }
+
+              return {
+                getInstance: function () {
+                  if (!instance) {
+                    instance = createInstance();
+                  }
+                  return instance;
+                }
+              };
+            })();
+
+            function run() {
+
+              var instance1 = Singleton.getInstance();
+              var instance2 = Singleton.getInstance();
+
+              console.log("Same instance? " + (instance1 === instance2));
+            }
+
+            run();
+
+          }
+        </script>
+
+    </head>
+    <body>
+
+    </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <script>
+          window.onload = function() {
+            var ones = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+            var tens = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+            var places = ['billion ', 'million ', 'thousand ', ''];
+
+            var number = '000000053041'; //have the number with 12 digits. ex: 00000000000233 (depending on places [])
+            //n = ('000000000' + num).slice(-9)
+            //"Hello world!".slice(-5) = 'orld!'
+            var res = '';
+
+            function compute(num) {
+              num = num.toString();
+              switch(num.length) {
+                case 1:
+                case 2:
+                  return ones[num] || (tens[num.charAt(0)] + ' '+ ones[num.charAt(1)]);
+                case 3:
+                  return ones[num.charAt(0)] + 'hundred ' + compute(num.slice(1));
+                default:
+                  return "";
+              }
+            }
+
+            console.log(compute(21))
+
+            var groups = new Array();
+            while(number) {
+              groups.push(number.slice(0,3));
+              number = number.slice(3);
+            }
+            console.log(groups)
+            groups.forEach(function(num, i) {
+              num = Number(num);
+              if(num) {
+                res += compute(num) + places[i];
+              }
+            });
+            console.log(res)
+          }
+        </script>
+
+    </head>
+    <body>
+
+    </body>
+</html>

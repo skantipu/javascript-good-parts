@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+    /*
+     ES6 Promises - http://www.html5rocks.com/en/tutorials/es6/promises/#toc-async
+
+     var promise = new Promise(function(resolve, reject) {
+        // do a thing, possibly async, then…
+
+        if (// everything turned out fine) {
+          resolve("Stuff worked!");
+        }
+        else {
+          reject(Error("It broke"));
+        }
+     });
+
+     The promise constructor takes one argument, a callback with two parameters, resolve and reject.
+     Do something within the callback, perhaps async, then call resolve if everything worked, otherwise call reject.
+
+     Here's how you use the promise:
+     promise.then(successCallBackFunction, errorFallBackFunction)
+
+     promise.then(function(result) {
+        console.log(result); // "Stuff worked!"
+     }, function(err) {
+        console.log(err); // Error: "It broke"
+     });
+
+     */
+    var userId = [1, 2, 3, 4, 5];
+    var urls = userId.map(function(id){
+      return ["https://jsonplaceholder.typicode.com/posts/", id].join("");
+    });
+
+    function get(url) {
+      return new Promise(function (resolve, reject) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if(this.readyState === 4 && this.status === 200) {
+            resolve(JSON.parse(this.responseText).id);
+          }
+          else if(this.readyState === 4 && this.status !== 200) {
+            reject(this.statusText);
+          }
+        }
+        xhttp.open('GET', url, true);
+        xhttp.send();
+      });
+    }
+
+
+    //A way to keep track when all async calls are completed (running async fns in parallel, but we'll know when all are done)
+    var promises = urls.map(function(url) {
+      return get(url);
+    });
+    Promise.all(promises).then(function(data) {
+      // returned data is an array of all resolves
+      console.log(data.toString());
+      console.log("done")
+    }, function(err) {
+      // error occurred
+    });
+
+
+
+//
+//    //random execution order
+//    urls.forEach(function (url) {
+//      get(url).then(
+//      function success(response) {
+//        console.log(response)
+//      }, function fail(error) {
+//        console.error(error);
+//      })
+//    });
+
+
+
+//    //execution order maintained - nest next get call in the success callback of previous one
+//
+//
+//    get('https://jsonplaceholder.typicode.com/posts/' + userId[0]).then(
+//      function success(response) {
+//        console.log(response)
+//        get('https://jsonplaceholder.typicode.com/posts/' + userId[1]).then(
+//          function success(response) {
+//            console.log(response)
+//            get('https://jsonplaceholder.typicode.com/posts/' + userId[2]).then(
+//              function success(response) {
+//                console.log(response);
+//                get('https://jsonplaceholder.typicode.com/posts/' + userId[3]).then(
+//                  function success(response) {
+//                    console.log(response)
+//                    get('https://jsonplaceholder.typicode.com/posts/' + userId[4]).then(
+//                      function success(response) {
+//                        console.log(response)
+//
+//                      }, function fail(error) {
+//                        console.error(error);
+//                      })
+//
+//                  }, function fail(error) {
+//                    console.error(error);
+//                  })
+//
+//              }, function fail(error) {
+//                console.error(error);
+//              })
+//
+//          }, function fail(error) {
+//            console.error(error);
+//          })
+//      }, function fail(error) {
+//        console.error(error);
+//      })
+//
+//
+
+
+</script>
+<body>
+
+</body>
+</html>

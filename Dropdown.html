@@ -1,0 +1,90 @@
+<!--
+  Knowledge:
+
+  href="" will reload the current page
+
+  href="#" will scroll the current page to the top
+
+` href="javascript: void(0)" will do nothing.  (<a href="javascript: void(0)">Link 1</a>)
+
+  You can get the same effect of javascript: void(0) by returning false from the click event handler of the anchor with either of the other two methods as well.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+          body {
+            font-family: Verdana;
+            font-size: 12px;
+          }
+          .dropdown-list {
+            position: relative;
+            margin-top: 100px;  /* increase it and see the effect of <a href=""> */
+            display: inline-block; /* Important, or else would take whole width of the container and problem when you hover outside the div*/
+          }
+          .dropdown-list button {
+            width: 100px;
+            height: 40px;
+            background-color: red;
+            color: white;
+            border: none;
+          }
+          .dropdown-list .list {
+            width: 200px;
+            border: 1px solid grey;
+            display: none;
+            position: absolute; /* Important, or else problem when you hover outside the div, inspect the element commenting this and see. Also for it not push content below it down*/
+            background: white;
+          }
+          .dropdown-list:hover .list{
+            display: block;
+          }
+          .dropdown-list .list a {
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+          }
+          .dropdown-list .list a:hover {
+            background: lightgrey;
+          }
+        </style>
+        <script>
+          window.onload = function() {
+            var link = document.getElementById("link2");
+            var list = document.querySelector(".dropdown-list .list");
+            var button = document.getElementsByTagName("button")[0];
+            link.onclick = function() {
+              return false;
+            }
+            button.onclick = function() {
+             //
+            }
+          }
+        </script>
+
+
+    </head>
+    <body>
+      <div class="dropdown-list">
+        <button>Contact Us</button>
+        <div class="list">
+          <a href="javascript: void(0)">Link 1</a>
+          <a href="#" id="link2">Link 2</a>  <!-- if you use onclick="doSomething()" in 'a' tag, then you need to define doSomething() directly in script tag. You cannot
+          have that funciton in scope of window.onload or document.ready as they would hide it. So it's a BAD practise to use onclick. Always attach function
+          using event handler functions. Also, separation of concerns (JS from HTML)-->
+          <a href="#">Link 3</a>
+        </div>
+      </div>
+      <div>
+        Hello, watch, I'm not being pushed down, rather the dropdown flows on top of me.
+      </div>
+      <div>
+        La la la laa la, La la la laa la
+      </div>
+
+    </body>
+</html>

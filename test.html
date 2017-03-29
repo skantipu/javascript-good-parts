@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yahoo</title>
+  <script>
+    function contains(n, d1, d2) {
+      return !(n.toString().match(/[^47]/));
+    }
+    function computeMutiples(start, end, n1, n2) {
+      var result = 0, temp = 1;
+      while(result <= end) {
+        result = start * (temp++);
+        if(contains(result, n1, n2)) {
+          console.log(result);
+        }
+      }
+    }
+    computeMutiples(512, 100000000, 4, 7);
+  </script>
+</head>
+<body>
+
+
+</body>
+</html>

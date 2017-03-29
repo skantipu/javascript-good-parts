@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Bar</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(function() {
+            var content = '<div class="progress-bar"><div class="progress-bar-content"></div></div>';
+            var $bars, count=0;
+            /*
+            Create progressBar module using Revealing Module pattern
+             */
+            var progressBar = (function(){ //IIFE start
+                function createProgressBar(bar) {
+                    var myWidth = 0;
+                    function setColor(myBar) {
+                        myWidth += 1;
+                        myBar.css("width", myWidth);
+                    }
+                    for(var i=1; i<=200; i++) {
+                        (function(a) {
+                            setTimeout(
+                                    function() {
+                                        setColor(bar);
+                                    }, a*15);
+                        })(i);
+                    }
+                }
+                return {
+                    create : createProgressBar
+                };
+            })();
+
+            //using setInterval() - Another approach and better one
+            var progressBarOther = (function(){
+                function createProgressBar(bar) {
+                    var myWidth = 0, handle;
+                    function frame() {
+                        if(myWidth >= 100) {
+                            clearInterval(handle);
+                        }
+                        else {
+                            myWidth ++;
+                            bar.width(myWidth+'%');
+                        }
+                    }
+                    handle = setInterval(frame, 20);
+                }
+                return {
+                    create : createProgressBar
+                }
+            })();
+
+            $("#btn").on("click", function() {
+                $("body").append(content);
+                $bars = $("div.progress-bar:last-child .progress-bar-content");
+                progressBarOther.create($bars.eq(0));
+                /* .eq(0) returns a jQuery object (or jQuery wrapped DOM element) so that we can have operations like
+                   bar.css() or bar.hide() etc. If it had been $bars[0] or $bars.get(0), it returns a native DOM element
+                   and it allows only native JS operations.
+                */
+            });
+        });
+    </script>
+    <style>
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            border: 2px solid black;
+            border-radius: 3px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+        .progress-bar-content {
+            background-color: green;
+            height: 100%;
+            width: 0%;
+        }
+        #btn {
+            margin: 0 auto;
+            display: block;
+            height: 30px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">Add a progress bar</button>
+</body>
+</html>

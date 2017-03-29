@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagination</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+        }
+        li {
+            padding: 10px;
+            float: left;
+            margin-left: 5px;
+            background-color: white;
+            color: black;
+            border: 1px solid grey;
+            padding: 10px;
+        }
+        li:not(.clicked):hover {
+            background-color: lightgrey;
+        }
+        .clicked:not(.arrow) {
+            background-color: green;
+            color: white;
+        }
+        li:hover {
+            cursor: pointer;
+        }
+        #content {
+            margin: 0 auto;
+            width: 25%;
+            text-align: center;
+        }
+        #pagination {
+            width: 100%;
+            padding-left: 50px;
+            padding-top: 10px;
+        }
+        #search-results div {
+            margin: 10px;
+            font-size: 22px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+    <div id="content">
+        <div id="search-results">
+            <div>Search result 1</div>
+            <div>Search result 2</div>
+            <div>Search result 3</div>
+            <div>Search result 4</div>
+            <div>Search result 5</div>
+            <div>Search result 6</div>
+            <div>Search result 7</div>
+            <div>Search result 8</div>
+            <div>Search result 9</div>
+            <div>Search result 10</div>
+            <div>Search result 11</div>
+            <div>Search result 12</div>
+            <div>Search result 13</div>
+            <div>Search result 14</div>
+            <div>Search result 15</div>
+            <div>Search result 16</div>
+            <div>Search result 17</div>
+            <div>Search result 18</div>
+            <div>Search result 19</div>
+            <div>Search result 20</div>
+            <div>Search result 21</div>
+            <div>Search result 22</div>
+            <div>Search result 23</div>
+        </div>
+        <div id="pagination">
+            <ul>
+                <li class="arrow">&lang;&lang;</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li class="arrow">&rang;&rang;</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        var pagination = (function(){
+            var pages, results, firstPage, partitions, arrows;
+            function activate() {
+                //remove any existing active pages
+                for(var i=0; i<pages.length; i++) {
+                    if(pages[i].classList.contains("clicked")) {
+                        pages[i].classList.remove("clicked");
+                    }
+                }
+                this.classList.add("clicked");
+                //Find from where to start showing results
+                var start = (parseInt(this.innerHTML)-1)*partitions;
+                for(var i=0; i<results.length; i++) {
+                    results[i].style.display = "block"; //required as you've to remove 'none' that is existing on the elem.
+                    if(i >= start && i < start+partitions) {
+                        continue;
+                    }
+                    results[i].style.display = "none";
+                }
+            }
+            function shiftPage(shift) {
+                //get Currently active li text
+                var activePageIndex = parseInt(document.querySelector('li.clicked').innerHTML)-1;
+                var index = activePageIndex + shift;
+                if(index >= pages.length) {
+                    index = 0;
+                }
+                else if (index < 0) {
+                    index = pages.length-1;
+                }
+                activate.call(pages[index]);
+            }
+            function init() {
+                pages = document.querySelectorAll('li:not(.arrow)');
+                results = document.querySelectorAll('#search-results div');
+                firstPage = document.querySelector('li:nth-child(2)');
+                partitions = Math.ceil (results.length / pages.length);
+                arrows = document.querySelectorAll("li.arrow");
+
+                /* Auto select first page and show those results */
+                activate.call(firstPage);
+
+                for(var i=0; i<pages.length; i++) {
+                    pages[i].onclick = activate;  //note that in activate() you wont be able to access i with correct index (its value will be pages.length)
+                }
+
+                arrows[0].onclick = function() {
+                    shiftPage(-1);
+                }
+                arrows[1].onclick = function() {
+                    shiftPage(1);
+                }
+            }
+            return {
+                init: init
+            };
+        })();
+
+        pagination.init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!--- vertically center a card in a page -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <style>
+    .outer {
+      display: table;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+    .middle {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .inner {
+      width: 200px;
+      height: 200px;
+      background: red;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="outer">
+  <div class="middle">
+    <div class="inner">
+      <div>
+        <p>sdfaadfasdfasdfasdfasdfasdf sdfaadfasdfasdfasdfasdfasdf sdfaadfasdfasdfasdfasdfasdf sdfaadfasdfasdfasdfasdfasdf sdfaadfasdfasdfasdfasdfasdf sdfaadfasdfasdfasdfasdfasdf</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
+<!-- other approaches
+CSS:
+.card {
+  width: 200px;
+  height: 200px;
+  background: red;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+<div class="card"></div>
+
+-----------------------
+
+.card {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+<div class="card"></div>
+
+
+-----------------------
+To vertically and horizontally center text within 'content' div
+<div class="card">
+  <div class="content">
+    sdfjl
+    asdf
+    <p>sdaff</p>
+    asdf
+    asdfasd
+    asdfasdf
+  </div>
+</div>
+
+.card {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+.content {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+-->

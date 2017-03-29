@@ -1,0 +1,131 @@
+
+<!--
+KNOWLEDGE:
+Setting position:absolute removes the element in question from the normal flow of the document structure.
+So unless you explicitly set a width it won't know how wide to be. you can explicitly set width:100% if that is the effect you're after.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slide Show</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <style>
+        .container {
+            width: 800px;
+            height: 500px;
+            border: 1px solid black;
+            position: relative;
+        }
+        .image-container, img {
+            width: 100%;
+            height: 100%;
+        }
+        .image-container:not(:first-child) {
+            display: none;
+        }
+        .next, .prev {
+            position: absolute;
+            top: 50%;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        a:hover {
+            cursor: pointer;
+        }
+        .next {
+            right: 5px;
+        }
+        .prev {
+            left: 5px;
+        }
+        .caption, .index {
+            position: absolute;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            font-family: arial;
+        }
+        .caption {
+            bottom: 5px;
+            /* you can also use just left: 50%, but not exactly center-aligned. Don't forget width: 100% when you use text-align:center (since position: absolute) */
+            width: 100%;
+            text-align: center;
+        }
+        .index {
+            top: 5px;
+            left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <div class="index"> 1 / 3</div>
+            <img src="/Users/Kantipudi/Desktop/pics/pic1.jpg" alt="image 1">
+            <div class="caption">Sun rise</div>
+        </div>
+        <div class="image-container">
+            <div class="index"> 2 / 3 </div>
+            <img src="/Users/Kantipudi/Desktop/pics/pic2.jpg" alt="image 2">
+            <div class="caption">Sun set</div>
+        </div>
+        <div class="image-container">
+            <div class="index"> 3 / 3 </div>
+            <img src="/Users/Kantipudi/Desktop/pics/pic3.jpg" alt="image 3">
+            <div class="caption">Beach</div>
+        </div>
+        <a class="next">&#10095;</a>
+        <a class="prev">&#10094;</a>
+    </div>
+    <script>
+        $(function(){
+            var slider = (function() {
+                var $slides, n, slideIndex;
+                function init() {
+                    $slides = $(".image-container");
+                    n = $slides.length;
+                    slideIndex = 0;
+                    $("a.next").click(function () {
+                        moveSlide(1);
+                    });
+                    $("a.prev").click(function () {
+                        moveSlide(-1);
+                    });
+                  //  moveSlide(slideIndex);  //:not(:first-child)
+                }
+                function moveSlide(counter) {
+                  /*  for(var i=0; i<$slides.length; i++) {
+                        $slides.eq(i).hide();  //$slides[i].hide() does not work as it does not return a jquery object.
+                    } */
+
+                    /* Above can also be written as...
+                     $slides.each(function(){
+                     $(this).hide();
+                     });
+                     */
+
+                    $slides[slideIndex].style.display = "none"; //not required to hide all slides, try to minimize number of times you touch the DOM, better not
+                    //to make document reflow many times
+
+                    slideIndex = slideIndex + counter;
+                    if(slideIndex === n) {
+                        slideIndex = 0;
+                    }
+                    else if(slideIndex < 0) {
+                        slideIndex = n-1;
+                    }
+                    $slides[slideIndex].style.display = "block";
+                }
+                return {
+                    init : init,
+                };
+            })();
+            slider.init();
+        });
+    </script>
+</body>
+</html>
+

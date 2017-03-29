@@ -1,0 +1,254 @@
+<html>
+<head>
+  <style>
+  </style>
+  <script>
+    /**** PROGRAMMING QUESTIONS ***/
+
+    //1. FIND NUMBER OF COMMON ELEMENTS IN TWO SORTED ARRAYS
+
+    //Strategy 1 - using Binary Search
+
+    var arr1 = [3, 5, 9, 12, 18, 34, 78, 119];
+    var arr2 = [5, 6, 18, 64, 78, 1244, 235234];
+    var noOfCommonElem = 0;
+
+    function search(num) {
+      var arr = this;
+      var left = 0, right = arr.length - 1;
+
+      function binarySearch(left, right) {
+        var n = Math.floor((right+left)/2);
+        if(right-left === 1 || right === left) {
+          if(num == arr[right] || num == arr[left]) {
+            return true;
+          }
+          else {
+            return false;
+          }
+        }
+        if(num >= arr[left] && num <= arr[n]) {
+          return binarySearch(left, n);
+        }
+        else {
+          return binarySearch(n+1, right);
+        }
+      }
+
+      return binarySearch(left, right);
+    }
+
+    for(var i=0; i<arr1.length; i++) {
+      if(search.call(arr2, arr1[i])) {
+        noOfCommonElem++;
+      }
+    }
+
+   // console.log(noOfCommonElem);
+
+
+    // Strategy 2 - using HashMap like
+    var obj = new Object(), c=0;
+    for(var i=0; i<arr1.length; i++) {
+      obj[arr1[i]] = i;
+    }
+    for(var i=0; i<arr2.length; i++) {
+      if(arr2[i] in obj) {
+        c++;
+      }
+    }
+   // console.log(c);
+
+//--------------------------------------------------------
+
+    // 2. 1121 - 21 12 11 (count followed by number, same number side by side, count it all or else no
+
+    function numberCount() {
+      var num = 1121, str = "";
+      var arr = num.toString().split("");  // ["1", "1", "2", "1"]
+      var obj = new Object();
+      var count = 0;
+      for(i=0; i<=arr.length; i++) {
+        if( !(arr[i] in obj) ) {
+          //if it's not in array, clean the obj and insert it
+          if(i !== 0) {
+            str += obj[arr[i-1]] + arr[i-1] + " ";
+          }
+          obj = {};
+          count = 0;
+          obj[arr[i]] = ++count;
+        }
+        else {
+          obj[arr[i]] = ++count;
+        }
+      }
+      console.log(str);
+    }
+   // numberCount();
+
+//--------------------------------------------------------
+
+    // 3. find duplicates in an array, and keep it in another array. I/p: [a,b,c,d,c,a]  o/p: [a,c]
+
+    function findDuplicates() {
+      var arr = ["a", "b", "c", "d", "a", "d", "c"];
+      var arr2 = [];
+      var count = 0;
+      for(var i=0; i<arr.length; i++) {
+        count = 0;
+        for(var j=0; j<arr.length; j++) {
+          if(arr[i] === arr[j]) {
+            count++;
+            if(count > 1) {
+              break;
+            }
+          }
+        }
+        if(count > 1) {
+          if(arr2.indexOf(arr[j]) == -1) {
+            arr2.push(arr[j]);
+          }
+        }
+      }
+      console.log(arr2)
+    }
+
+    //findDuplicates();
+
+    function findDupes() {
+      var arr = ["a", "b", "c", "d", "a", "d", "c", "e", "e"];
+      var arr2 = [];
+      var obj = {};
+      var count;
+      for(var i=0; i<arr.length ; i++) {
+        if( !(arr[i] in obj) ) {
+          count = 0;
+          obj[arr[i]] = ++count;
+        }
+        else {
+          count = obj[arr[i]];
+          obj[arr[i]] = ++count;
+        }
+      }
+      for(key in obj) {
+        if(obj[key] > 1) {
+          arr2.push(key);
+        }
+      }
+      console.log(arr2)
+    }
+    findDupes();
+//--------------------------------------------------------
+
+    function sayAlice() {
+      var say = function() { console.log(alice); }
+      // Local variable that ends up within closure
+      var alice = 'Hello Alice';
+      return say;
+    }
+    sayAlice()();  //prints 'Hello Alice' - closure (inner function having access to outer function environment, if it the outer function returned
+
+//--------------------------------------------------------
+    var a = 1;
+
+    var six = (function() {
+      var a = 6;
+
+      return function() {
+        // JavaScript "closure" means I have access to 'a' in here,
+        // because it is defined in the function in which I was defined.
+        console.log(a);
+      };
+    })();
+    six();
+
+//--------------------------------------------------------
+
+/* Find biggest difference between two numbers a and b, where b is after a */
+    function findBestMatch() {
+      var a = [500, 501, 498, 550, 499, 548];
+      var n = a.length;
+      var diff = 0;
+
+      for(var i=0; i<n; i++) {
+        for (var j=i+1; j<n; j++) {
+          if ((a[j]-a[i]) > diff) {
+            diff = a[j] - a[i];
+          }
+        }
+      }
+      return diff;
+    }
+    console.log("Biggest difference", findBestMatch())
+
+//--------------------------------------------------------
+
+/* Find unique numbers in the array */
+    /**
+     * For each elem of the array
+     * If elem exists
+     *  Update the value of the elem to incremented counter
+     * Else
+     *  Add element from the obj, with value 1
+     */
+    function uniques(arr) {
+      var obj = {};
+      for(var i=0; i<arr.length; i++) {
+        if(arr[i] in obj) {
+          obj[arr[i]] = ++obj[arr[i]];
+        }
+        else {
+          obj[arr[i]] = 1;
+        }
+      }
+      for(var key in obj) {
+        if(obj[key] == 1) {
+          console.log(key);
+        }
+      }
+    }
+    uniques([5,4,5,6,0,5,4,3,6]); // 0,3
+
+//--------------------------------------------------------
+
+    /**
+     * return the index of the element which has elements on both sides of it that have same sum
+     */
+
+    var arr = [1, 4, 3, 2, 3, 1, 13];  // index 5, elem 1 (1+4+3+2+3 = 13)
+    function findSum(start, end) {
+      var sum=0;
+      for(var i=start; i<=end; i++) {
+        sum += arr[i];
+      }
+      return sum;
+    }
+    for(var i=1; i<arr.length-1; i++) {
+      if(findSum(0,i-1) === findSum(i+1, arr.length-1)) {
+        console.log("Found Index", i, arr[i]);
+      }
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>
+
+<!--
+
+The following six values are always falsy in JS:
+
+ false
+ 0 (zero)
+ "" (empty string)
+ null
+ undefined
+ NaN (a special Number value meaning Not-a-Number!)
+
+So, the following passes if condition and prints output. Only 0 is treated as false value.
+if(-1) {
+  console.log("printed");
+}
+
+-->

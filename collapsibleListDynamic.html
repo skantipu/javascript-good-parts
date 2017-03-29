@@ -1,0 +1,120 @@
+<!-- Sample Rest API reference - http://jsonplaceholder.typicode.com/ -->
+
+<!--
+Some key concepts-
+- usage of self = this
+- using data-* attribute in the html tag to store user id of that user, to be used later in JS
+- not making repetitive API calls everytime you expand a list item, and making API call only the first time you expand any item, by keeping track of ids donwnloaded
+- uses ES6 Promise API to make asynchronous call to fetch data from http://jsonplaceholder.typicode.com/
+- usage of revealing module pattern (good modularization and structuring of code)
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Collapsible List</title>
+  <style>
+   .task-container {
+      margin: 10px;
+      width: 500px;
+   }
+   .task-container .task-block {
+      background-color: grey;
+      color: white;
+      border: 1px solid grey;
+      border-radius: 3px;
+      cursor: pointer;
+   }
+   .task-container .task-block .task {
+     font-size: 14px;
+     font-family: Arial;
+   }
+   .task-container .sub-task-block .task {
+    margin-left: 10px;
+   }
+   .task-container .sub-task-block {
+    display: none;
+   }
+   .task-container.display .sub-task-block {
+     display: block;
+   }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script>
+    window.onload = function() {
+
+      var CollapsibleList = (function() {
+        function createUserPostsList(posts) {
+          var len = posts.length;
+          var str = '';
+          str += '<div class="sub-task-block">';
+          for(var i=0; i<len; i++) {
+            str += '<div class="task">' + posts[i]['title'] + '</div>';
+          }
+          str += '</div>';
+          return str;
+        }
+        function createUsersList(users) {
+          var len = users.length;
+          var str = '';
+          for(var i=0; i<len; i++) {
+            str += '<div class="task-container" data-id="'+ users[i]['id'] +'"><div class="task-block">';
+            str += '<div class="task">' + users[i]['name'] + '</div></div></div>';
+          }
+          return str;
+        }
+        return {
+          createUsersList : createUsersList,
+          createUserPostsList: createUserPostsList
+        };
+      })();
+
+      function getData(url){
+        return new Promise(function(resolve, reject){
+         var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+           if(this.status == 200 && this.readyState == 4) {
+             resolve(JSON.parse(this.responseText));
+           }
+         }
+         xhttp.open('GET', url , true);
+         xhttp.send();
+        });
+      }
+
+      var posts = [];
+      getData('https://jsonplaceholder.typicode.com/users')
+      .then(function(response) {
+          var content = CollapsibleList.createUsersList(response);
+          $('.collapsible-list').append(content);
+          var $taskContainers = $('.task-container');
+          for(var i=0; i<$taskContainers.length; i++) {
+            $taskContainers.eq(i).click(function() {
+                //$(this).data('id')  //or $(this).attr('data-id');
+                var self = this;
+                var userId = $(self).data('id');
+                if(posts.indexOf(userId) !== -1) {
+                 // $(self).append(collapsibleList.createUserPostsList(response));
+                  $(self).toggleClass('display');
+                }
+                else {
+                  getData('https://jsonplaceholder.typicode.com/posts?userId=' + userId)
+                  .then(function(response) {
+                    posts.push(userId);
+                    $(self).append(CollapsibleList.createUserPostsList(response));  //Note: here this refers to window object, so used self=this in parent block
+                  });
+                  $(self).toggleClass('display');
+                }
+            });
+          }
+      });
+
+    }
+  </script>
+</head>
+<body>
+
+<div class="collapsible-list">
+</div>
+
+</body>
+</html>

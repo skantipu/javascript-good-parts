@@ -1,0 +1,102 @@
+<!-- Rubrik -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <style>
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        /*
+         Company A owns 10% of Company B
+         Company B owns 5% of Company C
+         Company A owns 2% of Company C
+
+         How much of Company C does Company A own? 2.5%
+         c = x;
+         b = .05x;
+         a = 0.1 * 0.05x + 0.02x = 0.005 + 0.02 = 0.025;
+
+         Exercise:
+         1) Model this (what DS do you use)
+         2) Implement getOwnership(source, target)
+         */
+
+        //source - A
+        //target - C
+
+        var data = [
+            {
+                source: "A",
+                target: "B",
+                percentage: 0.1
+            },
+            {
+                source: "B",
+                target: "C",
+                percentage: 0.05
+            },
+            {
+                source: "A",
+                target: "C",
+                percentage: 0.02
+            }
+        ];
+
+        function resolveMapping (source, target, data) {
+            for(var i=0; i<data.length; i++) {
+                var obj = data[i];
+                if (obj.source === source && obj.target === target) {
+                    break;
+                }
+            }
+            return obj.percentage;
+        }
+        function getOwnership (source, target, data) {
+            var result = 0, temp;
+            data.forEach(function(obj, index){
+                if(obj.source === source && obj.target === target) {
+                    result += obj.percentage;
+                }
+                else {
+                    if(obj.target !== target && obj.source === source) {
+                        temp = obj.percentage * resolveMapping(obj.target, target, data);
+                    }
+                }
+            });
+            result += temp;
+            console.log(result);
+        }
+        getOwnership("A", "C", data);
+
+        /*function getOwnership (source, target, data) {
+         var result = 0;
+         data.forEach(function(obj){
+         if(obj.target === target && obj.source === source) {
+         result += obj.percentage;
+         }
+         else {
+         //run a loop again to match other obj having source as current obj target
+         var newSource = obj.target, newResult= 0, newPercentage = obj.percentage;
+         // console.log(newPercentage);
+         data.forEach(function(obj){
+         if(obj.source === newSource) {
+         if(obj.target === target) {
+         newResult = obj.percentage * newPercentage;
+         }
+         }
+         });
+         result += newResult;
+         }
+
+         });
+         console.log(result);
+         }
+         getOwnership("A","C",data); */
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

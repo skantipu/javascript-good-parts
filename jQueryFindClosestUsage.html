@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <style>
+        div {
+            margin-left: 15px;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+            //Find all p elements having an anchor element within it, and give a background of red color
+            $("a").closest("p").css("backgroundColor","red");
+
+            /*
+            jQuery .closest():
+             Travels up the DOM tree (including the current element) until it finds a match for the supplied selector, and stops when it finds the first match.
+             ---------------------------------------
+            jQuery .find():
+             Travels down the DOM tree (excluding the current element) and matches ALL descendants nested under the selected element.
+             The .find() and .children() methods are similar, except that the .children() only travels a single level down the DOM tree.
+             */
+
+            //Find all 'a' elements that are nested inside p elements and give them a blue border
+            $("p").find("a").css("border", "2px solid blue");
+
+        });
+    </script>
+</head>
+<body>
+    <p>Hi there!</p>
+    <p>Hi there! <a href=""> Google</a></p>
+    <a href=""> Google</a>
+    <div>
+        <p>Hi there!</p>
+        <div>
+            <p>Hi there! <a href=""> Google</a></p>
+        </div>
+        <p>Hi there! <a href=""> Google</a></p>
+    </div>
+    <p>Hi there!</p>
+    <p>
+        <a href=""> Google</a>
+        <strong>
+           Hi there!<a href=""> Google</a>
+        </strong>
+    </p>
+    <a href=""> Google</a>
+</body>
+</html>

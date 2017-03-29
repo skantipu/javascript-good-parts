@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prototypes Questions</title>
+    <script>
+        function MyClass(prop) {
+            this.prop = prop;
+        }
+
+        var a = new MyClass('A');  //{prop: A}
+        var b = new MyClass('B');  //{prop: B}
+        /*
+            You can also acheive above as
+
+            var a = Object.create(MyClass.prototype); // creates an empty object 'a' and assigns MyClass prototype as its prototype
+            MyClass.call(a, 'A');
+            var b = Object.create(MyClass.prototype);
+            MyClass.call(b, 'B');
+
+            Point to note is both a and b share the same prototype
+         */
+
+        console.log('step 1:', a.prop, b.prop); // A,B
+
+        console.log('step 2:', a.prop2, b.prop2);// undefined, undefined
+
+        MyClass.prototype.prop2 = 'C';  //a -> {prop: A} -> {prop2: C}, b -> {prop: B} -> {prop2: C}
+
+        console.log('step 3:', a.prop2, b.prop2); //C,C
+
+        a.prop2 = 'D'; // a -> {prop: A, prop2: D} -> {prop2: C}
+        /*
+         Only property reads search the prototype chain, not writes.
+         When you have ng-model="myObject.aNumber" or ng-model="myObject.aThing.aNumber" or  ng-model="myArray[0]", there's subtle read,
+         which is why scope chain is consulted, and parent object is updated, if it exists
+         */
+        MyClass.prototype.prop2 = 'E'; // a -> {prop: A, prop2: D} -> {prop2: E}, b -> {prop: B} -> {prop2: E}
+        MyClass.prototype.prop = 'E0'; // a -> {prop: A, prop2: D} -> {prop: E0, prop2: E}, b -> {prop: B} -> {prop: E0, prop2: E}
+
+        console.log('step 4:', a.prop, b.prop);//A, B
+        console.log('step 5:', a.prop2, b.prop2);//D E
+
+        MyClass.prototype.prop2 = 'F'; //a -> {prop: A, prop2: D} -> {prop: E0, prop2: F}, b -> {prop: B} -> {prop: E0, prop2: F}
+
+        console.log('step 6:', a.prop2, b.prop2);// D F
+
+        // Please explain the flow and output
+
+        for (var i = 0; i < 3; i++) {
+            (function(a){
+                console.log(a);
+                setTimeout(function() { console.log(" ",a) }, 0);
+            })(i);
+        }
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!--
+Knowledge:
+new Date().getDay() - returns index (0-6 Sun-Sat) of today. Say, today is Saturday, it returns 6
+new Date().getMonth() - returns index (0-11 Jan-Dec) of current month
+new Date().getFullYear() - 2016
+new Date(2016, 08, 1).getDay() - returns what is the week day (0-6 Sun-Sat) of 1st september 2016.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar</title>
+    <style>
+        body {
+            font-family: arial;
+        }
+        .month {
+            color: white;
+            background-color: green;
+        }
+        td {
+            margin: 2px;
+            padding: 4px;
+        }
+        .week {
+            color: white;
+            background-color: grey;
+        }
+        .today {
+            color: blue;
+            font-weight: bold;
+        }
+        tr.day td:not(.pre):not(.booked):hover {
+            background: #ebebe0;
+            cursor: default;
+        }
+        td.booked {
+            background-color: aquamarine;
+            cursor: default;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        window.onload = function() {
+            var Calendar = (function(){
+                var monthNames, dayNames, daysPerMonth, date, month, year, i, htmlContent;
+                function init(myMonth, myYear) {
+                    monthNames = ["January","February","March","April","May","June","July","August","September","October","November", "December"];
+                    dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri", "Sat"];
+                    daysPerMonth = [31, 28, 31, 30, 31 , 30, 31, 31, 30, 31, 30, 31];
+                    date = new Date();
+                    month = myMonth-1 || date.getMonth();
+                    year = myYear || date.getFullYear();
+                    htmlContent = "";
+                }
+                function displayCalendar() {
+                    htmlContent += '<table><tr class="month"><th colspan="7">' + monthNames[month] + ', ' + year + '</th></tr><tr class="week">';
+                    for(i=0; i<dayNames.length; i++) {
+                        htmlContent += '<td>'+dayNames[i]+'</td>';
+                    }
+
+                    htmlContent += '<tr class="day">';
+
+                    //get what day our calendar month first day is falling on (0-6) and populate those many empty cells
+                    var weekday = new Date(year, month, 1).getDay();
+                    for(i=0; i<weekday; i++) {
+                        htmlContent += '<td class="pre"></td>';
+                    }
+
+                    for(i=0; i<daysPerMonth[month]; i++) {
+                        if(i+1 == new Date().getDate() ) {
+                            htmlContent += '<td class="today">' + (i+1) + '</td>';
+                        }
+                        else {
+                            htmlContent += '<td>' + (i+1) + '</td>';
+                        }
+                        weekday++;
+                        if(weekday > 6) {
+                            htmlContent += '</tr><tr class="day">';
+                            weekday = 0;
+                        }
+                    }
+
+                    htmlContent += '</tr></table>';
+                }
+                function create(month, year) {
+                    init(month, year);
+                    displayCalendar();
+                    return htmlContent;
+                }
+                return {
+                    create: create
+                };
+            })();
+
+            var content = Calendar.create(9,2016);
+            document.getElementById("calendar").innerHTML = content;
+
+            /*
+            //using JavaScript
+            var dayElems = document.querySelectorAll("tr.day td:not(.pre)");
+            function book() {
+                console.log(this.innerHTML);
+            }
+            for(var i=0; i<dayElems.length; i++) {
+                dayElems[i].addEventListener("click", book);
+            }
+            -----------------------------------
+            //using jQuery
+            function book() {
+                console.log($(this).text());
+            }
+            console.log($("tr.day td:not(.pre)").length);
+            $("tr.day td:not(.pre)").each(function(){
+                $(this).on("click", book);
+            });
+           */
+
+
+        };
+    </script>
+</head>
+<body>
+<div id="calendar"></div>
+</body>
+</html>

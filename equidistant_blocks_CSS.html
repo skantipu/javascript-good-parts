@@ -1,0 +1,41 @@
+<!-- https://css-tricks.com/equidistant-objects-with-css/#article-header-id-5 -->
+<!--
+  Using inline-block and justified text
+  This can be done by setting the elements to display: inline-block; and the parent element to text-align: justify;
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Object Contains</title>
+        <style>
+          #equidistant-blocks {
+            border: 1px solid red;
+            padding: 20px;
+            margin: 10px;
+            height: 100px;
+            text-align: justify;  /** important **/
+            width: 75%;
+          }
+          .block {
+            border: 1px solid green;
+            height: 80px;
+            width: 100px;
+            display: inline-block; /** important **/
+          }
+          #equidistant-blocks::after {  /** important **/
+            display: inline-block;
+            width: 100%;
+            content: "";
+          }
+        </style>
+
+    </head>
+    <body>
+      <div id="equidistant-blocks">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+      </div>
+    </body>
+</html>

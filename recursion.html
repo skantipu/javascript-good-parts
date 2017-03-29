@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recursion</title>
+        <script>
+            var str;
+            /**
+             * Factorial
+             * 5! = 5 * 4 * 3 * 2 * 1 = 120
+             */
+
+             function factorial (n) {
+                //base case
+                if(n === 1) {
+                    return 1;
+                }
+                else {
+                    return n * factorial(n-1);
+                }
+             }
+             str = 5;
+             console.log("Factorial of " + str + " is " + factorial(str));
+
+            /**
+             * Sum of first n numbers = n(n+1)/2
+             * Ex: Sum of first 5 numbers = 1+2+3+4+5 = 5*6/2 = 15
+             */
+
+             function sumOfFirstNNumbers(n) {
+                //base case
+                if(n === 1) {
+                    return 1;
+                }
+                else {
+                    return n + sumOfFirstNNumbers(n-1);
+                }
+             }
+             str = 100;
+             console.log("Sum of first " + str + " numbers is " + sumOfFirstNNumbers(str));
+
+             /*
+             Reverse a string
+             bindu = udnib
+             How we divide the bigger problem into subproblems...when the sub-problem is the smallest, as a base-case, we return the answer
+             u + reverse(bind) = u + d + reverse(bin) = u + d + n + reverse(bi) = ...
+              */
+            function reverse(str) {
+                var n = str.length;
+                if(n === 1) {
+                    return str;
+                }
+                else {
+                    return str.charAt(n-1) + reverse(str.slice(0,n-1));
+                }
+            }
+            str = "madam";
+            console.log("Reverse of " + str + " is " + reverse(str));
+
+            /* fibnocci seris
+            0 1 1 2 3 5 8 13 ...
+            Using Recursion, you can easily run into max call stack exceeded issue with calls like fibnocci(35).
+            Solution:
+            1) So, faster way is using non recursion based -> c = a+b; and swap them.
+            2) If you employ recursion, use MEMOIZATION technique
+             */
+
+            function fibnocci(index) {
+              switch (index) {
+                case 0:
+                  return 0;
+                case 1:
+                  return 1;
+                default:
+                  return fibnocci(index-1) + fibnocci(index-2);
+              }
+            }
+            str = 7;
+            console.log("Fibnocci of " + str + " index element is " + fibnocci(str));
+
+            /* Find exponent of a number. Ex: 8^3 = 8 * 8 * 8 = 512 */
+            function exponent(num, power) {
+              if(power === 1) {
+                return num;
+              }
+              else {
+                return num * exponent(num, power-1);
+              }
+            }
+            console.log("Exponent - 8^3 = " + exponent(8, 3));
+
+
+            /*
+            Binary Search
+            i/p: array ordered - [0, 23, 33, 34, 56, 78, 112, 435, 500], search elem = 400
+            o/p: not found
+             */
+
+            function binarySearch(arr, elem) {
+
+              function search(start, end) {
+                var middle = Math.floor((start + end) / 2);
+                if (start === middle - 1) {
+                  if (elem === arr[start] || elem === arr[middle] || elem === arr[end]) {
+                    return "Found";
+                  }
+                  else {
+                    return "Not Found";
+                  }
+                }
+                if (elem === arr[middle]) {
+                  return "Found";
+                }
+                else if (elem > arr[middle]) {
+                  return search(middle, end);
+                }
+                else {
+                  return search(start, middle);
+                }
+              }
+
+              console.log(search(0, arr.length-1));
+            }
+            binarySearch([0, 23, 33, 34, 56, 78, 112, 435, 500], 500);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,0 +1,77 @@
+<html>
+<head>
+  <script>
+    // Math.ceil((Math.random() * n)) -- generates a random number between 1 and n
+    // Math.random() generates a random number between 0 (inclusive) and 1 (exclusive)
+    // Math.random() * 3 generates random numbers like 0, 0.001, 2.66, 1.45, 2.89
+    /*
+    function A() {
+      setTimeout(function() {
+        console.log("A")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function B() {
+      setTimeout(function() {
+        console.log("B")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function C() {
+      setTimeout(function() {
+        console.log("C")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    A();
+    B();
+    C();
+
+    //The above generates random outputs like ABC, BAC, BCA ....It runs async fns in PARALLEL
+    */
+
+
+    //Another approach to run async fns in parallel
+    //2)using Promise.all
+
+    function A() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log("1");
+          resolve(["A", 1]);
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+    function B() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log("2");
+          resolve({"B":2});
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+    function C() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log("3");
+          resolve({"C":3});
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+    var promises = [A(), B(), C()];
+    Promise.all(promises).then(function success(response){
+      //this 'then' will be executed when all the async functions in the promises array are completed. (note that they run in parallel.)
+      console.log(response); //array of all resolves
+    }, function error(response){
+
+    });
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

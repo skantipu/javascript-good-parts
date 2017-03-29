@@ -1,0 +1,70 @@
+<!-- Medallia interview question -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recursion</title>
+        <style>
+
+        </style>
+        <script>
+
+        // 5 + 3 * 5
+        // 5 + (3 * 5) = 5 + 15 = 20
+
+        /*
+
+        node == number
+             == object
+                .left == node
+                .right == node
+                .operation == function(a,b) -> result
+
+                             +
+                       5          *
+                               3     5
+
+        {
+          left: 5
+          right: {
+              left: 3,
+              right: 5
+              op: multiply
+          },
+          op: add
+        }
+
+        */
+
+        var node = {
+            left: 5,
+            right: {
+                left: 3,
+                right: 5,
+                op: "multiply"
+            },
+            op: "add"
+        }
+        function compute(operation, operand1, operand2) {
+            switch(operation) {
+                case "add":
+                    return operand1 + operand2;
+                case "multiply":
+                    return operand1 * operand2;
+            }
+        }
+        function evaluate(node) {
+            if(typeof node === "number") {  //base case
+                return node;
+            }
+            else {
+                var left = evaluate(node.left);
+                var right = evaluate(node.right);
+                return compute(node.op, left, right)
+            }
+        }
+        console.log(evaluate(node));
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

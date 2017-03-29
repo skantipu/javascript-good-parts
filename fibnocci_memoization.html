@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fibnocci - Memoization</title>
+  <script>
+    window.onload = function() {
+
+//      Code without using Memoization (using basic recursion)
+
+//      function fibnocci(index) {
+//        switch (index) {
+//          case 0:
+//            return 0;
+//          case 1:
+//            return 1;
+//          default:
+//            return fibnocci(index-1) + fibnocci(index-2);
+//        }
+//      }
+
+//     Try running fibnocci(43), takes longer and calls like fibnocci(67) can result in max call stack exceeded error. But fib(67) (with memoization) runs fast.
+
+//    Using MEMOIZATION
+      var obj = {};
+      function fib(n) {
+        if(n in obj) {
+          return obj[n];
+        }
+        switch(n) {
+          case 0: return 0;
+          case 1: return 1;
+          default:
+            var res = fib(n-1) + fib(n-2);
+            obj[n] = res;
+            console.log(obj)
+            return res;
+        }
+      }
+      console.log(fib(7));
+   }
+  </script>
+</head>
+<body>
+</body>
+</html>

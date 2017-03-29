@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prime Number</title>
+    <script>
+        window.onload = function() { //don't forget this. Alternatively, you can write script before body closing tag
+            var resultElem1 = document.getElementById("res1");
+            var resultElem2 = document.getElementById("res2");
+            var button1 = document.getElementsByTagName("button")[0];
+            var button2 = document.getElementsByName("printPrime")[0];
+            var inputElem = document.getElementsByName("primeNumberInput")[0];
+            var fromElem = document.getElementsByName("fromNumber")[0];
+            var toElem = document.getElementsByName("toNumber")[0];
+
+            button1.addEventListener("click", function(){
+                computePrime();
+            });
+
+            button2.onclick = function() {
+                printPrime();
+            }
+
+            function computePrime() {
+                var num = inputElem.value;
+                if(isPrime(num)) {
+                    resultElem1.innerHTML = "It is a prime number";
+                }
+                else {
+                    resultElem1.innerHTML = "It is not a prime number";
+                }
+            }
+            //refer - http://www.sitepoint.com/5-javascript-interview-exercises/
+            function isPrime(num) {
+                if(num <2 || (num>2 && num%2 === 0)) {
+                    return false;
+                }
+                for(var i=3; i<num; i+=2) {
+                    if(num % i === 0) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function printPrime() {
+                var num1 = fromElem.value;
+                var num2 = toElem.value;
+                var count = 0;
+                resultElem2.innerHTML = "";
+                for(var i=num1; i<=num2; i++) {
+                    if(isPrime(i)) {
+                        count++;
+                        resultElem2.innerHTML += i+" ";
+                    }
+                }
+                resultElem2.innerHTML += "<br>COUNT = "+count;
+            }
+        }
+    </script>
+    <style>
+        input, button {
+            display: block;
+            margin: 5px;
+        }
+        p {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="number" name="primeNumberInput" placeholder="Please enter a number">
+    <button>Check Prime</button>
+    <p id="res1"></p>
+    <!-- button onclick=performLogic() does not work, as computePrime is an inner function of window.onload and is not available to the outside scope here.
+    A trick to make it work can be, make performLogic() a global function with window.computePrime = function(){..} or
+    use addEventListener() inside window.onload or
+    remove the window.onload wrapper and keep script before body closing tag.
+    So, avoid using userscript HTML DOM events - separation of concerns and scope problems
+    -->
+    <input type="number" name="fromNumber" placeholder="From">
+    <input type="number" name="toNumber" placeholder="To">
+    <button name="printPrime">Print Prime Numbers</button>
+    <p id="res2"></p>
+</body>
+</html>

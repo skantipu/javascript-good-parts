@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Closure Concept Revisited</title>
+    <script>
+    /*
+    window.addEventListener("load", function(){
+        ...
+    });
+
+    same as
+
+    window.onload = function() {
+        ...
+    }
+    */
+
+
+    window.onload = function() {  //important to wrap code in window.onload(), or have the script before body closing tag
+        var nodes = document.getElementsByTagName("input");
+        var len = nodes.length;
+      /*
+        for(var i=0; i<len; i++) {
+            nodes[i].onclick = function() {
+                console.log("you clicked input "+i);  //prints 3 regardless of whichever input you click
+            }
+        }
+      */
+
+      /*
+      Approach 1 - creating closure
+
+        for(var i=0; i<len; i++) {
+            (function(a){
+                nodes[a].onclick = function() {
+                    console.log("you clicked input " + (a+1));  //prints correctly
+                }
+            })(i);
+        }
+     */
+     //Approach 2 - use of intermediate function
+
+        for(var i=0; i<len; i++) {
+            nodes[i].onclick = intermediateFunction(i); //it is like function execution call, so in the function definition return the function, else it will run
+        }
+        function intermediateFunction(i) {
+            return function() {
+                console.log("you clicked input " + (i+1));  //prints correctly, make sure you (i+1) or else string concatination happens
+            }
+        }
+
+     //Approach 3 - using let  (reference - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
+     /*
+        for(var i=0; i<len; i++) {
+            let j = i;
+            nodes[i].onclick = function(ev) {
+                console.log("you clicked input " + (j+1));
+            }
+        }
+      */
+    }
+
+    </script>
+    <style>
+        input {
+            display: block;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text">
+    <input type="text">
+    <input type="text">
+</body>
+</html>

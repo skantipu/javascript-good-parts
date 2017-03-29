@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Programming Questions</title>
+  <script>
+    window.onload = function () {
+
+//--------------------------------------------------------
+
+      /*
+       To print a pyramid of numbers exactly like below: input = 4
+             4
+           3 4 3
+         2 3 4 3 2
+       1 2 3 4 3 2 1
+
+       Work it out on the paper. Simple math to get ranges. i index starts from 1 to n (number of rows), and insdie i for loop, you have 4 nested for loop sections
+       for column 1) leading space 2) first section of numbers till n 3) next section of numbers 4) trailing spaces
+       */
+      function pyramid(n) {
+        var str = "";
+        for (var i=1; i<=n; i++) {
+          for (var j=1; j<=n-i; j++) {
+            str += "   ";
+          }
+          for (var k=n-i+1; k<=n; k++) {
+            str += k + "  ";
+          }
+          for (var l=n+i-1; l>n; l--) {
+            str += l - i + "  ";
+          }
+          for (var m=n+i; m<=2*n-1; m++) {  //mind you it is 2*n.  2n does not work.
+            str += "   ";
+          }
+          str += "\n";
+        }
+        return str;
+      }
+
+      console.log(pyramid(9));
+
+//--------------------------------------------------------
+
+      function amountTocoins(amount, coins)
+      {
+        if (amount === 0)
+        {
+          return [];
+        }
+        else if (coins.length === 0) {
+          return "NN"
+        }
+        else
+        {
+          if (amount >= coins[0])
+          {
+            left = (amount - coins[0]);
+            return [coins[0]].concat( amountTocoins(left, coins) );
+          }
+          else
+          {
+            coins.shift();
+            return amountTocoins(amount, coins);
+          }
+        }
+      }
+      console.log(amountTocoins(59, [25, 10, 5, 2, 1]));
+//--------------------------------------------------------
+
+
+      function anagramGroup(arr) {
+        /*
+
+         I/P: ["eat", "tea", "tan", "ate", "nat", "bat"],
+
+         O/P:
+         [
+         ["ate", "eat","tea"],
+         ["nat","tan"],
+         ["bat"]
+         ]
+
+         */
+        var obj = {}, str;
+        for(var i=0; i<arr.length; i++) {
+          str = arr[i].split("").sort().join("");
+          if(str in obj) {
+            obj[str].push(arr[i]);  //Note the usage here, directly operating on the value
+          }
+          else {
+            obj[str] = [arr[i]];
+          }
+        }
+        var result = new Array();
+        for(var key in obj) {
+          result.push(obj[key]);
+        }
+
+      }
+
+      console.log(anagramGroup(["eat", "tea", "tan", "ate", "nat", "bat"]));
+
+//--------------------------------------------------------
+
+
+      function uniques(arr) {
+        var obj = {};
+        for(var i=0; i<arr.length; i++) {
+          if(arr[i] in obj) {
+            obj[arr[i]]++;
+          }
+          else {
+            obj[arr[i]] = 1;
+          }
+        }
+        for(var key in obj) {
+          if(obj[key] == 1) {
+            console.log(key);
+          }
+        }
+        console.log(obj)
+      }
+
+      uniques([5,4,5,6,0,5,4,3,6]); // 0,3
+
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
+

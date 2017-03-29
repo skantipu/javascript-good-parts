@@ -1,0 +1,27 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script>
+  //The following piece of code will not output "hi" until after a delay of 2 sec
+    $(function(){
+      var timeoutId;
+      $("#example-checkbox").on("input",function() {
+      //  console.log("--",timeoutId)
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(function () {
+          $("#call").text($("#call").text() + "hi")
+        }, 2000);
+        console.log("-",timeoutId)
+      });
+
+    });
+  </script>
+</head>
+<body>
+    <input id="example-checkbox" type="text">
+    <span id="call"></span>
+</body>
+</html>
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+       var input = [
+           {name: "A", skill: "word"},
+           {name: "B", skill: "excel"},
+           {name: "C", skill: "word"},
+           {name: "D", skill: "excel"},
+           {name: "E", skill: "excel"},
+           {name: "A", skill: "excel"}
+       ];
+//       //output - skills : { word: [A,C], excel: [B,D,E] };
+//       var skills = {};
+//       function print(arrInput) {
+//            arrInput.forEach(function(obj){
+//                if(!(obj.skill in skills))
+//                {
+//                    var newArray = [];
+//                    for(var i=0; i<arrInput.length; i++) {
+//                        if(obj.skill === arrInput[i].skill) {
+//                            newArray.push(arrInput[i].name);
+//                        }
+//                    }
+//                    skills[obj.skill] = newArray;
+//                }
+//            });
+//        console.log(JSON.stringify(skills));
+//       }
+//       print(input);
+//
+//
+//       //better approach
+//
+//       input.forEach(function(obj, index) {
+//         if(!(obj.skill in skills)) {
+//            var mySkill = obj.skill;
+//            skills[mySkill] = [];
+//            for(var i=index; i<input.length; i++) {
+//               if(input[i].skill === mySkill) {
+//                skills[mySkill].push(input[i].name);
+//               }
+//            }
+//         }
+//       });
+//
+//
+
+      var result = {};
+      input.forEach(function(obj){
+        if(obj.skill in result) {
+          result[obj.skill].push(obj.name);
+        }
+        else {
+          result[obj.skill] = [obj.name];
+        }
+      });
+
+      console.log(result);
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+    <style>
+        button {
+            padding: 5px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <label>X
+        <input type="number" name="x">
+    </label>
+    <label>Y
+        <input type="number" name="y">
+    </label>
+    <label>Result
+        <input type="number" name="res" readonly>
+    </label>
+    <br><br>
+    <button id="add">+</button>
+    <button id="subtract">-</button>
+    <button id="multiply">*</button>
+    <button id="divide">/</button>
+</body>
+<script>
+    var xElem = document.getElementsByName("x")[0];
+    var yElem = document.getElementsByName("y")[0];
+    var btnAdd = document.getElementById("add");
+    var btnSubtract = document.getElementById("subtract");
+    var btnMultiply = document.getElementById("multiply");
+    var btnDivide = document.getElementById("divide");
+    var resultElem = document.getElementsByName("res")[0];
+    var answer;
+    btnAdd.addEventListener("click", function(){
+        answer = compute("add", parseFloat(xElem.value), parseFloat(yElem.value));
+        resultElem.value = answer;
+    });
+    btnSubtract.addEventListener("click", function(){
+        answer = compute("subtract", parseFloat(xElem.value), parseFloat(yElem.value));
+        resultElem.value = answer;
+    });
+    btnMultiply.addEventListener("click", function(){
+        answer = compute("multiply", parseFloat(xElem.value), parseFloat(yElem.value));
+        resultElem.value = answer;
+    });
+    btnDivide.addEventListener("click", function(){
+        answer = compute("divide", parseFloat(xElem.value), parseFloat(yElem.value));
+        resultElem.value = answer;
+    });
+
+    function compute(operation, operand1, operand2) {
+        var result;
+        switch(operation) {
+            case "add":
+                result = operand1 + operand2;
+                break;
+            case "subtract":
+                result = operand1 - operand2;
+                break;
+            case "multiply":
+                result = operand1 * operand2;
+                break;
+            case "divide":
+                result = operand1 / operand2;
+                break;
+            default:
+                result = "";
+        }
+        return result;
+    }
+
+</script>
+</html>

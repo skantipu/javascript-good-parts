@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+    /*
+     JSON.stringify(myObject) - converts JavaScript data structures into JSON text.
+     JSON.parse(JSON text) - converts JSON text to actual Javascript Objects
+     */
+
+     /*
+      Let's say you have 5 ajax (ajax means asynchronous) calls and you want to accumulate the results from those 5 ajax calls
+      and then when they have all completed you want to do something.
+      */
+    var userId = [3, 6, 9, 34, 65];
+    var callsRemaining = userId.length;
+
+    function sendRequest(id) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(JSON.parse(this.responseText).id);
+          callsRemaining--;
+          if(callsRemaining <= 0) {
+            console.log("finished"); //executed when all the ajax calls are completed
+          }
+        }
+      }
+      xhttp.open('GET', 'https://jsonplaceholder.typicode.com/posts/' + id, true);
+      xhttp.send();
+    }
+
+    userId.forEach(function (id) {
+      sendRequest(id);
+    });
+</script>
+<body>
+
+</body>
+</html>

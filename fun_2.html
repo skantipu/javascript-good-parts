@@ -1,0 +1,85 @@
+<!-- Highlighting elements in the order -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order is important!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        div {
+            width: 40px;
+            height: 40px;
+            border: 2px solid blue;
+            margin: 5px;
+            float: left;
+            padding: 10px;
+        }
+        button {
+            height: 30px;
+            width: 40px;
+            border-radius: 3px;
+            background-color: grey;
+            color: white;
+            margin: 5px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+
+    //in jQuery
+    $(function(){
+
+        $("#btn").click(function() {
+           var divs = $("div"), i= 0, elem;
+           //to order divs
+           divs.each(function(index) {
+               elem = $(this);
+               (function(myElem, a) {
+                  setTimeout (function(){
+                      myElem.css("backgroundColor", "yellow");
+                  }, a*700);
+               })(elem, elem.text());
+           });
+        });
+    });
+
+    /*
+    //Even this works:
+      $(function(){
+        $("#btn").click(function() {
+           var divs = $("div"), i= 0, elem, arr=[];
+           for(var j=0; j<divs.length; j++) {
+            arr.push(divs[j]);
+           }
+           function order(arr) {
+               arr.sort(function(a,b) { return a.innerHTML - b.innerHTML });
+           }
+           order(arr);
+           arr.forEach(function(elem) {
+               (function(myElem, a) {
+                  setTimeout (function(){
+                    myElem.style.backgroundColor = "yellow";
+                  }, a*700);
+               })(elem, i);
+               i++
+           });
+        });
+     });
+     */
+    </script>
+</head>
+<body>
+    <div>10</div>
+    <div>1</div>
+    <div>2</div>
+    <div>6</div>
+    <div>8</div>
+    <div>3</div>
+    <div>4</div>
+    <div>7</div>
+    <div>5</div>
+    <div>9</div>
+    <button id="btn">Click</button>
+</body>
+</html>

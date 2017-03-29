@@ -1,0 +1,228 @@
+<!-- Refer calculator.png for the layout & design. 4 divs row wise, 5 divs height wise
+Knowledge:
+Array deep copy trick
+    operatorsListWithDot = Array.prototype.slice.call(operatorsList);
+
+Setting height of a div based on other div
+    result.style.height = reset.offsetHeight + "px";
+
+To evaluate the expression (ex: "2.5-5/3"), use
+    var answer = eval(result.innerHTML);  //takes string as parameter
+
+Round the answer to 9 digits
+    answer = Math.round(answer * 1000000000) / 1000000000;
+
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator Full</title>
+    </head>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+                -ms-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+            color: dimgrey;
+        }
+        #calculator {
+            width: 300px;
+            height: auto;
+            margin: 0 auto;
+            margin-top: 10px;
+            border-radius: 5px;
+            background: lightblue;
+            padding: 20px;
+        }
+        .row div {
+            float: left;
+            border-radius: 3px;
+            margin-left: 6px;
+            margin-top: 11px;
+            height: auto;
+            padding: 5px;
+            text-align: center;
+            box-shadow: 0 5px grey;  /* offset-x offset-y color  --> 5px below the box */
+        }
+        .row div:not(#expression) {
+            cursor: pointer;
+            -webkit-transition: background-color 0.5s;
+                -ms-transition: background-color 0.5s;
+                    transition: background-color 0.5s;
+        }
+        .row div:not(#expression):hover {
+            background-color: dodgerblue;
+        }
+        .row div#expression {
+            cursor: default;
+            text-align: right;
+            overflow-x: hidden;
+        }
+        .number {
+            background: white;
+            width: 59px; /* (300 - 20 - 20 - (4 divs * 6 mrgLefts)) / 4 */
+        }
+        #reset {
+           width: 59px;
+           background: pink;
+           color: white;
+        }
+        #expression {
+            width: 189px; /* (3 * 59 + 2 mgsLefts) */
+            background: lightgray;
+        }
+        #equalTo {
+            width: 59px;
+            background: lightgoldenrodyellow;
+        }
+        .operator {
+            width: 59px;
+            background: lightcyan;
+        }
+        .row::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        /*
+         $(function() {
+            $("#expression").height($("#reset").height());
+            var $expression = $("#expression");
+            $(".number,.operator").click(function() {
+                $expression.html($expression.html() + $(this).text());
+            });
+            $("#reset").click(function(){
+                $expression.html("");
+            });
+            $("#equalTo").click(function() {
+                var res = eval($expression.html());
+                res = (Math.round(res * 1000)) / 1000;
+                $expression.html(res);
+            });
+         });
+         */
+        //in JS
+        //TODO use &divide and x symbols instead of / and * in the view
+        window.addEventListener("load", function() {
+            var Calculator = (function(){
+                var result, reset, numbers, operators, equalsTo, operatorsList = [], operatorsListWithDot = [];
+                function init() {
+                    result = document.getElementById("expression");
+                    reset = document.getElementById("reset");
+                    equalsTo = document.getElementById("equalTo");
+                    numbers = document.querySelectorAll(".number");
+                    operators = document.getElementsByClassName("operator");
+                    for(var i=0; i<operators.length; i++) {
+                        operatorsList.push(operators[i].innerHTML);
+                    }
+                    operatorsListWithDot = Array.prototype.slice.call(operatorsList);
+                    operatorsListWithDot.push(".");
+                }
+                function setResultDivHeight() {
+                    result.style.height = reset.offsetHeight + "px";
+                    //** unless height is specified in the style property inline, reset.style.height will not retrieve height
+                }
+                function calculate() {
+                    for(var i=0; i<numbers.length; i++) {
+                        numbers[i].addEventListener("click", function() {
+                            //make sure two dots are not side by side
+                            var twoDotsTogether = false;
+                            var str = result.innerHTML;
+                            if(this.classList.contains("dot")) {
+                                if(str.charAt(str.length-1) === this.innerHTML) {  //note that dot is still not added to the result
+                                    twoDotsTogether = true;
+                                }
+                            }
+                            if(!twoDotsTogether) {
+                                result.innerHTML += this.innerHTML;
+                            }
+                        });
+                    }
+                    for(var i=0; i<operators.length; i++) {
+                        operators[i].addEventListener("click", function(){
+                            result.innerHTML += this.innerHTML;
+                            var str = result.innerHTML;
+                            //Check if the preceding character is an operator, if so, delete the current typed operator.
+                            if(operatorsList.indexOf(str.charAt(str.length-2)) !== -1) {
+                                setTimeout(function() {
+                                    result.innerHTML = str.slice(0, str.length-1);
+                                }, 200);
+                            }
+                        });
+                    }
+                    reset.addEventListener("click", function() {
+                        result.innerHTML = "";
+                    });
+
+                    equalsTo.addEventListener("click", function() {
+                        var str = result.innerHTML;
+                        //Trim trailing operators, if any
+                        if(operatorsListWithDot.indexOf(str.charAt(str.length-1)) !== -1) {
+                            //if last character is an operator, replace it
+                            result.innerHTML = str.slice(0, str.length-1);
+                        }
+                        else {
+                            //compute the input expression using eval()
+                            var answer = eval(result.innerHTML);
+
+                            //round the answer to 9 digits
+                            answer = Math.round(answer * 1000000000) / 1000000000;
+
+                            result.innerHTML = answer;
+                        }
+                    });
+                }
+                function createCalculator() {
+                    init();
+                    setResultDivHeight();
+                    calculate();
+                }
+                return {
+                    create : createCalculator
+                };
+            })();
+
+            Calculator.create();
+        });
+    </script>
+    <body>
+        <div id="calculator">
+            <div class="row">
+                <div id="reset">C</div>
+                <div id="expression"></div>
+            </div>
+            <div class="row">
+                <div class="number">7</div>
+                <div class="number">8</div>
+                <div class="number">9</div>
+                <div class="operator">+</div>
+            </div>
+            <div class="row">
+                <div class="number">4</div>
+                <div class="number">5</div>
+                <div class="number">6</div>
+                <div class="operator">-</div>
+            </div>
+            <div class="row">
+                <div class="number">1</div>
+                <div class="number">2</div>
+                <div class="number">3</div>
+                <div class="operator">/</div>
+            </div>
+            <div class="row">
+                <div class="number">0</div>
+                <div class="number dot">.</div>
+                <div id="equalTo">=</div>
+                <div class="operator">*</div>
+            </div>
+        </div>
+    </body>
+</html>

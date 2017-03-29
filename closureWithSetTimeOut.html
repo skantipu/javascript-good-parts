@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script>
+    //prints out colors with a time gap on a specified element on a page
+        window.onload = function () {
+            var colors = ["yellow","red","green", "blue", "orange"];
+            var element = document.body;  //document.getElementsByTagName("h1")[0];
+            setElmBGColor.call(element, colors);
+        };
+        function setElmBGColor (myColors) {
+            var currentElm = this;
+            for(var i=0; i<myColors.length; i++){
+                (function(a){
+                    setTimeout(function(){
+                       console.log(a);
+                       currentElm.style.backgroundColor = myColors[a];
+                    }, a*2000);
+                })(i);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<h1>Main heading</h1>
+<p>this is the first paragraph</p>
+
+</body>
+</html>

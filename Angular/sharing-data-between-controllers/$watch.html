@@ -1,0 +1,92 @@
+<!-- Changing a model in one controller, should reflect that change in other sibling controllers as well -->
+<!--
+1) Using $scope.$watch()
+Disadvantage:
+https://www.accelebrate.com/blog/effective-strategies-avoiding-watches-angularjs/
+Watches suffer a performance penalty because watchers are added to the watch list and they must be re-evaluated with each run of the $digest loop.
+When the value being observed by the watch changes, the function registered with the watch executes synchronously, locking the web browser user interface temporarily.
+
+So better use event broadcasting
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script>
+    var app = angular.module('myApp', []);
+
+    app.factory('BrandInfo', [function () {   //you cannot inject $scope here
+      var brand;
+      function setBrand(brandName) {
+        brand = brandName;
+      }
+      function getBrand() {
+        return brand;
+      }
+      return {
+        setBrand: setBrand,
+        getBrand: getBrand
+      };
+    }]);
+
+    app.controller('myCtrl1', ['$scope', '$http', 'BrandInfo', function ($scope, $http, BrandInfo) {
+      $scope.selectedBrand = "";
+      $scope.$watch(function(){return BrandInfo.getBrand();}, function(newValue, oldValue) {
+        if(newValue) {
+          $scope.selectedBrand = newValue;
+        }
+      });
+    }]);
+
+    app.controller('myCtrl2', ['$scope', 'BrandInfo', function ($scope, BrandInfo) {
+      $scope.brands = [
+        {id: 1, name: "Bata"},
+        {id: 2, name: "Nike"},
+        {id: 3, name: "Adidas"},
+        {id: 4, name: "ASICS"}
+      ];
+      $scope.selectedBrand = {};
+      $scope.$watch("selectedBrand.name", function(newValue, oldValue) {
+        BrandInfo.setBrand(newValue);
+      });
+    }]);
+
+    app.controller('myCtrl3', ['$scope', 'BrandInfo', function ($scope, BrandInfo) {
+      $scope.selectedBrand = "";
+      $scope.$watch(function(){return BrandInfo.getBrand();}, function(newValue, oldValue) {
+        if(newValue) {
+          $scope.selectedBrand = newValue;
+        }
+      });
+    }]);
+  </script>
+</head>
+<body>
+<div ng-app="myApp">
+  <div ng-controller="myCtrl1">
+    <h4>Controller 1</h4>
+    Selected brand from myCtrl2 is {{selectedBrand}}
+  </div>
+  <hr>
+  <div ng-controller="myCtrl2">
+    <h4>Controller 2</h4>
+    {{brands}}
+    <br>
+    {{selectedBrand}}
+    <br>
+    <select ng-model="selectedBrand" ng-options="brand.name for brand in brands">
+      <option value="">Select a brand</option>
+    </select>
+    <!-- brand.name will be the label of the option. Don't worry about the value. Angular ng-model will take care of it. It returns the whole object.-->
+  </div>
+  <hr>
+  <div ng-controller="myCtrl3">
+    <h4>Controller 3</h4>
+    Selected brand from myCtrl2 is {{selectedBrand}}
+  </div>
+
+</div>
+</body>
+</html>

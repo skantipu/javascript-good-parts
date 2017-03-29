@@ -1,0 +1,30 @@
+<html>
+<head>
+  <script>
+    var fullname = 'John Doe';
+    var obj = {
+      fullname: 'Colin Ihrig',
+      prop: {
+        fullname: 'Aurelio De Rosa',
+        getFullname: function() {
+          return this.fullname;
+        }
+      }
+    };
+
+    console.log(obj.prop.getFullname()); //Aurelio De Rosa
+
+    var test = obj.prop.getFullname;
+
+    console.log(test());  //calling context is window object //John Doe
+    console.log(test.apply(obj)); //calling context is obj //Colin Ihrig
+    console.log(test.apply(obj.prop)); //Aurelio De Rosa
+
+    //Value of 'this' depends on the calling context.
+    //The value of 'this' depends on the context of the function, which depends on how a function is invoked, not how it's defined.
+  </script>
+</head>
+<body>
+
+</body>
+</html>

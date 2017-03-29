@@ -1,0 +1,54 @@
+<!-- LinkedIn Question - What's the output and how do you fix the errors? -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prototypes Questions</title>
+    <script>
+        var Foo = function( a ) {
+            function bar() {
+                return a;
+            }
+            this.baz = function() {
+                return a;
+            };
+        };
+
+        Foo.prototype = {
+            biz: function() {
+                return a;
+            }
+        };
+
+        var f = new Foo( 8 ); //  f {baz : function(){return a} }
+        console.log(f.bar());  //error
+        console.log(f.baz());  //8
+        console.log(f.biz());  //error
+
+        /*
+         //ANSWER
+         var Foo = function( a ) {
+             this.a = a;
+             this.bar = function () {
+                return a;
+             }
+             this.baz = function() {
+                return a;
+             };
+         };
+
+         Foo.prototype = {
+             biz: function() {
+                return this.a;
+             }
+         };
+
+         var f = new Foo( 8 ); //  f {baz : function(){return a} }
+         console.log(f.bar());  //8
+         console.log(f.baz());  //8
+         console.log(f.biz());  //8
+         */
+    </script>
+</head>
+<body>
+</body>
+</html>

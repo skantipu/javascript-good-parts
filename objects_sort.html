@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Objects Sort</title>
+  <script>
+    window.onload = function() {
+      //Sorting JavaScript Object by property value
+
+      var list = {"you": 100, "me": 75, "foo": 116, "bar": 15};
+      var arrSort = [];
+      for(key in list) {
+        arrSort.push([key, list[key]])
+      }
+      console.log(JSON.stringify(arrSort)); //[["you",100],["me",75],["foo",116],["bar",15]]
+
+      arrSort.sort(function(a,b) { return b[1] - a[1];}); //note how we sort array of arrays
+
+      console.log(JSON.stringify(arrSort)); //[["foo",116],["you",100],["me",75],["bar",15]]
+
+
+
+      //Now reduce array to Object  -- just an example to get back object from array using reduce().
+      //NOTE that this object will not be in sorted order. Objects DO NOT preserve insertion order, but arrays do.
+      var list = arrSort.reduce(function(prev, current){
+        prev[current[0]] = current[1];
+        return prev;
+      },{});
+
+      /*
+         prev is initialized to {} that we passed as a param to reduce()
+         prev = {};
+         ---------------- First Iteration
+         current = ['foo', 116]
+         prev[current[0]] = current[1];
+         and now prev becomes
+         prev = {foo: 116}
+         return prev object
+         ---------------- Second Iteration
+         current = ['you', 100]
+         after the operation
+         prev = {foo: 116, you: 100}
+         return prev
+         -----------------
+       */
+
+       console.log(list);
+
+
+//------------------------------------------------------------------------------------------------
+       //Sorting array of objects
+       var objectsList = [
+         {
+          name: "geeta",
+          age: 27,
+          year: 2016
+         },
+         {
+           name: "meena",
+           age: 17,
+           year: 2011
+         },
+         {
+           name: "geeta",
+           age: 47,
+           year: 1990
+         },
+         {
+           name: "geeta",
+           age: 22,
+           year: 2012
+         }
+       ];
+       //sort the array of objects by age
+
+       var sorted = objectsList.sort(function(a,b){return b.age - a.age;});
+
+       console.log(JSON.stringify(sorted));
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

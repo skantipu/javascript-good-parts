@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <script>
+    //Note that bind() can only be applied on function expressions.
+    var a = function(a,b,c) {
+      console.log(this + ' ' + a + ' ' + b + ' ' + c);
+    }.bind(1, 2, 3, 4);
+    a(); // 1
+
+    var b = function() {
+      console.log(this, arguments[0]);
+    }
+    b.call(1,2); // 1 2
+    //first argument is the object under whose scope the b() has to be executed, second and further arguments are parameters to b()
+
+    var c = function() {
+      console.log(this, arguments[0]);
+    }
+    c.apply(1,[2]); // 1 2
+  </script>
+</head>
+<body>
+
+</body>
+</html>

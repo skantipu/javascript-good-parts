@@ -1,0 +1,40 @@
+<!-- UBER -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test question</title>
+</head>
+<body>
+
+<script>
+/*  // UBER question original
+    function TaskRunner(concurrency) {
+        // TODO implement this
+    }
+
+    function exampleTask(done) {
+        setTimeout(done, Math.random() * 1000);
+    }
+
+    var r = new TaskRunner(2);
+    r.push(exampleTask); // execute immediately
+    r.push(exampleTask); // execute immediately
+    r.push(exampleTask); // wait until 1 slot is open, then execute immediately
+    r.push(exampleTask); // wait until 1 slot is open, then execute immediately
+*/
+
+
+    function exampleTask(done) {
+        setTimeout(done, Math.random() * 1000);
+    }
+
+    var r = new TaskRunner(2);
+    r.push(exampleTask); // execute immediately
+    r.push(exampleTask); // execute immediately
+    r.push(exampleTask); // wait until 1 slot is open, then execute immediately
+    r.push(exampleTask); // wait until 1 slot is open, then execute immediately
+
+
+</script>
+</body>
+</html>

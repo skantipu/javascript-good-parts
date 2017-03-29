@@ -1,0 +1,46 @@
+<!-- POSITIONING
+
+RELATIVE - will be placed in relation to its original position based on box offset properties. Still takes up the original space.
+ABSOLUTE - will be placed in relation to its closest relatively positioned parent element. If such a parent does not exist, then body will be used as reference.
+Does not take up original space.
+
+-->
+<html>
+  <head>
+    <title>Bootstrap</title>
+    <style>
+      body {
+        background: lightblue;
+        padding: 10px;
+      }
+      .parent {
+        width: 200px;
+        height: 200px;
+        background-color: blue;
+        position: relative; /* try removing this and test */
+      }
+      .child1 {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+        position: absolute;
+        left: 100px;
+        top: 100px;
+      }
+      .child2 {
+        width: 100px;
+        height: 100px;
+        background-color: magenta;
+        position: relative;
+        left:20px;
+        top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+   <div class="parent">
+      <div class="child1"></div>
+      <div class="child2"></div>
+   </div>
+  </body>
+</html>

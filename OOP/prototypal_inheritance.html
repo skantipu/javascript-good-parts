@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Prototypal Inheritance</title>
+    <script>
+        function Animal() {
+            this.eatsVeggies = "maybe";
+            this.eatsMeat = "maybe";
+        }
+        Animal.prototype.toplevel = "false";
+
+        function Herbivore() {
+            Animal.call(this); //call to super constructor (try commenting this and run)
+            this.eatsMeat = false;
+        }
+        Herbivore.prototype = Object.create(Animal.prototype);
+
+        function Carnivore() {
+            this.eatsMeat = true;
+        }
+        Carnivore.prototype = new Animal();
+
+        var rabbit = new Herbivore();
+        var bear = new Carnivore();
+
+        console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel);
+        console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel);
+        console.log(rabbit, bear)
+
+    </script>
+</head>
+<body>
+</body>
+</html>

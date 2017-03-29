@@ -1,0 +1,75 @@
+<!-- Medallia interview question -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Recursion</title>
+        <style>
+
+        </style>
+        <script>
+//            Technical Questions & Coding practice:
+//            https://leetcode.com/ (Highly Recommended)
+//            http://www.careercup.com/page
+//            http://codekata.com/kata/codekata-intro/
+//            Practice Problem:  This example is the same as the one provided prior to our coding challenge,
+//            however; I wanted to provide it to you again as a refresher.
+//
+//            Q: Write a function that takes a number n and returns an array containing a Fibonacci sequence of length n
+//
+//            A simple solution (horribly inefficient):
+
+            function fib(n) {
+                if (n <= 1) return 1;
+                return fib(n - 1) + fib(n - 2);
+            }
+            function fibArray(n) {
+                let arr = [];
+                for (let x=0; x<n; x++) {
+                    arr.push(fib(x));
+                }
+                return arr;
+            }
+
+            console.log(fibArray2(300));
+//            Time Complexity: O(n*2^n)
+//            Space Complexity: O(n)
+//            So, how do we improve? Memoize the recursive function so we don't keep recomputing the same values:
+            function fibArray1(n) {
+                let fibMemo = new Map();
+                function fib(n) {
+                    if (fibMemo.has(n)) return fibMemo.get(n);
+                    if (n <= 1) return 1;
+                    const result = fib(n - 1) + fib(n - 2);
+                    fibMemo.set(n, result);
+                    return result;
+                }
+                let arr = [];
+                for (let x=0; x<n; x++) {
+                    arr.push(fib(x));
+                }
+                return arr;
+            }
+//            Time Complexity: O(n)
+//            Space Complexity: O(n)
+//            Not bad, but the memoization is really overkill. We could write this cleaner by using the previous values as we build the array:
+              function fibArray2(n) {
+                  let arr = [];
+                  for (let x=0; x<n; x++) {
+                      arr.push(
+                        x < 2 ? 1 : arr[x - 1] + arr[x - 2]
+                      );
+                  }
+                  return arr;
+              }
+//            Things to keep in mind:
+//            • Follow instructions
+//            • Does your code always return an array?
+//            • Is it always of length n?
+//            • Know the time and space complexity of the code you write
+//            • Handle edge cases. What if n is zero?
+//            • Test your code! Walk through a sample input
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

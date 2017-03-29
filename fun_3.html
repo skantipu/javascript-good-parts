@@ -1,0 +1,89 @@
+<!-- Refer q1.pdf -->
+<!-- JavaScript array .forEach() invokes the callback with arguments element and index, whereas jQuery .each() to iterate over a jQuery object, invokes
+callback with arguments index and element. But in the latter case, we don't need to pass any arguments in general, as we access currently iterated element using
+$(this)-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color the Squares</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 20px;
+        }
+        div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            float: left;
+        }
+        #mini {
+            width: 24px;
+            height: 24px;
+            background-color: green;
+            margin-left: -15px;
+            margin-top: -10px;
+        }
+        .clear {
+            clear: both;
+        }
+        #displace {
+            margin-left: 120px;
+        }
+    </style>
+    <script>
+        //in JavaScript
+        window.onload = function () {
+            var blocks = document.querySelectorAll("div:not(#mini)");
+            var smallBlock = document.getElementById("mini");
+            var counter = 0, undoInProcess = false;
+            var arr = [];
+            for(var i=0; i<blocks.length; i++) {
+                blocks[i].onclick = function() {
+                    if(!undoInProcess) {
+                        if(this.style.backgroundColor !== "blue") {
+                            counter ++;
+                            this.style.backgroundColor = "blue";
+                            arr.push(this);
+                            if(counter == blocks.length) {
+                                undoInProcess = true;
+                                smallBlock.style.backgroundColor = "red";
+                                arr.reverse();
+                                arr.forEach(undoColor);
+                            }
+                        }
+                    }
+                }
+            }
+            function undoColor(element, index) {
+                (function(elem, count){
+                    setTimeout(function () {
+                        elem.style.backgroundColor = "white";
+                        if(count === arr.length) {
+                            counter = 0;
+                            arr = [];
+                            undoInProcess = false;
+                            smallBlock.style.backgroundColor = "green";
+                        }
+                    }, count*700);
+                })(element, index+1);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div id="mini"></div>
+    <div class="clear"></div>
+    <div id="displace"></div>
+    <div class="clear"></div>
+    <div></div>
+    <div></div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<html>
+<head>
+  <style>
+  </style>
+  <script>
+
+    /*
+    The below prints "My value: 3" 3 times.
+    How do you solve for it to print below?
+    My value: 0
+    My value: 1
+    My value: 2
+     */
+
+    var funcs = [];
+    for (var i = 0; i < 3; i++) {
+      funcs[i] = function() {
+        console.log("My value: " + i);
+      };
+    }
+    for (var j = 0; j < 3; j++) {
+      funcs[j]();
+    }
+
+    console.log("-----------------------------------------");
+    /* Approach 1 - using closure
+    * We create a new scope/closure for every loop iteration by enclosing our function in an IIFE and thus i value will be stored separately
+    */
+
+    var funcs = [];
+    for (var i = 0; i < 3; i++) {
+      (function(t){
+        funcs[t] = function() {
+          console.log("Approach 1: My value: " + t);
+        };
+      })(i);
+    }
+    for (var j = 0; j < 3; j++) {
+      funcs[j]();
+    }
+
+    console.log("-----------------------------------------");
+    /*
+      Approach 2 - using another function
+    */
+    var funcs = [];
+    function createFun(i) {
+      return function() {
+        console.log("Approach 2: My value: " + i)
+        };
+    };
+    for (var i = 0; i < 3; i++) {
+      funcs[i] = createFun(i);
+    }
+    for (var j = 0; j < 3; j++) {
+      funcs[j]();
+    }
+
+    console.log("-----------------------------------------");
+    /*
+      Approach 3 - using let keyword, supported in ES6 which creates a block level scope for variables declared using let
+     */
+
+    var funcs = [];
+    for (let i = 0; i < 3; i++) {
+      funcs[i] = function() {
+        console.log("Approach 3: My value: " + i);
+      };
+    }
+    for (var j = 0; j < 3; j++) {
+      funcs[j]();
+    }
+
+    console.log("-----------------------------------------");
+    /*
+    Approach 4 - using bind
+     */
+
+    var funcs = [];
+    for (var i = 0; i < 3; i++) {
+      funcs[i] = function(x) {
+        console.log("Approach 4: My value: " + x);
+      }.bind(null, i); //here this argument does not matter, so null can be passed
+    }
+    for (var j = 0; j < 3; j++) {
+      funcs[j]();
+    }
+
+    /** ------------------------------------------------------------------------------------- **/
+
+    /* Solve the below problem, which prints 10 10times after 1 sec. We want it to print 0 to 9 with a gap of 1 sec for each number */
+    for(var i = 0; i < 10; i++) {
+      setTimeout(function() {
+        console.log(i);
+      }, 1000);
+    }
+
+    //using Closure
+    function solution1() {
+
+      for(var i = 0; i < 10; i++) {
+        (function(x){
+          setTimeout(function() {
+            console.log(x);
+          }, x * 1000);
+        })(i);
+      }
+
+    }
+
+    //using let keyword - creates unique scope for each variable
+    function solution2() {
+
+      for(let i = 0; i < 10; i++) {
+        setTimeout(function() {
+          console.log(i);
+        }, i * 1000);
+      }
+
+    }
+
+    //using bind
+
+    function solution3() {
+      //bind can only be applied on function expressions
+      for(var i = 0; i < 10; i++) {
+        var a = function(j) {
+          setTimeout(function() {
+            console.log(j);
+          }, j*1000);
+        }.bind(null, i);
+        a();
+      }
+    }
+
+    //using helper function
+    function solution4() {
+
+      var funcs = [];
+      function helper(i) {
+        return function() {  /* note that no parameter on return fn */
+          setTimeout(function() {
+            console.log(i);
+          }, i*1000);
+        };
+      }
+      for(var i=0; i<10; i++) {
+        funcs[i] = helper(i);
+      }
+      for(var i=0; i<10; i++) {
+        funcs[i]();
+      }
+      //you can combine the above two loops to one loop which has helper(i)();
+
+    }
+
+    solution4();
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

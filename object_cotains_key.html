@@ -1,0 +1,46 @@
+<!-- http://stackoverflow.com/questions/15792794/convert-parent-child-array-to-tree
+Req: check if object contains a key (even if it is nested). ex. obj.contains("zodiac") should return true.  -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Object Contains</title>
+        <script>
+          window.onload = function() {
+              var obj = {
+                name: "Sachin",
+                age: 23,
+                dob: {
+                  year: 1990,
+                  date: 02,
+                  month: 01,
+                  sign: {
+                    zodiac: "Capricorn"
+                  }
+                },
+                city: "Santa Clara"
+              }
+
+              //Safe to use external variable found, and return it at the end. Not safe to return true or false directly in RECURSION.
+              var found = false;
+              function contains(obj, target) {
+                if(typeof obj !== "object")  //note the typeof returns a string
+                  return;
+                for(key in obj) {
+                  if(key === target)
+                    found = true;  //you can break; here
+                  contains(obj[key], target);
+                }
+                return found;
+              }
+              console.log(contains(obj, "zodiac"))
+
+          }
+        </script>
+
+
+    </head>
+    <body>
+      <div id="res"></div>
+    </body>
+</html>

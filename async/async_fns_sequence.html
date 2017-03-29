@@ -1,0 +1,131 @@
+<html>
+<head>
+  <script>
+    // Math.ceil((Math.random() * n)) -- generates a random number between 1 and n
+    // Math.random() generates a random number between 0 (inclusive) and 1 (exclusive)
+    // Math.random() * 3 generates random numbers like 0, 0.001, 2.66, 1.45, 2.89
+    /*
+    function A() {
+      setTimeout(function() {
+        console.log("A")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function B() {
+      setTimeout(function() {
+        console.log("B")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function C() {
+      setTimeout(function() {
+        console.log("C")
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    A();
+    B();
+    C();
+
+    //The above generates random outputs like ABC, BAC, BCA ...
+
+    //Requirement: I want to execute A B C async fns in order
+
+    */
+
+
+   /*
+
+    //APPROACH 1: USING CALLBACKS
+
+    function A(callback) {
+      setTimeout(function() {
+        console.log("A");
+        if(callback !== undefined) {
+          callback();
+        }
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function B(callback) {
+      setTimeout(function() {
+        console.log("B");
+        if(callback !== undefined) {
+          callback();
+        }
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    function C() {
+      setTimeout(function() {
+        console.log("C");
+      }, (Math.ceil(Math.random()*3)) * 1000);
+    }
+
+    A(function() {
+      B(function() {
+        C();
+      })
+    });
+
+    */
+
+
+
+
+
+    //Using callbacks, makes the code look messier and hard to understand. Promises are easy to use.
+
+    //APPROACH 2: chaining multiple thens
+
+    function A() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log('1')
+          resolve("Z");
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+    function B() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log('2')
+          resolve("A")
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+    function C() {
+      return new Promise(function(resolve, reject) {
+        setTimeout(function() {
+          console.log('3')
+          resolve("C")
+        }, (Math.ceil(Math.random()*3)) * 1000);
+      });
+    }
+
+     // Executing asynchronous functions in sequence
+     //Chaining multiple thens. It makes sure A(), B() and C() aync fns are executed in order.
+     //KEY here is 'then' returns a promise here
+     A()
+     .then(function(response){
+      console.log(response);
+      return B();
+     })
+     .then(function(response){
+      console.log(response);
+      return C();
+     })
+     .then(function(response){
+      console.log(response);
+     })
+
+
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

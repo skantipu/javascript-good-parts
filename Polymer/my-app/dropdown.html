@@ -1,0 +1,48 @@
+<dom-module id="dropdown-ex">
+  <template>
+    <style>
+      .myDropdown {
+        width: 200px;
+      }
+    </style>
+    <div class="myDropdown">
+      <px-dropdown checkbox-mode="true">
+        <px-dropdown-content checkbox-mode='true' extend-dropdown='true' extend-dropdown-by='25' max-cont-character-width='10' items='{{items}}' show-selected="true">
+        </px-dropdown-content>
+      </px-dropdown>
+    </div>
+    <div class="myDropdown">
+      <px-dropdown display-value="Click Me"><px-dropdown-content items='[{"key":"1","val":"Rhino", "disabled":true},{"key":"2","val":"Giraffe", "disabled":false}]'></px-dropdown-content></px-dropdown></div>
+  </template>
+  <script>
+    Polymer({
+      is: 'dropdown-ex',
+      properties: {
+        items: {
+          type: Array,
+          value: []
+        }
+      },
+      listeners: {
+        'px-dropdown-checkbox-changed': 'handleDropDownChange'
+      },
+      ready: function () {
+        this.items = [];
+        var options = {
+          "1": "iPhone",
+          "2": "Android",
+          "3": "Windows Phone",
+          "4": "Galaxy S6"
+        }
+        for(var key in options) {
+          this.push('items', {"key": key, "val": options[key]})
+        }
+        console.log(this.items)
+      },
+      handleDropDownChange : function (e) {
+        console.log(e.detail)
+        console.log(e.detail.val.trim())
+      }
+    });
+  </script>
+</dom-module>

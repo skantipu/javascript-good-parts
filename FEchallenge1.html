@@ -1,0 +1,134 @@
+<!--
+ Learn:
+ * z-index works only when it's coupled with position attribute.
+ * float: left, does not result in space between floated elements like in display: inline-block
+ *  - Elements after a floating element will flow around it. To avoid this, use the clear property.
+ *  - Alternatively, you can use overflow: hidden for the parent element containing floating elements as used in the code
+ * Here, you can increase the size of the image, and accordingly the size of left-navigation bar increases (automatically)
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML CSS Only Challenge</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial;
+    }
+    /*
+    .row::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    */
+    .row {
+      overflow: hidden;
+    }
+    [class*="col-"] {
+      float: left;
+    }
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+
+    ul.nav-1, ul.nav-2 {
+      color: white;
+      padding: 40px;
+      margin: 0;
+    }
+    ul.nav-1 li, ul.nav-2 li {
+      padding: 5px;
+    }
+    .nav-2 {
+      background: #D76668;
+    }
+    .divider-nav {
+      height: 10px;
+      margin: 10px 0;
+      background: lightgrey;
+    }
+    .divider-main {
+      height: 10px;
+      margin: 10px 0;
+      background: darkred;
+    }
+    .banner-image {
+      background: url(banner.jpg);
+      width: 100%;
+      height: 400px;
+    }
+    .left-space {
+      padding-left: 5px;
+    }
+    .dummy-div {
+      position: absolute;
+      width: 16.66%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="row">
+  <div class="col-2">
+    <div class="divider-nav"></div>
+  </div>
+  <div class="col-10 left-space">
+    <div class="divider-main"></div>
+  </div>
+</div>
+<div class="row" style="position: relative;">
+  <div class="col-2">
+    <div style="position: absolute; width: 16.66%; height: 100%; background: #319DBA; z-index: 1"></div>
+    <ul class="nav-1" style="position: relative; z-index: 2">
+      <li>Home</li>
+      <li>About Us</li>
+      <li>Patient Care</li>
+      <li>Child Care</li>
+      <li>Services</li>
+      <li>Career</li>
+      <li>Contact Us</li>
+    </ul>
+  </div>
+  <div class="col-10 left-space">
+    <div class="banner-image"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    <div class="divider-nav"></div>
+  </div>
+  <div class="col-10 left-space">
+    <div class="divider-main"></div>
+  </div>
+</div>
+<div clas="row">
+  <div class="col-2">
+    <ul class="nav-2">
+      <li>Peadeatrics</li>
+      <li>Gyneacology</li>
+      <li>Peadeatrics</li>
+      <li>Gyneacology</li>
+      <li>Peadeatrics</li>
+      <li>Gyneacology</li>
+      <li>Peadeatrics</li>
+      <li>Gyneacology</li>
+    </ul>
+  </div>
+  <div class="col-10 left-space">
+    LKSDJfljsdkfa sldflasjkd flkaskjdflasdj lfkasdlfj
+  </div>
+</div>
+</body>
+</html>

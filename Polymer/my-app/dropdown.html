@@ -4,6 +4,11 @@
       .myDropdown {
         width: 200px;
       }
+      :root {
+        --px-modal-content: {
+          width: 600px;
+        }
+      }
     </style>
     <div class="myDropdown">
       <px-dropdown checkbox-mode="true">
@@ -12,7 +17,11 @@
       </px-dropdown>
     </div>
     <div class="myDropdown">
-      <px-dropdown display-value="Click Me"><px-dropdown-content items='[{"key":"1","val":"Rhino", "disabled":true},{"key":"2","val":"Giraffe", "disabled":false}]'></px-dropdown-content></px-dropdown></div>
+      <px-dropdown display-value="Click Me"><px-dropdown-content items='[{"key":"1","val":"Rhino", "disabled":true},{"key":"2","val":"Giraffe", "disabled":false}]'></px-dropdown-content></px-dropdown>
+    </div>
+
+    <br><br>
+    <px-modal btn-modal-negative="Cancel"><button class='btn btn--primary modal-trigger'>Open Modal</button><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></px-modal>
   </template>
   <script>
     Polymer({

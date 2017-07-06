@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Progress Bar</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        #progress-bar {
+            border: 1px solid black;
+        }
+        .progress-bar-content {
+            float: left;
+        }
+        #progress-bar-green {
+            background: green;
+            width: 85%;
+            position: relative;
+            border-right: 1px solid black;
+            height: 100%;
+        }
+        #progress-bar-red {
+            background: red;
+            width: 15%;
+            height: 100%;
+        }
+        #progress-indicator {
+            width: 5px;
+            height: 55px;
+            border: 1px solid black;
+            position: absolute;
+            margin-left: 100px;
+            background: lightgray;
+            top: -3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-bar">
+        <div id="progress-bar-green" class="progress-bar-content">
+            <div id="progress-indicator"></div>
+        </div>
+        <div id="progress-bar-red" class="progress-bar-content"></div>
+    </div>
+</body>
+<script>
+  (function(){
+    function setBarWidthAndHeightInPx(width, height) {
+      var bar = document.getElementById("progress-bar");
+      bar.style.width = width+"px";
+      bar.style.height = height+"px";
+    }
+    function setSliderLeftPercentage(mgLft) {
+      var slider = document.getElementById("progress-indicator");
+      slider.style.marginLeft = mgLft+"%";
+    }
+    setBarWidthAndHeightInPx(500, 50);
+    setSliderLeftPercentage(10);
+  })();
+</script>
+</html>

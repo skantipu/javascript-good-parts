@@ -13,6 +13,8 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
-    "px-dropdown": "^3.1.1"
+    "px-dropdown": "^3.1.1",
+    "px-modal": "^1.4.10",
+    "px-widget-cards": "^2.3.2"
   }
 }

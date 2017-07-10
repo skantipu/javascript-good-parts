@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test performance of a method</title>
+  <script>
+    var iterations = 1000000, arr = [{name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}, {name: 'Kishore', age: 24}]
+    function functionOne() {
+      arr.forEach (function(item) {
+        item.age = item.age+1;
+      });
+    }
+
+    function functionTwo() {
+      for(var i=0; i<arr.length; i++) {
+        arr[i].age = arr[i].age+1;
+      }
+    }
+
+    console.time('Function #1');
+    for(var i = 0; i < iterations; i++ ){
+      functionOne();
+    };
+    console.timeEnd('Function #1')
+
+    console.time('Function #2');
+    for(var i = 0; i < iterations; i++ ){
+      functionTwo();
+    };
+    console.timeEnd('Function #2');
+
+
+    /**
+     * https://stackoverflow.com/questions/111368/how-do-you-performance-test-javascript-code
+     * for loop takes much lesser time than forEach - which you can observe in console when you run this file.
+     */
+  </script>
+</head>
+<body>
+
+</body>
+</html>

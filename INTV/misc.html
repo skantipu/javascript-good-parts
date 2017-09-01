@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  /*
+   Return the sum of all integers from a random String. Continuous Integers must be considered as one number.
+   If the input String does not have any Integers, return 0.
+   You may ignore decimals, float, and other non-integer numbers
+   @param str : Input String
+   Given the following inputs, we expect the corresponding output:
+   "1a2b3c" => 6        (1+2+3)
+   "123ab!45c" => 168   (123+45)
+   "abcdef" => 0        (no Integers in String)
+   "0123.4" => 127      (0123+4)
+   "dFD$#23+++12@#T1234;/.,10"  => 1279  (23+12+1234+10)
+   */
+  (function(){
+    const input = "dFD$#23+++12@#T1234;/.,10";
+    const arr = input.match(/\d+/g) || new Array();  // note that the + is important in regex, even /\d{1,}/gi/ will work. If /\d/g or /[0-9]/g is used, matching set would be [1,2,3,4,0]
+    const res = arr.reduce((sum, val)=>parseInt(sum)+parseInt(val),0);
+    console.log(res);
+  })();
+
+  //-----------------------------------------------------------
+
+  /*
+
+   */
+</script>
+</body>
+</html>

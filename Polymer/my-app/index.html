@@ -1,4 +1,5 @@
-<!-- Run bower install in this project directory so all dependencies from bower.json are created under bower_components folder -->
+<!-- Run bower install in this project directory so all dependencies from bower.json are created under bower_components folder
+Run python -m SimpleHTTPServer and access via http://localhost:8000 or whichever port it runs-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,7 @@
   <link rel="import" href="bower_components/px-dropdown/px-dropdown.html"/>
   <link rel="import" href="bower_components/px-modal/px-modal.html"/>
   <link rel="import" href="bower_components/px-widget-cards/px-twoup.html"/>
+  <link rel="import" href="bower_components/px-alert-message/px-alert-message.html"/>
   <link rel="import" href="dropdown.html">
 </head>
 <body>
@@ -22,5 +24,13 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut</p>
     </div>
   </px-twoup>
+  <px-alert-message
+    visible
+    type="information"
+    action="dismiss"
+    message-title="Well done!"
+    message="You successfully completed a difficult task."
+    auto-dismiss="0">
+  </px-alert-message>
 </body>
 </html>

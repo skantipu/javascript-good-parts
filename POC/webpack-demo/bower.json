@@ -1,9 +1,9 @@
 {
-  "name": "my-app",
+  "name": "webpack-demo",
   "description": "",
-  "main": "",
-  "license": "MIT",
-  "homepage": "",
+  "main": "index.js",
+  "license": "ISC",
+  "homepage": "https://github.com/skantipu/javascript-good-parts",
   "ignore": [
     "**/.*",
     "node_modules",

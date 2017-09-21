@@ -6,6 +6,8 @@ https://stackoverflow.com/questions/33561272/task-runners-gulp-grunt-etc-and-bun
   <head>
     <meta charset="utf-8">
     <title>Hello webpack</title>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/px-alert-message/px-alert-message.html"/>
   </head>
   <body>
     <div id="root"></div>
@@ -13,6 +15,14 @@ https://stackoverflow.com/questions/33561272/task-runners-gulp-grunt-etc-and-bun
     <div id="progressBar" style="width: 300px; height: 50px; border: 1px solid black;">
       <div id="progressBarContent" style="background-color: red; height: 100%"></div>
     </div>
+    <px-alert-message
+      visible
+      type="information"
+      action="dismiss"
+      message-title="Well done!"
+      message="You successfully completed a difficult task."
+      auto-dismiss="0">
+    </px-alert-message>
     <script src="dist/bundle.js"></script>
   </body>
 </html>

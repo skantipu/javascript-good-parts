@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  function person() {
+    const persons = [{fname: "manish", lname: "sahgal"}, {fname: "ilan", lname: "musk"}, {fname: "barret", lname: "cargal"}];
+    //I want this output: {fname: "manish ilan barret", lname: "sahgal musk cargal"}
+    //In reduce, prev - accumulator, can take initial value, cur - iterator
+    /*
+     var total = [0, 1, 2, 3].reduce(function(sum, value) {
+        return sum + value;
+     }, 0);
+     // total is 6
+     */
+    const res = persons.reduce((prev,cur) => ({
+      fname: prev.fname ? prev.fname + cur.fname + ' ' : cur.fname + ' ',
+      lname: prev.lname ? prev.lname + cur.lname + ' ' : cur.lname + ' '
+    }),{});
+    //Using arrow function, if you want to return an object, then wrap in (). Without (), it is considered as function block.
+    console.log("result", res);
+    //{fname: "manish ilan barret", lname: "sahgal musk cargal"}
+  }
+  person();
+</script>
+</body>
+</html>

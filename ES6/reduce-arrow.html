@@ -21,6 +21,7 @@
       lname: prev.lname ? prev.lname + cur.lname + ' ' : cur.lname + ' '
     }),{});
     //Using arrow function, if you want to return an object, then wrap in (). Without (), it is considered as function block.
+    // Parenthesize the body of function to return an object literal expression: params => ({foo: bar})
     console.log("result", res);
     //{fname: "manish ilan barret", lname: "sahgal musk cargal"}
   }

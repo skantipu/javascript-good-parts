@@ -93,4 +93,43 @@ To vertically and horizontally center text within 'content' div
   text-align: center;
 }
 
+-----------------------
+.flex-container {
+    display: flex;
+    justify-content: center; //horizontal aligning (flex-start, flex-end, center, space-between, space-around)
+    align-items: center;  //vertical aligning (stretch (overridden by height), flex-start, flex-end, center)
+    width: 400px;
+    height: 250px;
+    background-color: lightgrey;
+}
+
+.flex-item {
+    background-color: yellow;
+    width: 75px;
+    height: 75px;
+}
+
+<div class="flex-container">
+  <div class="flex-item">Perfect centering!</div>
+</div>
+
+-----------------------
+
+.flex-container {
+    display: flex;
+    width: 400px;
+    height: 250px;
+    background-color: lightgrey;
+}
+
+.flex-item {
+	  margin: auto;
+    background-color: yellow;
+    width: 75px;
+    height: 75px;
+}
+
+<div class="flex-container">
+  <div class="flex-item">Perfect centering!</div>
+</div>
 -->

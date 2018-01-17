@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layout</title>
+  <style>
+    .container {
+      background: red;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+
+      -webkit-justify-content: space-around;
+      justify-content: space-around;
+      -webkit-flex-flow: row wrap;
+      flex-flow: row wrap;
+      -webkit-align-items: stretch;
+      align-items: stretch;
+    }
+    header, footer {
+      flex: 1 100%;
+      border: 1px solid black;
+      padding: 40px;
+    }
+    .side-bar {
+      flex: 1;
+      border: 1px solid black;
+      padding: 40px;
+    }
+    main {
+      flex: 2;
+      border: 1px solid black;
+      padding: 40px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>Header</header>
+    <div class="side-bar">Side Bar</div>
+    <main>Main</main>
+    <div class="side-bar">Side Bar</div>
+    <footer>Footer</footer>
+  </div>
+</body>
+</html>

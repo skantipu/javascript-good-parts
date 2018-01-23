@@ -7,7 +7,7 @@ Does not take up original space.
 -->
 <html>
   <head>
-    <title>Bootstrap</title>
+    <title>Position and concentric circle</title>
     <style>
       body {
         background: lightblue;
@@ -35,6 +35,27 @@ Does not take up original space.
         left:20px;
         top: 20px;
       }
+
+
+
+      #circle {
+        width: 40px;
+        height: 40px;
+        margin-top: 100px;
+        border-radius: 50%;
+        border: 1px solid red;
+        display: flex;  /* to the parent, so children under it will have flex styling */
+        justify-content: center; /* horizontal centering */
+        align-items: center; /* vertical centering */
+      }
+      #circle::after {
+        content: '';
+        display: block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: red;
+      }
     </style>
   </head>
   <body>
@@ -42,5 +63,8 @@ Does not take up original space.
       <div class="child1"></div>
       <div class="child2"></div>
    </div>
+
+  <!-- concentric circle (run in the browser to see) -->
+  <div id="circle"></div>
   </body>
 </html>

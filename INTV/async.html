@@ -34,6 +34,54 @@
     r.push(exampleTask); // wait until 1 slot is open, then execute immediately
     r.push(exampleTask); // wait until 1 slot is open, then execute immediately
 
+/*
+    function task1(callback) {
+      console.log('Task1 is being executed');
+      setTimeout(function () {
+        callback();
+      }, Math.random() * 1000);
+    }
+
+
+    function task2(callback) {
+      console.log('Task2 is being executed');
+      setTimeout(function () {
+        callback();
+      }, Math.random() * 1000);
+    }
+
+
+    function task3(callback) {
+      console.log('Task3 is being executed');
+      setTimeout(function () {
+        callback();
+      }, Math.random() * 1000);
+    }
+
+
+    var TaskManager = function (limit) {
+      this.task = [];
+      this.limit = limit;
+      this.count = 0;
+    };
+
+    TaskManager.prototype.push = function (task) {
+      var self = this;
+      if (this.count === this.limit) {
+        return this.task.push(task);
+      }
+      this.count++;
+      task(function () {
+        if (self.task[0]) {
+          self.task[0](function () {
+            console.log('Queue Task');
+            self.task.splice(0, 1);
+          });
+        }
+      });
+    }
+
+    */
 
 </script>
 </body>

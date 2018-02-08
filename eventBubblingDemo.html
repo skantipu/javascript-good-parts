@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Bubbling</title>
+  <style>
+    div {
+      border: 1px solid green;
+    }
+
+    #p1Div {
+      padding: 20px;
+    }
+
+    #p2Div {
+      padding: 20px;
+    }
+
+    .btn--disabled {
+      pointer-events: none;
+      /*
+      has other styling info for disabled button, let's say
+       */
+    }
+  </style>
+</head>
+<body>
+<div id="p1Div" onclick="return p1Divclicked(event)" ;>
+  <div id="p2Div" onclick="return p2Divclicked(event)" ;>
+    <button onclick="return btnClicked(event);">Click me</button>
+    <!--
+    <button onclick="return btnClicked(event);" disabled>Click me</button>
+    Adding disabled attribute, will make sure click event wont be fired at all, so it wont be bubbled up.
+
+    <button onclick="return btnClicked(event);" class="btn--disabled" disabled>Click me</button>
+    Once you have pointer-events: none, event still bubbles up but not fired by the btn element
+    -->
+  </div>
+</div>
+<script>
+  function btnClicked(e) {
+    printOnConsole('btnClicked', e);
+  }
+  function p2Divclicked(e) {
+    printOnConsole('p2Divclicked', e);
+  }
+  function p1Divclicked(e) {
+    printOnConsole('p1Divclicked', e);
+  }
+  function printOnConsole(fnName, e) {
+    console.log(fnName);
+    console.log('currentTarget', e.currentTarget);
+    console.log('target', e.target);
+    console.log('currrentTarget === target', e.currentTarget === e.target);
+    console.log('-----------------------------------');
+  }
+
+  /*
+   It's better to have event handlers defined in javascript by document.getElementById("p1Div").onclick = function(event) {} -- separation of concerns
+   or document.getElementById("myBtn").addEventListener("click", ()=>{});
+   */
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Programming</title>
+  <script>
+    /*** Programming Questions **/
+
+    function arrayOfArraySearch() {
+      //Arrays are converted to strings implicitly when used as object keys
+      var arr = [
+        [2, 6, 89, 45],
+        [3, 566, 23, 79],
+        [434, 677, 9, 23]
+      ];
+      var val = [3, 566, 23, 79];
+      //problem: search arr for val
+
+      //method 1
+      Array.prototype.containsArray = function(val) {
+        var hash = {};
+        for (var i = 0; i < this.length; i++) {
+          hash[this[i]] = i;
+        }
+        return hash.hasOwnProperty(val);
+      }
+      console.log(arr.containsArray(val));
+
+      //method 2
+      Array.prototype.containsArray = function(search) {
+        var searchJson = JSON.stringify(search); // "[3,566,23,79]"
+        var arrJson = this.map(JSON.stringify); // ["[2,6,89,45]", "[3,566,23,79]", "[434,677,9,23]"]
+        return arrJson.indexOf(searchJson) !== -1;
+      }
+      console.log(arr.containsArray(val));
+    }
+    arrayOfArraySearch();
+  </script>
+</head>
+<body>
+
+</body>
+</html>

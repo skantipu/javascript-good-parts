@@ -25,8 +25,81 @@
 
         console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel);
         console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel);
-        console.log(rabbit, bear)
+        console.log(rabbit, bear);
 
+        //----------------------------------------------------------
+        // Object oriented JS using object constructor function
+        //ref: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
+        function Person(fname, lname, age, gender) {
+          this.fname = fname;
+          this.lname = lname;
+          this.age = age;
+          this.gender = gender;
+        }
+        Person.prototype.fullName = function() {
+          return `${this.fname} ${this.lname}`;
+        }
+        Person.prototype.isAbove60 = function() {
+          return this.age > 60;
+        }
+        Person.prototype.greeting = function() {
+          return `Hello, this is ${this.fullName()}`;
+        }
+
+        function Teacher(fname, lname, age, gender, subject) {
+          Person.call(this, fname, lname, age, gender);
+          this.subject = subject;
+        }
+
+        Teacher.prototype = Object.create(Person.prototype);
+        //this prototype assignment has to happen before you define greeting() on Teacher prototype
+
+        Teacher.prototype.greeting = function() {
+          return `Hello, this is ${this.gender === 'm' ? 'Mr': 'Mrs'}.${this.fullName()} and I teach ${this.subject}`;
+        }
+
+        let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
+
+        //--------------------------------------------------
+
+        /*
+        // Object oriented JS - Class
+        // JS classes are syntactical sugar over JavaScript's existing prototype-based inheritance using object constructor functions
+        //ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+        class Person {
+          constructor(fname, lname, age, gender) {
+            this.fname = fname;
+            this.lname = lname;
+            this.age = age;
+            this.gender = gender;
+          }
+          //getter
+          get fullName() {
+            return `${this.fname} ${this.lname}`;
+          }
+          //instance method (called with an instance)
+          isAbove60() {
+            return this.age > 60;
+          }
+          //instance method
+          greeting() {
+            return `Hello, this is ${this.fullName}`;
+          }
+        }
+        class Teacher extends Person {
+          constructor (fname, lname, age, gender, subject) {
+            super(fname, lname, age, gender);
+            this.subject = subject;
+          }
+          greeting() {
+            return `Hello, this is ${this.gender === 'm' ? 'Mr': 'Mrs'}.${this.fullName} and I teach ${this.subject}`;
+          }
+        }
+        let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
+        // later if you want to add more methods to the prototype of Teacher, do so using Teacher.prototype.myMethod = function() {...}
+        Teacher.prototype.myMethod = function() {return 'test';}
+
+        */
     </script>
 </head>
 <body>

@@ -90,6 +90,72 @@
 //
 //  }
 
+  //-----------------------------------------------
+  //  Paypal question
+  (function() {
+    var x ={
+      "home_address":{
+        "street_name":"test",
+        "apartment_number":33
+      },
+      "contact_no":{
+        "home_number":123,
+        "work":{
+          "mobile_number":234,
+          "fax_number":34243
+        }
+      }
+    };
+    /*
+    output:
+      var x ={
+        "homeAddress":{
+          "streetName":"test",
+          "apartmentNumber":33
+        },
+        "contactNo":{
+          "homeNumber":123,
+          "work":{
+            "mobileNumber":234,
+            "faxNUmber":34243
+          }
+        }
+      };
+    */
+
+    //method to convert from 'contact_no' to 'contactNo'
+    function formatKey(key) {
+      const words = key.split("_");
+      const newWords = words.map((word, i) => {
+        if (i > 0) {
+          return `${word.charAt(0).toUpperCase()}${word.substring(1)}`;
+        }
+        return word;
+      });
+      return newWords.join("");
+    }
+    /*
+    // alternate way
+    function formatKey(key) {
+      return str.replace(/_([a-z])/g, function(str) {
+        return str[1].toUpperCase();
+      })
+    }
+    */
+    function parseObj(obj) {
+      const res = {};
+      for (const key in obj) {
+        const formattedKey = formatKey(key);
+        res[formattedKey] = typeof obj[key] === 'object' ? parseObj(obj[key]) : obj[key];
+      }
+      return res;
+    }
+
+    console.log(parseObj(x));
+
+  })();
+
+
 </script>
 </body>
 </html>

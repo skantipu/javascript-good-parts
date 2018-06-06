@@ -155,6 +155,31 @@
 
   })();
 
+  //-----------------------------------------------
+
+  (function() {
+
+    function myFun(fn, delay) {
+      var ctr = 0;
+      return function() {
+        setTimeout(function() {
+          fn(ctr, delay);
+        }, ctr * delay);
+        ctr++;
+      }
+    }
+
+    function callBack(x,y) {
+      console.log('Hi', x, y, x*y);
+    }
+
+    var x = myFun(callBack, 1000);
+    x(); // to be called after 1 sec
+   // x(); to be called after 2 sec
+   // x(); to be called after 3 sec
+   //...
+    // enter x() one after other in the console.
+  })();
 
 </script>
 </body>

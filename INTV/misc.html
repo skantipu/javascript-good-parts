@@ -212,7 +212,10 @@
        }
      ]
      */
+    // below solution can be improved - it's a working one
+    // you can safely assume that in exclude array, key values will be one of type/color
 
+    //returns {color: silver, type: radio}
     function getExcludeObj(exclArr) {
       return exclArr.reduce((acc, elem) => {
         acc[elem.key] = elem.val;
@@ -233,9 +236,7 @@
     function computeRes(items, excludeArr) {
       const res = [];
       const helperObj = getExcludeObj(excludeArr);
-      console.log(helperObj);
       items.forEach((elem) => {
-        console.log(checkObjMatch(helperObj, elem));
         if (!checkObjMatch(helperObj, elem)) {
           res.push(elem);
         }

@@ -1,0 +1,72 @@
+<!--
+Trick is give height: 100% to html, body, container (all three required).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layout</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      font-family: arial;
+      font-size: 14px;
+      height: 100%;
+    }
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+    .container {
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+    }
+    .row {
+      flex: 1 1;
+      display: flex;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      background: deepskyblue;
+      color: white;
+    }
+    .side-bar {
+      flex: 1;
+      background: darkorange;
+    }
+    main {
+      flex: 2;
+      background: orangered;
+    }
+    footer {
+      height: 3em;  /* 42 px as 3 times font-size -> 3*14 */
+      background: deepskyblue;
+      /* centering horizontal and vertical css below */
+      text-align: center;
+      line-height: 3em;  /* give line height same as height of the div to have vertical centering */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>Layout Page</div>
+      <div>Time Now: xxx</div>
+    </header>
+    <div class="row">
+      <div class="side-bar">Side Bar</div>
+      <main>Main</main>
+      <div class="side-bar">Side Bar</div>
+    </div>
+    <footer>
+      CENTER FOOTER
+    </footer>
+  </div>
+</body>
+</html>

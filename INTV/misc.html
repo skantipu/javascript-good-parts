@@ -181,6 +181,71 @@
     // enter x() one after other in the console.
   })();
 
+  // -------------------------------------------
+  (function(){
+    var items =
+      [{
+        "type": "iphone",
+        "color": "silver"
+      }, {
+        "type": "tv",
+        "color": "grey"
+      },{
+        "type": "radio",
+        "color": "black"
+      }];
+
+    var exclude =
+      [{
+        "key": "color",
+        "val": "silver"
+      }, {
+        "key": "type",
+        "val": "radio"
+      }];
+
+    /*
+     output: [
+       {
+       "type": "tv",
+       "color": "grey"
+       }
+     ]
+     */
+
+    function getExcludeObj(exclArr) {
+      return exclArr.reduce((acc, elem) => {
+        acc[elem.key] = elem.val;
+        return acc;
+      }, {});
+    }
+
+    function checkObjMatch(obj1, obj2) {
+      let match = false;
+      for(let key in obj1) {
+        if (key in obj2 && obj2[key] === obj1[key]) {
+          match = true;
+        }
+      }
+      return match;
+    }
+
+    function computeRes(items, excludeArr) {
+      const res = [];
+      const helperObj = getExcludeObj(excludeArr);
+      console.log(helperObj);
+      items.forEach((elem) => {
+        console.log(checkObjMatch(helperObj, elem));
+        if (!checkObjMatch(helperObj, elem)) {
+          res.push(elem);
+        }
+      });
+      return res;
+    }
+
+    console.log(computeRes(items, exclude));
+  })();
+
 </script>
 </body>
 </html>

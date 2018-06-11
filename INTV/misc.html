@@ -247,6 +247,73 @@
     console.log(computeRes(items, exclude));
   })();
 
+  // -------------------------------------------
+
+  (function(){
+    var items =
+      [{
+        "type": "iphone",
+        "color": "silver"
+      }, {
+        "type": "tv",
+        "color": "grey"
+      },{
+        "type": "radio",
+        "color": "black"
+      }];
+
+    var exclude =
+      [{
+        "key": "color",
+        "val": "silver"
+      }, {
+        "key": "type",
+        "val": "radio"
+      }, {
+        "key": "color",
+        "val": "blue"
+      }];
+
+    /*
+     output: [
+     {
+     "type": "tv",
+     "color": "grey"
+     }
+     ]
+     */
+    // given key values (color and type) in the exclude array will only be one of items keys.
+
+    /*
+     have a map as below:
+
+     {
+     color: [silver, blue],
+     type: [radio]
+     }
+
+
+     Remember
+     push() returns length of array
+     reduce() takes accumulator, element as parameters, mind the order
+     reduce() has to return accumulator
+     forEach(), if you wanna continue iteration, you can just 'return'; ('continue' does not work)
+     */
+    (function(items, exclude) {
+      const result = [];
+      const excludeMap = exclude.reduce((acc, elem) => {
+          acc[elem.key] ? acc[elem.key].push(elem.val) : acc[elem.key] = [elem.val];
+      return acc;
+    }, {});
+      items.forEach(elem => {
+        if (excludeMap.type.indexOf(elem.type) == -1 && excludeMap.color.indexOf(elem.color) == -1) {
+        result.push(elem);
+      }
+    });
+      console.log(result);
+    })(items, exclude);
+  })();
+
 </script>
 </body>
 </html>

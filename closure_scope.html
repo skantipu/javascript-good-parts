@@ -4,7 +4,12 @@
   </style>
   <script>
     //CLOSURE - https://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
-
+    /*
+    Closure -
+    whenever there is an inner function inside an another function, we are creating a closure which is like
+    a pointer to the local execution context of outer function. The outer function stack frame stays in memory and not destroyed,
+    even after it is returned (so inner function can access outer function local variables).
+    */
     /*
     The below prints "My value: 3" 3 times.
     How do you solve for it to print below?

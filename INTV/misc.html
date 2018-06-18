@@ -249,7 +249,7 @@
 
   // -------------------------------------------
 
-  (function(){
+  (function() {
     var items =
       [{
         "type": "iphone",
@@ -312,6 +312,57 @@
     });
       console.log(result);
     })(items, exclude);
+  })();
+
+  // -------------------------------------------
+
+  (function () {
+    //input: thereisaboynamedsachinandheisstudying, hcinas
+    //output: thereisaboynamedandheisstudying  (after removing hcinas anagrams from the sentence)
+
+    var longStr = 'thereisaboynamedschainheisstudying', anagram = 'hcinas';
+    // may be you can try binary search algo too
+    function isAnagram(wordA, wordB) {
+      if (wordA === wordB) {
+        return true;
+      } else if (wordA.length !== wordB.length) {
+        return false;
+      }
+      const map = {};
+      for (let letter of wordA) {
+        if (letter in  map) {
+          map[letter]++;
+        } else {
+          map[letter] = 1;
+        }
+      }
+
+      for (let letter of wordB) {
+        if (letter in map) {
+          map[letter]--;
+          if(map[letter] === 0) {
+            delete map[letter];
+          }
+        } else {
+          map[letter] = 1;
+        }
+      }
+
+      return Object.keys(map).length === 0;
+    }
+
+    function findAnagramSubStr(str, anagram) {
+      const anaLen = anagram.length;
+      for (let i = 0; i < str.length-anaLen; i++) {
+        let substr = str.substring(i, anaLen+i);
+        if (isAnagram(substr, anagram)) {
+          return str.replace(substr, '');
+        }
+      }
+      return str;
+    }
+
+    console.log(findAnagramSubStr(longStr, anagram));
   })();
 
 </script>

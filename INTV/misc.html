@@ -365,6 +365,70 @@
     console.log(findAnagramSubStr(longStr, anagram));
   })();
 
+  //----------------------------------------------------------
+  //Binary Search
+
+  (function(){
+    const arr = [2, 3, 9, 12, 44, 233, 999];
+    const elm = 32;
+    function binarySearch(first, last) {
+      if (last - first <= 1) {
+        return elm === arr[first] || elm === arr[last];
+      }
+      const middle = Math.ceil((first + last)/2);
+      if (arr[middle] === elm) {
+        return true;
+      } else if (arr[middle] > elm) {
+        return binarySearch(first, middle);
+      } else {
+        return binarySearch(middle, last);
+      }
+    }
+    if (binarySearch(0, arr.length - 1)) {
+      console.log('found');
+    } else {
+      console.log('not found');
+    }
+  })();
+
+  //----------------------------------------------------------
+  // Objective: to find sum of negative numbers in a matrix.
+
+  (function(){
+    // Returns index of right most negative number in the array. Assumes array is sorted asc. If no negative number present, returns -1
+    function search(arr) {
+      function binarySearch(left, right) {
+        if (right - left <= 1) {
+          if (arr[right] < 0) {  // important to have right condition check first, followed by left
+            return right;
+          } else if (arr[left] < 0) {
+            return left;
+          }
+          return -1;
+        }
+        const middle = Math.ceil((left + right)/2);
+        if (arr[middle] < 0) {
+          return binarySearch(middle, right);
+        } else {
+          return binarySearch(left, middle);
+        }
+      }
+      return binarySearch(0, arr.length - 1);
+    }
+
+    function countNegativeNums(matrix) {
+      let sum = 0;
+      for (arr of matrix) {
+        let index = search(arr);
+        if (index !== -1) {
+          sum += (++index);
+        }
+      }
+      return sum;
+    }
+    // matrix can be represented as array of arrays.
+    console.log(countNegativeNums([[-3, -2, -1, 0, 3], [-12, 1, 2, 5, 10], [0, 1, 4, 5, 34], [-5, -4, -3, -2, -1]])); //9
+  })();
 </script>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sort</title>
+  <script>
+    // Refer https://www.youtube.com/watch?v=nmhjrI-aW5o
+    //BUBBLE SORT
+    function bubbleSort(arr) {
+      let n = arr.length;
+      for (let i = n - 1; i > 0; i--) {
+        for (let j = 0; j < i; j++) {
+          if (arr[j] > arr[j + 1]) {
+            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+          }
+        }
+      }
+      return arr;
+    }
+    console.log(bubbleSort([120,4,1,2,123,5,-3,-23,4,-1,0,-78]));
+
+    // INSERTION SORT - https://www.youtube.com/watch?v=c4BRHC7kTaQ
+    function insertionSort(arr) {
+      const n = arr.length;
+      for (let i = 1; i < n; i++) {
+        for (let j = i - 1; j >= 0; j--) {
+          if (arr[j] > arr[j+1]) {
+            [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+          }
+        }
+      }
+      return arr;
+    }
+    console.log(insertionSort([120,4,1,2,123,5,-3,-23,4,-1,0,-78]));
+
+  </script>
+</head>
+<body>
+</body>
+</html>

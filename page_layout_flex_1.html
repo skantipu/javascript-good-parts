@@ -26,7 +26,7 @@ Trick is give height: 100% to html, body, container (all three required).
       flex-flow: column nowrap;
     }
     .row {
-      flex: 1 1;
+      flex: auto; /* or flex: 1 1 auto  --> it grows to fill in the remaining space*/
       display: flex;
     }
     header {

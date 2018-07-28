@@ -429,6 +429,39 @@
     // matrix can be represented as array of arrays.
     console.log(countNegativeNums([[-3, -2, -1, 0, 3], [-12, 1, 2, 5, 10], [0, 1, 4, 5, 34], [-5, -4, -3, -2, -1]])); //9
   })();
+
+  // First greatest, second greatest, third greatest in an array
+  (function(){
+      const arr = [];
+      for (let i = 0; i < 50; i++) {
+          arr.push(Math.round(Math.random() * 100)); // load 50 random numbers between 0 and 100 inclusive in the arr
+      }
+      /*
+       Math.random() generates random number between 0 and 1, with 1 exclusive and 0 inclusive (0, 0.03, 0.53, 0.999, ...)
+       Math.random() * 100 --> between 0 and 99.99..
+       Math.round() rounds off to nearest number
+       */
+      let fl = Number.MIN_SAFE_INTEGER, sl = Number.MIN_SAFE_INTEGER, tl = Number.MIN_SAFE_INTEGER;
+      for (let num of arr) {
+          if (num > fl) {
+              [tl, sl] = [sl, fl];
+              fl = num;
+          } else if (num > sl) {
+              tl = sl;
+              sl = num
+          } else if (num > tl) {
+              tl = num;
+          }
+      }
+      if (sl === Number.MIN_SAFE_INTEGER) {
+          console.log('no sl, tl');
+          console.log(fl)
+      } else if (tl === Number.MIN_SAFE_INTEGER) {
+          console.log('no tl');
+      } else {
+          console.log(fl, sl, tl);
+      }
+  })();
 </script>
 </body>
 </html>

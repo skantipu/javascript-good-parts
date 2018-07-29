@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkedList</title>
+</head>
+<body>
+<script>
+    // Reference: https://codeburst.io/js-data-structures-linked-list-3ed4d63e6571
+    (function (){
+        class SinglyLinkedList {
+            constructor(value) {
+                this.head = null;
+                this.length = 0;
+                this.addToHead(value);
+            }
+            addToHead(value) {
+                const node = {
+                    value,
+                    next: this.head
+                }
+                this.head = node;
+                this.length++;
+                return this;
+            }
+            removeFromHead() {
+                if (this.length > 0) {
+                    const temp = this.head;
+                    this.head = this.head.next;
+                    temp.next = null;
+                    this.length--;
+                    return this;
+                }
+            }
+            find(val) {
+                let node = this.head;
+                while (node) {
+                    if (node.value === val) {
+                        return 'val found';
+                    }
+                    node = node.next;
+                }
+                return 'val not found';
+            }
+        }
+        const sll = new SinglyLinkedList(10)
+            .addToHead(20)
+            .addToHead(30)
+            .addToHead(40)
+            .addToHead(50)
+            .addToHead(60)
+            .removeFromHead();
+        console.log(sll);
+
+        console.log('70 --> ', sll.find(70));
+        console.log('60 --> ', sll.find(60));
+        console.log('50 --> ', sll.find(50));
+        console.log('10 --> ', sll.find(10));
+    })();
+</script>
+</body>
+</html>

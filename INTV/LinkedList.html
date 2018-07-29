@@ -53,6 +53,25 @@
                     return 'value not found';
                 }
             }
+            push(value) {
+                // add node at the end
+                const node = {
+                    value,
+                    next: null
+                }
+                if (!this.head) {
+                    this.head = node;
+                } else {
+                    // traverse to the end
+                    let curNode = this.head;
+                    while (curNode.next) {
+                        curNode = curNode.next;
+                    }
+                    curNode.next = node;
+                }
+                this.length++;
+                return this;
+            }
             find(val) {
                 let node = this.head;
                 while (node) {

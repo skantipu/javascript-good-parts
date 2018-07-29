@@ -18,7 +18,7 @@
                 const node = {
                     value,
                     next: this.head
-                }
+                };
                 this.head = node;
                 this.length++;
                 return this;
@@ -30,6 +30,27 @@
                     temp.next = null;
                     this.length--;
                     return this;
+                }
+            }
+            remove(val) {
+                // find the node and remove
+                if (this.length > 0) {
+                    if (this.head.value === val) {
+                        return this.removeFromHead();
+                    }
+                    let node = this.head;
+                    let prev = this.head;
+                    while (node) {
+                        if (node.value === val) {
+                            prev.next = node.next;
+                            node.next = null;
+                            this.length--;
+                            return this;
+                        }
+                        prev = node;
+                        node = node.next;
+                    }
+                    return 'value not found';
                 }
             }
             find(val) {
@@ -49,6 +70,7 @@
             .addToHead(40)
             .addToHead(50)
             .addToHead(60)
+            .addToHead(70)
             .removeFromHead();
         console.log(sll);
 
@@ -56,6 +78,8 @@
         console.log('60 --> ', sll.find(60));
         console.log('50 --> ', sll.find(50));
         console.log('10 --> ', sll.find(10));
+        sll.remove(60);
+        console.log('60 --> ', sll, sll.find(60));
     })();
 </script>
 </body>

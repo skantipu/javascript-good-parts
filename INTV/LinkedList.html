@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkedList</title>
+</head>
+<body>
+<script>
+    // Reference: https://codeburst.io/js-data-structures-linked-list-3ed4d63e6571
+    (function (){
+        class SinglyLinkedList {
+            constructor(value) {
+                this.head = null;
+                this.length = 0;
+                this.addToHead(value);
+            }
+            addToHead(value) {
+                const node = {
+                    value,
+                    next: this.head
+                };
+                this.head = node;
+                this.length++;
+                return this;
+            }
+            removeFromHead() {
+                if (this.length > 0) {
+                    const temp = this.head;
+                    this.head = this.head.next;
+                    temp.next = null;
+                    this.length--;
+                    return this;
+                }
+            }
+            remove(val) {
+                // find the node and remove
+                if (this.length > 0) {
+                    if (this.head.value === val) {
+                        return this.removeFromHead();
+                    }
+                    let node = this.head;
+                    let prev = this.head;
+                    while (node) {
+                        if (node.value === val) {
+                            prev.next = node.next;
+                            node.next = null;
+                            this.length--;
+                            return this;
+                        }
+                        prev = node;
+                        node = node.next;
+                    }
+                    return 'value not found';
+                }
+            }
+            push(value) {
+                // add node at the end
+                const node = {
+                    value,
+                    next: null
+                }
+                if (!this.head) {
+                    this.head = node;
+                } else {
+                    // traverse to the end
+                    let curNode = this.head;
+                    while (curNode.next) {
+                        curNode = curNode.next;
+                    }
+                    curNode.next = node;
+                }
+                this.length++;
+                return this;
+            }
+            find(val) {
+                let node = this.head;
+                while (node) {
+                    if (node.value === val) {
+                        return 'val found';
+                    }
+                    node = node.next;
+                }
+                return 'val not found';
+            }
+        }
+        const sll = new SinglyLinkedList(10)
+            .addToHead(20)
+            .addToHead(30)
+            .addToHead(40)
+            .addToHead(50)
+            .addToHead(60)
+            .addToHead(70)
+            .removeFromHead();
+        console.log(sll);
+
+        console.log('70 --> ', sll.find(70));
+        console.log('60 --> ', sll.find(60));
+        console.log('50 --> ', sll.find(50));
+        console.log('10 --> ', sll.find(10));
+        sll.remove(60);
+        console.log('60 --> ', sll, sll.find(60));
+    })();
+</script>
+</body>
+</html>

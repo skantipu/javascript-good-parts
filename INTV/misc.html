@@ -429,6 +429,47 @@
     // matrix can be represented as array of arrays.
     console.log(countNegativeNums([[-3, -2, -1, 0, 3], [-12, 1, 2, 5, 10], [0, 1, 4, 5, 34], [-5, -4, -3, -2, -1]])); //9
   })();
+
+
+  // Find 5 most repeating words in the string
+  (function() {
+    const sentence = 'Downtown Greensborough is a major financial center in which many citizens either drive or rely on public transportation to get to work. This setup has led up to a spate in the number of pedestrians who have been struck and killed by vehicles. In an effort to curb the number of pedestrian-related fatalities, Greensborough has installed speed reduction signs at the six city intersections at which the highest numbers of fatalities have occurred in the last year. The Greensborough city government predicts that the number of traffic fatalities will significantly decrease once the speed reduction signs have been installed.'
+    const parsedSentence = sentence.replace(/[^a-z ]/gi, '');
+    const words = parsedSentence.split(" ");
+    const map = {};
+    for (let word of words) {
+      if (map.hasOwnProperty(word)) {
+        map[word]++;
+      } else {
+        map[word] = 1;
+      }
+    }
+    console.log(map);
+    const freqArr = [];
+    for (let word in map) {
+      const wordList = freqArr[map[word]] || [];
+      wordList.push(word);
+      freqArr[map[word]] = wordList;
+    }
+    console.log(freqArr);
+    const result = computeRes(freqArr, 5);
+    function computeRes(arr, len) {
+      const res = [];
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] && arr[i].length > 0) {
+          for (let word of arr[i]) {
+            res.push(word);
+            if (res.length >= len) {
+              return res;
+            }
+          }
+        }
+      }
+      return res;
+    }
+    console.log(result)
+
+  })();
 </script>
 </body>
 </html>

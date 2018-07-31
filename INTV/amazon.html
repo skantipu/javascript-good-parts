@@ -131,6 +131,43 @@
       // 2) big string - I want freq of all words and retrieve top 5 words.
 
       // singalfx - find unique elements in an array
+
+      //8X8
+      // i/p: “ab  cde   fghi     j” 20   // 2 3 5
+      // o/p: "ab    cde   fghi   j" 20   // 4 3 3
+      // redistribute spaces in the output evenly with left focus, so both i/p and o/p are of same length (so cannot be 3 4 3 or 3 3 4).
+
+      (function() {
+        function parseStr(str) {
+          const parts = str.split(" ");
+          let result = [];
+          let resultStr = '';
+          for (let part of parts) {
+            if (part.length > 0) {
+              // if it's a space, ignore
+              result.push(part);
+            }
+          }
+          const numberOfSpaces = str.length - result.join("").length; // 10
+          const slots = result.length - 1; // 3
+          const share = Math.floor(numberOfSpaces/slots); // 3
+          let balance = numberOfSpaces % slots; // numberOfSpaces - (slots * share);
+          for (let i = 0; i < slots; i++) {
+            if (balance <= 0) {
+              break;
+            }
+            result[i]  = result[i] + ' ';
+            balance--;
+          }
+          let joinStr = ' '.repeat(share);
+          resultStr = result.join(joinStr);
+          return resultStr;
+          // [ab, cde, fghi, j];
+        }
+
+        const res = parseStr('ab  cde   fghi     j');
+      })();
+
     </script>
   </head>
   <body>

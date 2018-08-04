@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script>
     /*
      ES6 Promises - http://www.html5rocks.com/en/tutorials/es6/promises/#toc-async
@@ -30,18 +29,17 @@
 
      */
     var userId = [1, 2, 3, 4, 5];
-    var urls = userId.map(function(id){
-      return ["https://jsonplaceholder.typicode.com/posts/", id].join("");
-    });
+    var urls = userId.map(id => `https://jsonplaceholder.typicode.com/posts/${id}`);
 
     function get(url) {
-      return new Promise(function (resolve, reject) {
+      return new Promise((resolve, reject) => {
         var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = () => {...} does NOT work as arrow function has 'this' value based on surrounding context (window).
         xhttp.onreadystatechange = function() {
-          if(this.readyState === 4 && this.status === 200) {
+          if (this.readyState === 4 && this.status === 200) {
             resolve(JSON.parse(this.responseText).id);
           }
-          else if(this.readyState === 4 && this.status !== 200) {
+          else if (this.readyState === 4 && this.status !== 200) {
             reject(this.statusText);
           }
         }
@@ -50,16 +48,14 @@
       });
     }
 
-
     //A way to keep track when all async calls are completed (running async fns in parallel, but we'll know when all are done)
-    var promises = urls.map(function(url) {
-      return get(url);
-    });
-    Promise.all(promises).then(function(data) {
+    var promises = urls.map(url => get(url));
+
+    Promise.all(promises).then((data) => {
       // returned data is an array of all resolves
       console.log(data.toString());
       console.log("done")
-    }, function(err) {
+    }, (err) => {
       // error occurred
     });
 

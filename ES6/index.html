@@ -31,6 +31,48 @@
 
    */
 
+  //fix the code below
+  /*
+      class LateBloomer{
+          constructor() {
+              this.petalCount = Math.ceil(Math.random() * 100);
+          }
+          declare() {
+              console.log('I am a beautiful flower with ' + this.petalCount + ' petals!');
+          }
+          bloom() {
+              setTimeout(this.declare, 1000); //remember to use this.declare, not just declare
+          }
+      }
+
+      let flower = new LateBloomer();
+      flower.bloom(); // I am a beautiful flower with undefined petals!
+
+      reason: setTimeout is in window context. so 'this' in declare() refers to window.
+   */
+  (function(){
+      class LateBloomer{
+          constructor() {
+              this.petalCount = Math.ceil(Math.random() * 100);
+          }
+          declare() {
+              console.log('I am a beautiful flower with ' + this.petalCount + ' petals!');
+          }
+          bloom() {
+              setTimeout(this.declare.bind(this), 1000);
+          }
+          bloomArrow() {
+              //even this works as 'this' value inside arrow functions depend on surrounding context of arrow fn.
+              setTimeout(() => {
+                  console.log('I am a beautiful flower with ' + this.petalCount + ' petals!');
+              }, 1000);
+          }
+      }
+
+      let flower = new LateBloomer();
+      flower.bloom(); // I am a beautiful flower with 68 petals!
+  })();
+
 </script>
 </body>
 </html>

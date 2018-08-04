@@ -170,6 +170,104 @@
         const res = parseStr('ab  cde   fghi     j');
       })();
 
+      //skytap
+
+      //
+      // NEW QUESTION
+      //
+
+      // Fix the following code so that the counter increments
+      // appropriately while keeping the setTimeout and for
+      // loop intact.
+
+      // function createTimeoutLoop() {
+      //   var i = 0;
+
+      //   for (i = 0; i < 3 ; i++) {
+      //     setTimeout(function() {
+      //       console.log('The value is: ' + i);
+      //     }, 500);
+      //   }
+      // }
+
+      // call the function, which should print 0, 1, 2 to the console.
+      // createTimeoutLoop();
+
+      /////// SOLUTION - create a closure for each loop iteration so context of i is maintained within the setTimeout separately
+      function createTimeoutLoop() {
+        var i = 0;
+        for (i = 0; i < 3; i++) {
+          (function(i){
+            setTimeout(function() {
+              console.log('The value is: ' + i);
+            }, 500);
+          })(i);
+        }
+      }
+      createTimeoutLoop();
+      //
+      // NEW QUESTION
+      //
+
+      // Create a Person object with 2 methods, "setName" and "printName"
+      // that can be chained so that the code below can be run successfully.
+
+      //////////////////////////////
+      // ENTER YOUR SOLUTION HERE //
+      //////////////////////////////
+      class Person {
+        constructor(name) {
+          this.name = name;
+        }
+        printName() {
+          console.log(` ${this.name} `);
+          return this;
+        }
+        setName(name) {
+          this.name = name;
+          return this;
+        }
+      }
+
+      // Uncomment this code when you are ready:
+      var person = new Person("Jill");
+      person.printName().setName("Tom").printName();
+      // This should output "Jill" and then "Tom" in the console.
+
+      //
+      // NEW QUESTION
+      //
+
+      // Imagine you have a button and you want to ensure the click handler
+      // is not fired more than once in a short period of time.
+      // Write a function that only allows the logMessage function to be fired
+      // after handleClick has not been called for 1000ms.
+
+      // Uncomment this code when you are ready:
+      const logMessage = (event) => { console.log('Function fired!') }
+      let handle;
+      const callOnceAfter = (fn, time) => {
+        //////////////////////////////
+        // ENTER YOUR SOLUTION HERE //
+        //////////////////////////////
+        // debounce logic
+        return function() {
+          if (handle) {
+            clearTimeout(handle)
+          }
+          handle = setTimeout(fn, time);
+        }
+      }
+
+      const handleClick = callOnceAfter(logMessage, 1000)
+      handleClick();
+      handleClick();
+      handleClick()
+      handleClick()
+
+      // After 1000 ms has elapsed since the last call
+      // "Function fired!" should be printed to the console
+
     </script>
   </head>
   <body>

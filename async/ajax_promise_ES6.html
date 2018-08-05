@@ -51,6 +51,7 @@
     //A way to keep track when all async calls are completed (running async fns in parallel, but we'll know when all are done)
     var promises = urls.map(url => get(url));
 
+    // Running multiple promises in parallel using Promise.all()
     Promise.all(promises).then((data) => {
       // returned data is an array of all resolves
       console.log(data.toString());
@@ -58,6 +59,35 @@
     }, (err) => {
       // error occurred
     });
+
+    //Running multiple promises in sequence without hardcoding each promise
+
+    (function () {
+      function asyncFunc(num) {
+        return new Promise((res, rej) => {
+          setTimeout(() => {
+            res(num);
+          }, Math.floor(Math.random() * 2000));
+        });
+
+      }
+
+      const arr = [1, 2, 3, 4, 5];
+
+      function workMyCollection(arr) {
+        return arr.reduce((promise, item) => {
+          return promise
+            .then((result) => {
+              return asyncFunc(item).then(result => {
+                console.log(`done ${item} ${result}`);
+              })
+            })
+            .catch(console.error);
+        }, Promise.resolve());
+      }
+
+      workMyCollection(arr);
+    })();
 
 
 

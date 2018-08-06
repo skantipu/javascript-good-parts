@@ -61,8 +61,8 @@
           if (this.head.value === val) {
             return this.removeFromHead();
           }
-          let node = this.head;
-          let prev = this.head;
+          let node = this.head.next;
+          let prev = this.head.next;
           while (node) {
             if (node.value === val) {
               prev.next = node.next;
@@ -96,13 +96,14 @@
       .addToHead(50)
       .addToHead(60)
       .addToHead(70)
-      .removeFromHead();
+      .removeFromHead(); // 70 removed
     console.log(sll);
 
-    console.log('70 --> ', sll.find(70));
+    console.log('70 --> ', sll.find(70)); // not found
     console.log('60 --> ', sll.find(60));
     console.log('50 --> ', sll.find(50));
     console.log('10 --> ', sll.find(10));
+    console.log('20 --> ', sll.find(20));
     sll.remove(60);
     console.log('60 --> ', sll, sll.find(60));
   })();

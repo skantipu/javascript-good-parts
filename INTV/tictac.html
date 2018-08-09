@@ -64,39 +64,32 @@
               const row = index[0];
               const col = index[1];
               updateData(row, col, 'user');
-              checkUserWin(row, col);
+              checkWin(row, col, 'user');
             }
-            function checkUserWin(rowId, colId) {
-              if (rowCheckPassed(rowId, 'user') || colCheckPassed(colId, 'user') || diagnolCheckPasssed('user')) {
+            function checkWin(rowId, colId, context = 'computer') {
+              if (rowCheckPassed(rowId, context) || colCheckPassed(colId, context) || diagnolCheckPasssed(context)) {
                 setTimeout(() => {
-                  alert('user won');
-                },100);
-              }
-            }
-            function checkComputerWin(rowId, colId) {
-              if (rowCheckPassed(rowId) || colCheckPassed(colId) || diagnolCheckPasssed()) {
-                setTimeout(() => {
-                  alert('computer won');
+                  alert(context + ' won');
                 },100);
               }
             }
             function sum(arr) {
               return arr.reduce((acc, elem) => acc + (elem || 0), 0);
             }
-            function rowCheckPassed(rowId, context = 'computer') {
+            function rowCheckPassed(rowId, context) {
               if (context === 'user') {
                 return sum(data[rowId]) === 3;
               }
               return sum(data[rowId]) === -3;
             }
-            function colCheckPassed(colId, context = 'computer') {
+            function colCheckPassed(colId, context) {
               const colArr = data.map(elem => elem[colId] || 0);
               if (context === 'user') {
                 return sum(colArr) === 3;
               }
               return sum(colArr) === -3;
             }
-            function diagnolCheckPasssed(context = 'computer') {
+            function diagnolCheckPasssed(context) {
                 const diagnol1 = data.map((elem, ind) => data[ind][ind] || 0);
                 const diagnol2 = data.map((elem, ind) => data[ind][data.length - ind - 1] || 0);
                 if (context === 'user') {
@@ -128,7 +121,7 @@
                   updateData(row, col);
                   const elem = document.querySelector(`[data-position='${res}']`);
                   elem.innerText = 'O';
-                  checkComputerWin(row, col);
+                  checkWin(row, col);
                 }
               });
             }

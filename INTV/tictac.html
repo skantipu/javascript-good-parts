@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .container .row {
+            display: flex;
+        }
+        .container .row div {
+            width: 50px;
+            height: 50px;
+            margin: 2px;  /* why not padding */
+            border: 1px solid black;
+            text-align: center;
+            line-height: 50px;
+            background: yellow;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+          const TicTac = (function() {
+            const boxes = document.querySelectorAll('.row div');
+            const data = [[], [], []];
+            const positionMap = {
+              0: [0, 0],
+              1: [0, 1],
+              2: [0, 2],
+              3: [1, 0],
+              4: [1, 1],
+              5: [1, 2],
+              6: [2, 0],
+              7: [2, 1],
+              8: [2, 2]
+            };
+            function init() {
+              boxes.forEach(box => {
+                box.onclick = function() {
+                  const content = this.innerText;
+                  if (!content) {
+                    //if it's an empty box
+                    this.innerHTML = 'X';
+                    handleUserClick(this.dataset.position);
+                    handleComputerClick();
+                  }
+                }
+              });
+            }
+            function updateData(row, col, context = 'computer') {
+              if (context === 'user') {
+                data[row][col] = 1;
+              } else {
+                data[row][col] = -1;
+              }
+            }
+            function handleComputerClick() {
+              computeRandom();
+            }
+            function handleUserClick(position) {
+              const index = positionMap[position];
+              const row = index[0];
+              const col = index[1];
+              updateData(row, col, 'user');
+              checkUserWin(row, col);
+            }
+            function checkUserWin(rowId, colId) {
+              if (rowCheckPassed(rowId, 'user') || colCheckPassed(colId, 'user') || diagnolCheckPasssed('user')) {
+                setTimeout(() => {
+                  alert('user won');
+                },100);
+              }
+            }
+            function checkComputerWin(rowId, colId) {
+              if (rowCheckPassed(rowId) || colCheckPassed(colId) || diagnolCheckPasssed()) {
+                setTimeout(() => {
+                  alert('computer won');
+                },100);
+              }
+            }
+            function sum(arr) {
+              return arr.reduce((acc, elem) => acc + (elem || 0), 0);
+            }
+            function rowCheckPassed(rowId, context = 'computer') {
+              if (context === 'user') {
+                return sum(data[rowId]) === 3;
+              }
+              return sum(data[rowId]) === -3;
+            }
+            function colCheckPassed(colId, context = 'computer') {
+              const colArr = data.map(elem => elem[colId] || 0);
+              if (context === 'user') {
+                return sum(colArr) === 3;
+              }
+              return sum(colArr) === -3;
+            }
+            function diagnolCheckPasssed(context = 'computer') {
+                const diagnol1 = data.map((elem, ind) => data[ind][ind] || 0);
+                const diagnol2 = data.map((elem, ind) => data[ind][data.length - ind - 1] || 0);
+                if (context === 'user') {
+                  return (sum(diagnol1) === 3 || sum(diagnol2) === 3);
+                }
+                return sum(diagnol1) === -3 || sum(diagnol2) === -3;
+            }
+            function httpReq() {
+              return new Promise((resolve, reject) => {
+                const xhttp = new XMLHttpRequest();
+                let movePosition;
+                xhttp.onreadystatechange = function () {
+                  if (this.readyState == 4 && this.status == 200) {
+                    movePosition = JSON.parse(JSON.parse(this.responseText))['move_position'];
+                    resolve(movePosition);
+                  }
+                }
+                xhttp.open('GET', 'https://zpj6onnvm5.execute-api.us-west-2.amazonaws.com/prod/getmove', true);
+                xhttp.send();
+              });
+            }
+            function computeRandom() {
+              httpReq().then(res => {
+                const row = positionMap[res][0];
+                const col = positionMap[res][1];
+                if(data[row][col]) { // if element exists
+                  return computeRandom();
+                } else {
+                  updateData(row, col);
+                  const elem = document.querySelector(`[data-position='${res}']`);
+                  elem.innerText = 'O';
+                  checkComputerWin(row, col);
+                }
+              });
+            }
+            return {
+              init
+            }
+          })();
+          TicTac.init();
+
+
+          /*
+          TODO:
+          with more time, I would do -
+
+          do putboard PUT API
+          refactoring to make algo work for variable rows/cols
+          documentation
+          make it more cleaner
+           */
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div data-position="0"></div>
+            <div data-position="1"></div>
+            <div data-position="2"></div>
+        </div>
+        <div class="row">
+            <div data-position="3"></div>
+            <div data-position="4"></div>
+            <div data-position="5"></div>
+        </div>
+        <div class="row">
+            <div data-position="6"></div>
+            <div data-position="7"></div>
+            <div data-position="8"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -24,6 +24,7 @@
         window.onload = function() {
           const TicTac = (function() {
             const boxes = document.querySelectorAll('.row div');
+            let winnerFound = false;
             const data = [[], [], []];
             const positionMap = {
               0: [0, 0],
@@ -40,11 +41,13 @@
               boxes.forEach(box => {
                 box.onclick = function() {
                   const content = this.innerText;
-                  if (!content) {
+                  if (!content && !winnerFound) {
                     //if it's an empty box
                     this.innerHTML = 'X';
                     handleUserClick(this.dataset.position);
-                    handleComputerClick();
+                    if (!winnerFound) {
+                      handleComputerClick();
+                    }
                   }
                 }
               });
@@ -68,6 +71,7 @@
             }
             function checkWin(rowId, colId, context = 'computer') {
               if (rowCheckPassed(rowId, context) || colCheckPassed(colId, context) || diagnolCheckPasssed(context)) {
+                winnerFound = true;
                 setTimeout(() => {
                   alert(context + ' won');
                 },100);

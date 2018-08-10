@@ -11,7 +11,7 @@
 <script>
   document.getElementById("myCheckbox").addEventListener("click", function(event){
     event.preventDefault()
-    // event.stopPropagation();  //uncomment and see
+    event.stopPropagation();  //uncomment and see. click on checkbox, and on label. remember you are stopping propagation only on checkbox click.
   });
   function runme() {
     alert(event + '  ' + typeof event);}

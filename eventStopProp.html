@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html>
 <body>
-<div onclick='runme()'>
-  <label for="myCheckbox">Try to check this box:</label> <input type="checkbox" id="myCheckbox">
+
+<p>The preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.</p>
+<p>The preventDefault() method does not prevent further propagation of an event through the DOM. Use the stopPropagation() method to handle this.</p>
+
+<div onclick="parent()">
+  <label for="myCheckbox">Try to check this box:</label>
+  <input type="checkbox" id="myCheckbox">
 </div>
 
-<p>Toggling a checkbox is the default action of clicking on a checkbox. The preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.</p>
-<p>The preventDefault() method does not prevent further propagation of an event through the DOM. Use the stopPropagation() method to handle this.</p>
+<br><br>
+<div id="inputBoxes">
+  <input type="text">
+</div>
+<button type="button" id="addInputBtn">Add one more</button>
 
 <script>
   document.getElementById("myCheckbox").addEventListener("click", function(event){
     event.preventDefault();
     event.stopPropagation();  //uncomment and see. click on checkbox, and on label. remember you are stopping propagation only on checkbox click.
   });
-  function runme() {
-    alert(event + '  ' + typeof event);}
+  function parent() {
+    alert(event + '  ' + typeof event);
+  }
+
+  document.getElementById("addInputBtn").addEventListener("click", function (event) {
+    const newInputElem = document.createElement("input");
+    newInputElem.setAttribute("type", "text"); //if attr exists, sets value, else creates
+    document.getElementById("inputBoxes").appendChild(newInputElem);
+  });
+
+  //disable tabbing between input fields (pressing tab - u wont be able to go to next field)
+  //** For dynamically created element, you should event delegation to handle event. Note how it's written - document.addEventListener(..)
+  // in jquery it's easier -  $(document).on('click','input',function(){//do something})
+
+  document.addEventListener("keydown", function (event) {
+    if (event.target && event.target.nodeName.toLowerCase() === 'input') {
+      const keyCode = event.keyCode || event.which;
+      if (keyCode === 9) {
+        event.preventDefault();
+      }
+    }
+  });
+
+
 </script>
 
 </body>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div onclick='runme()'>
+  <label for="myCheckbox">Try to check this box:</label> <input type="checkbox" id="myCheckbox">
+</div>
+
+<p>Toggling a checkbox is the default action of clicking on a checkbox. The preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.</p>
+<p>The preventDefault() method does not prevent further propagation of an event through the DOM. Use the stopPropagation() method to handle this.</p>
+
+<script>
+  document.getElementById("myCheckbox").addEventListener("click", function(event){
+    event.preventDefault()
+    // event.stopPropagation();  //uncomment and see
+  });
+  function runme() {
+    alert(event + '  ' + typeof event);}
+</script>
+
+</body>
+</html>

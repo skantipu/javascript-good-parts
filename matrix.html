@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix</title>
+    <script>
+       // given a matrix (2D Array) of size 9 * 9 (sizeX * sizeY), we have some helper methods.
+       // It will have positions from 1 - 81, so (getX(pos), getY(pos)) will return index in the matrix
+      (function(){
+        let sizeX = 9, sizeY = 9, min = 0, maxX = sizeX - 1, maxY = sizeY-1;
+        let x = Math.floor(Math.random() * sizeX);
+        let y = Math.floor(Math.random() * sizeY);
+
+        function getX(position) {
+          if (position > sizeX * sizeY) {
+            return;
+          }
+          return Math.floor((position - 1)/sizeY); // mind you it's sizeY here
+        }
+        function getY(position) {
+          if (position > sizeX * sizeY) {
+            return;
+          }
+          return (position - 1) % sizeY;
+        }
+        console.log(getX(1), getY(1))
+        console.log(getX(9), getY(9))
+        console.log(getX(10), getY(10))
+        console.log(getX(19), getY(19))
+        console.log(getX(81), getY(81))
+        console.log(getX(27), getY(27))
+
+        function clampX(num) {
+          return Math.min(Math.max(min, num), maxX);
+        }
+        function clampY(num) {
+          return Math.min(Math.max(min, num), maxY);
+        }
+        function getAdjacents(x, y) {
+          for (let i = clampX(x-1); i <= clampX(x+1); i++) {
+            for (let j=clampY(y-1); j <= clampY(y+1); j++) {
+              if (i == x && j == y) continue;
+              console.log(i,j);
+            }
+          }
+        }
+        console.log('-----Adjacents----------- for', x, y);
+        console.log(getAdjacents(x, y));
+
+      })();
+    </script>
+</head>
+<body>
+
+</body>
+</html>

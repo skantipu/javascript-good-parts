@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MineSweeper</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      #mine-sweeper .row {
+        display: flex;
+      }
+      #mine-sweeper .row div {width: 20px;
+        height: 20px;
+        margin: 2px;
+        border: 1px solid black;
+        text-align: center;
+        line-height: 20px;
+        background: lightgrey;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        const Minesweeper = (function(){
+          let sizeX, sizeY, numberOfMines;
+          const data = [];
+          const randArray = [];
+          let x = Math.floor(Math.random() * sizeX);
+          let y = Math.floor(Math.random() * sizeY);
+
+          function init(x, y, n) {
+            sizeX = x;
+            sizeY = y;
+            numberOfMines = n;
+            if (numberOfMines > (sizeX * sizeY)) {
+              alert('number of mines cannot exceed total number of available slots');
+            }
+            for (let i = 0; i < sizeX; i++) {
+              data.push([]);
+            }
+            for (let i = 0; i < numberOfMines; i++) {
+              randArray.push(getRandom());
+            }
+            createDOM();
+          }
+          function getRandom() {
+            const rand = Math.ceil(Math.random() * (sizeX * sizeY));
+            if (randArray.indexOf(rand) !== -1) {
+              return getRandom(); // return stmt is important here
+            }
+            return rand;
+          }
+          function createDOM() {
+            const container = document.getElementById('mine-sweeper');
+            for (let i = 0; i < sizeX; i++) {
+              const div = document.createElement('div');
+              div.classList.add('row');
+              container.appendChild(div);
+            }
+            const rows = document.getElementsByClassName('row');
+            for (let i = 0; i < rows.length; i++) {
+              for (let j = 1; j <= sizeY; j++) {
+                const div = document.createElement('div');
+                div.setAttribute('data-position', (sizeY * i) + j);
+                rows[i].appendChild(div);
+              }
+            }
+          }
+          function getX(position) {
+            return Math.floor((position - 1)/sizeY);
+          }
+          function getY(position) {
+            return (position - 1) % sizeY;
+          }
+          function clampX(num) {
+            const maxX = sizeX - 1;
+            return Math.min(Math.max(0, num), maxX);
+          }
+          function clampY(num) {
+            const maxY = sizeY - 1;
+            return Math.min(Math.max(0, num), maxY);
+          }
+          function getAdjacents(x, y) {
+            for (let i = clampX(x-1); i <= clampX(x+1); i++) {
+              for (let j=clampY(y-1); j <= clampY(y+1); j++) {
+                if (i == x && j == y) continue;
+                console.log(i,j);
+              }
+            }
+          }
+          return {
+            init
+          };
+
+        })();
+        Minesweeper.init(9, 9, 1);
+      }
+
+    </script>
+</head>
+<body>
+  <div id="mine-sweeper">
+
+  </div>
+</body>
+</html>

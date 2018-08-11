@@ -1,0 +1,128 @@
+<!-- Deep clone using vanilla JS (recursion) -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Object Clone</title>
+    <script>
+      window.onload = function () {
+        var obj = {
+          name: "Sachin",
+          age: 23,
+          address: {
+            state: 'CA',
+            lane: {
+              landmark: "Rangoli",
+              stores: ['biglots', 'lucky']
+            }
+          },
+          getAge: function () {
+            return this.age;
+          }
+        }
+
+        var obj2 = obj; //now obj has one more reference - obj2, both point to the same objects. Object work by reference and are mutable.
+        //  obj2.age = 24; //now obj.age will also result 24
+
+        /*
+         function copy(obj) {
+           var obj2 = {};
+           for(var key in obj) {
+            obj2[key] = obj[key];
+           }
+           return obj2;  //problem is nested objects in obj2 still point to the original object obj. So recursion is the solution.
+         }
+         */
+        function copy(obj) {
+          if (typeof obj !== "object" || Array.isArray(obj)) {
+            return obj;
+          }
+          var obj2 = {};
+          for (var key in obj) {
+            obj2[key] = copy(obj[key]);
+          }
+          return obj2;
+        }
+
+        var newObj = copy(obj);
+        console.log(newObj);
+
+        var newObj2 = JSON.parse(JSON.stringify(obj))
+
+        //similar problem solved using recursion in yahoo.html in INTV longestString()
+
+        //Array deep copy
+        var a = [1, 2, 3, 4, [5, 6]];
+        // var test = a; //both 'test' and 'a' point to the same array 'a'
+        var b = Array.prototype.slice.call(a);
+        var c = JSON.parse(JSON.stringify(a));
+        c[0] = 10;
+        b[0] = 4;
+        console.log(a, b, c);
+
+        //without using above tricks
+        function cloneDeep(arr) {
+          if (!Array.isArray(arr)) {
+            return arr;
+          }
+          var a = [];
+          for (var i = 0; i < arr.length; i++) {
+            a[i] = cloneDeep(arr[i]);
+          }
+          return a;
+        }
+
+        var d = cloneDeep(a);
+        console.log(d);
+
+        // deep clone object
+
+        (function () {
+          let obj = {
+            name: {
+              first: 'sachin',
+              last: 'kantipudi',
+              misc: {
+                otherName: 'n/a',
+                initial: 's'
+              }
+            },
+            age: 28
+          }
+          // let newObj = Object.assign({}, obj);
+
+          // let newObj = {...obj};
+
+          // problem with above two approaches - does not work for deep clone. It only copies property values. If the source value is a reference to an object, it only copies that reference value.
+
+          // let newObj = JSON.parse(JSON.stringify(obj)); // works great for deep clone. but problem is it does not work well for Date() objects. JSON.stringify coverts date object into ISO string and parse() does not convert it back to date object.
+
+          // so recursive solution.
+
+          function deepClone(obj) {
+            let newObj = {};
+            for (let key in obj) {
+              if (typeof obj[key] === 'object') {
+                newObj[key] = deepClone(obj[key]);
+              } else {
+                newObj[key] = obj[key];
+              }
+            }
+            return newObj;
+          }
+
+          let newObj = deepClone(obj);
+          newObj.age = 30;
+          newObj.name.first = 'ram';
+          newObj.name.misc.initial = 'r'
+
+          console.log('newObj', newObj);
+          console.log('obj', obj);
+        })();
+      }
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -21,4 +21,5 @@ MVC framework use - think it's an overkill for this requirement, did not use on 
 better UX - more fun and cool, more animations
 variable timer
 current clicked node indication on the UI
+module bundling (webpack) and task running
  */

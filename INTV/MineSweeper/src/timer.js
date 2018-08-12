@@ -14,15 +14,16 @@ const Timer = (function () {
     futureTimerDate = new Date().getTime() + totalTime * 60000;
     timerDiv.innerText = `${totalTime} : 00`;
     handle = setInterval(function () {
-      let timeDiff = futureTimerDate - new Date().getTime();
+      const timeDiff = futureTimerDate - new Date().getTime();
       let minutes = Math.floor(timeDiff / 60000);
       let seconds = Math.round((timeDiff / 1000) % 60);
-      timerDiv.innerText = `${minutes} : ${seconds}`;
       if (minutes + seconds <= 0) {
-        resetTimer();
         clearInterval(handle);
         Minesweeper.errorMsgHandler('Sorry, time out, game over. Better luck next time!');
+        minutes = 0;
+        seconds = 0;
       }
+      timerDiv.innerText = `${minutes} : ${seconds}`;
     }, 1000);
   }
 

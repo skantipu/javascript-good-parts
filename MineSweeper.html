@@ -69,15 +69,12 @@
             sizeX = x;
             sizeY = y;
             numberOfMines = n;
-            if (numberOfMines > (sizeX * sizeY)) {
-              alert('number of mines cannot exceed total number of available slots');
-            }
             clearData();
             createDOM();
             setRandomMineSlots();
             setMinesData();
             handleClick();
-            revealMines();
+            // revealMines();
           }
           function setMinesData() {
             for (let i = 0; i < sizeX; i++) {
@@ -116,6 +113,7 @@
             container.innerHTML = '';
             data = [];
             randomMines = [];
+            gameOver = false;
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.innerText = '';
             errorDiv.classList.add('hide');
@@ -146,7 +144,7 @@
               if (data[x][y]) {
                 // square contains mine
                 gameOver = true;
-                alert('user lost');
+                document.getElementById('errorMessage').innerText = 'Sorry that you lost! Better luck next time!';
                 revealMines();
               } else {
                 const neighbors = getAdjacents(x, y);
@@ -173,7 +171,7 @@
           function checkUserWin() {
             const openedDivs = document.querySelectorAll('.row div.opened');
             if (openedDivs.length + randomMines.length === (sizeX * sizeY)) {
-              alert('user won', openedDivs.length, randomMines.length);
+              document.getElementById('errorMessage').innerText = 'Congrats! You won!!';
             }
           }
           function handleClick() {
@@ -191,7 +189,7 @@
             return (position - 1) % sizeY;
           }
           function getPosition(x, y) {
-            return x * sizeX + y + 1;
+            return (x) * sizeY + y + 1;
           }
           function clampX(num) {
             const maxX = sizeX - 1;
@@ -220,8 +218,11 @@
           const rowVal = Number(document.getElementById('rowCount').value);
           const colVal = Number(document.getElementById('colCount').value);
           const mines = Number(document.getElementById('mineCount').value);
+          const errorMsgElm = document.getElementById('errorMessage');
           if (!rowVal || !colVal || !mines) {
-            document.getElementById('errorMessage').innerText = 'Please enter all the three input values.'
+            errorMsgElm.innerText = 'Please enter all the three input values.'
+          } else if (mines > (rowVal * colVal)) {
+            errorMsgElm.innerText = 'Number of mines cannot exceed total number of available slots';
           } else {
             Minesweeper.init(rowVal, colVal, mines);
           }
@@ -233,11 +234,11 @@
   <section id="userInput">
     <div class="item-row">
       <label for="rowCount">Enter number of grid rows: </label>
-      <input id="rowCount" placeholder="between 1 and 20" type="number">
+      <input id="rowCount" placeholder="rows" type="number">
     </div>
     <div class="item-row">
       <label for="colCount">Enter number of grid columns: </label>
-      <input id="colCount" placeholder="between 1 and 20" type="number">
+      <input id="colCount" placeholder="columns" type="number">
     </div>
     <div class="item-row">
       <label for="mineCount">Enter number of mines: </label>

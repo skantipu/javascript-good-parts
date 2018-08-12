@@ -9,6 +9,6 @@ document.getElementById('generateBtn').addEventListener('click', function (event
     Minesweeper.errorMsgHandler('Number of mines cannot exceed total number of available slots.');
   } else {
     Minesweeper.init(rowVal, colVal, mines);
-    Timer.init(1);
+    Timer.init(5);
   }
 });

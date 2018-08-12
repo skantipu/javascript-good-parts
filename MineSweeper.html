@@ -48,8 +48,28 @@
     </style>
     <script>
       window.onload = function () {
-        const timer = (function() {
-
+        const Timer = (function() {
+          // add 5 minutes to current time
+          let futureTimerDate;
+          let handle;
+          const timerDiv = document.getElementById('timer');
+          function setTime(totalTime) {
+            futureTimerDate =  new Date().getTime() + totalTime * 60000;
+            timerDiv.innerText = `${totalTime} : 00`;
+            handle = setInterval(function() {
+              let timeDiff = futureTimerDate - new Date().getTime();
+              let minutes = Math.floor(timeDiff / 60000);
+              let seconds = Math.round((timeDiff / 1000) % 60);
+              timerDiv.innerText = `${minutes} : ${seconds}`;
+              if (minutes + seconds === 0) {
+                clearInterval(handle);
+                Minesweeper.errorMsgHandler('Sorry, time out, game over. Better luck next time!');
+              }
+            }, 1000);
+          }
+          return {
+            init: setTime
+          };
         })();
         const Minesweeper = (function(){
           let sizeX, sizeY, numberOfMines;
@@ -116,14 +136,15 @@
           function handleErrorMessage(msg, state = 'open') {
             errorDiv.innerText = msg;
             state === 'hide' ? errorDiv.classList.add('hide') : errorDiv.classList.remove('hide');
+            gameOver = true;
           }
           function clearData() {
             const container = document.getElementById('mineSweeper');
             container.innerHTML = '';
             data = [];
             randomMines = [];
-            gameOver = false;
             handleErrorMessage('', 'hide');
+            gameOver = false;
           }
           function createDOM() {
             const container = document.getElementById('mineSweeper');
@@ -150,7 +171,6 @@
 
               if (data[x][y]) {
                 // square contains mine
-                gameOver = true;
                 handleErrorMessage('Sorry that you lost! Game over, better luck next time!');
                 revealMines();
               } else {
@@ -178,7 +198,6 @@
           function checkUserWin() {
             const openedDivs = document.querySelectorAll('.row div.opened');
             if (!gameOver && openedDivs.length + randomMines.length === (sizeX * sizeY)) {
-              gameOver = true;
               handleErrorMessage("Congrats!!! You won!! Game over, we'd love to see you again!!");
               revealMines();
             }
@@ -236,6 +255,7 @@
             Minesweeper.errorMsgHandler('Number of mines cannot exceed total number of available slots.');
           } else {
             Minesweeper.init(rowVal, colVal, mines);
+            Timer.init(5);
           }
         });
       }
@@ -259,9 +279,10 @@
       <button type="button" id="generateBtn">Generate</button>
     </div>
   </section>
-  <div class="item-row" id="errorMessage">
-
+  <div class="item-row">
+    Timer: <span id="timer"></span>
   </div>
+  <div class="item-row" id="errorMessage"></div>
   <section id="mineSweeper">
   </section>
 </body>

@@ -38,21 +38,27 @@
         background: white;
       }
       #userInput  { display: table; margin-bottom: 5px }
-      div.item-row  { display: table-row; height: 25px; transition: display 1s linear }
+      div.item-row  { display: table-row; height: 25px; transition: visibility 1s linear }
       label { display: table-cell; width: 230px; }
       input { display: table-cell; }
-      #errorMessage { color: red; }
+      #errorMessage { color: darkorange; }
       div.item-row.hide {
-        display: none;
+        visibility: hidden;
       }
     </style>
     <script>
       window.onload = function () {
+        /**
+         * Timer module to keep track of time countdown, and when it is up, you end the game
+         */
         const Timer = (function() {
-          // add 5 minutes to current time
           let futureTimerDate;
           let handle;
           const timerDiv = document.getElementById('timer');
+
+          function stopTimer() {
+            clearInterval(handle);
+          }
           function setTime(totalTime) {
             futureTimerDate =  new Date().getTime() + totalTime * 60000;
             timerDiv.innerText = `${totalTime} : 00`;
@@ -61,16 +67,20 @@
               let minutes = Math.floor(timeDiff / 60000);
               let seconds = Math.round((timeDiff / 1000) % 60);
               timerDiv.innerText = `${minutes} : ${seconds}`;
-              if (minutes + seconds === 0) {
+              if (minutes + seconds <= 0) {
+                resetTimer();
                 clearInterval(handle);
                 Minesweeper.errorMsgHandler('Sorry, time out, game over. Better luck next time!');
               }
             }, 1000);
           }
+
           return {
-            init: setTime
+            init: setTime,
+            stopTimer
           };
         })();
+
         const Minesweeper = (function(){
           let sizeX, sizeY, numberOfMines;
           let data = []; // 1 indicates mine present ex: data = [[0,0,1,0,], [...]]
@@ -96,11 +106,15 @@
             numberOfMines = n;
             clearData();
             createDOM();
-            setRandomMineSlots();
+            generateRandomPositions();
             setMinesData();
             handleClick();
-            //revealMines();
+            //revealMines(); //for testing sake
           }
+
+          /**
+           * Method to set 'data' with randomly generated number of mines as input by user. 1 indicates mine, 0 indicates otherwise.
+           */
           function setMinesData() {
             for (let i = 0; i < sizeX; i++) {
               data.push([]);
@@ -114,11 +128,19 @@
               data[x][y] = 1;
             }
           }
-          function setRandomMineSlots() {
+
+          /**
+           * Method to generate an array of unique random positions to set mines in it
+           */
+          function generateRandomPositions() {
             for (let i = 0; i < numberOfMines; i++) {
               randomMines.push(getRandom());
             }
           }
+
+          /**
+           * Method to show mines in the game when user wins or loses a game
+           */
           function revealMines() {
             for (let mine of randomMines) {
               const div = document.querySelector(`[data-position='${mine}']`);
@@ -126,6 +148,10 @@
               div.innerHTML = '<i class="fa fa-bomb"></i>';
             }
           }
+          
+          /**
+           * Method to get a unique random number that is not already chosen
+           */
           function getRandom() {
             const rand = Math.ceil(Math.random() * (sizeX * sizeY));
             if (randomMines.indexOf(rand) !== -1) {
@@ -133,19 +159,35 @@
             }
             return rand;
           }
-          function handleErrorMessage(msg, state = 'open') {
+
+          /**
+           * Method to handle showing/hiding of message (error, success etc) to the user
+           * @param msg - message to display
+           * @param state - show/hide
+           */
+          function handleMessage(msg, state = 'open') {
             errorDiv.innerText = msg;
             state === 'hide' ? errorDiv.classList.add('hide') : errorDiv.classList.remove('hide');
             gameOver = true;
+            Timer.stopTimer();
           }
+
+          /**
+           * Method to reset the data every time user clicks 'generate' button i.e., when user plays a new game.
+           */
           function clearData() {
             const container = document.getElementById('mineSweeper');
             container.innerHTML = '';
             data = [];
             randomMines = [];
-            handleErrorMessage('', 'hide');
+            handleMessage('', 'hide');
             gameOver = false;
           }
+
+          /**
+           * Method to create minesweeper game squares on the UI dynamically based on number of rows (sizeX) and number
+           * of columns (sizeY) as input by user
+           */
           function createDOM() {
             const container = document.getElementById('mineSweeper');
             for (let i = 0; i < sizeX; i++) {
@@ -162,6 +204,11 @@
               }
             }
           }
+
+          /**
+           * Method to handle flow when user clicks on a square (that is not already clicked). It handles 3 conditions
+           * as mentioned in the problem statement
+           */
           function clickSquare() {
             if (!gameOver && !this.classList.contains('opened')) {
               this.classList.add('opened');
@@ -171,7 +218,7 @@
 
               if (data[x][y]) {
                 // square contains mine
-                handleErrorMessage('Sorry that you lost! Game over, better luck next time!');
+                handleMessage('Sorry that you lost! Game over, better luck next time!');
                 revealMines();
               } else {
                 const neighbors = getAdjacents(x, y);
@@ -195,13 +242,18 @@
               checkUserWin();
             }
           }
+
+          /**
+           * Method to check if user won
+           */
           function checkUserWin() {
             const openedDivs = document.querySelectorAll('.row div.opened');
             if (!gameOver && openedDivs.length + randomMines.length === (sizeX * sizeY)) {
-              handleErrorMessage("Congrats!!! You won!! Game over, we'd love to see you again!!");
+              handleMessage("Congrats!!! You won!! Game over, we'd love to see you again!!");
               revealMines();
             }
           }
+
           function handleClick() {
             const squares = document.querySelectorAll('.row div');
             for (let square of squares) {
@@ -210,36 +262,67 @@
               });
             }
           }
+
+          /**
+           * Method to get row index of position in the 'data' array
+           * @param position - takes value between 1 and sizeX * sizeY
+           * @returns {number}
+           */
           function getX(position) {
             return Math.floor((position - 1)/sizeY);
           }
+
+          /**
+           * Method to get column index of position in the 'data' array
+           * @param position - takes value between 1 and sizeX * sizeY
+           * @returns {number}
+           */
           function getY(position) {
             return (position - 1) % sizeY;
           }
+
+          /**
+           * Method to get position value from (row, column) index value
+           * @param x - between 0 and sizeX-1
+           * @param y - between 0 and sizeY-1
+           * @returns {number} - position value between 1 and sizeX * sizeY
+           */
           function getPosition(x, y) {
             return (x) * sizeY + y + 1;
           }
-          function clampX(num) {
-            const maxX = sizeX - 1;
+
+          /**
+           * Method to clamp a value to the range 0 - (sizeX-1)
+           * @param num
+           * @returns {number}
+           */
+          function clamp(num, max) {
+            const maxX = max - 1;
             return Math.min(Math.max(0, num), maxX);
           }
-          function clampY(num) {
-            const maxY = sizeY - 1;
-            return Math.min(Math.max(0, num), maxY);
-          }
+
+          /**
+           * Method to get neighbor node indexes
+           * @param x - row index of clicked node
+           * @param y - column index of clicked node
+           * @returns {Array} - adjacent nodes (max can be 8)
+           */
           function getAdjacents(x, y) {
             const neighbours = [];
-            for (let i = clampX(x-1); i <= clampX(x+1); i++) {
-              for (let j=clampY(y-1); j <= clampY(y+1); j++) {
-                if (i === x && j === y) continue;
-                  neighbours.push([i, j, getPosition(i, j)]);
+            for (let i = clamp(x-1, sizeX); i <= clamp(x+1, sizeX); i++) {
+              for (let j = clamp(y-1, sizeY); j <= clamp(y+1, sizeY); j++) {
+                if (i === x && j === y) {
+                  continue;
+                }
+                neighbours.push([i, j, getPosition(i, j)]);
               }
             }
             return neighbours;
           }
+
           return {
             init,
-            errorMsgHandler: handleErrorMessage
+            errorMsgHandler: handleMessage
           };
 
         })();
@@ -255,9 +338,16 @@
             Minesweeper.errorMsgHandler('Number of mines cannot exceed total number of available slots.');
           } else {
             Minesweeper.init(rowVal, colVal, mines);
-            Timer.init(5);
+            Timer.init(1);
           }
         });
+
+        /**
+         * TODO with more time
+         * 1) better UX with more cool, nice looking stuff
+         * 2) use a framework, but for this problem, I think it's an overkill, adds an extra dependency to download
+         * 3) indicate current node that is clicked
+         */
       }
     </script>
 </head>

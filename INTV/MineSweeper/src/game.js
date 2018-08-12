@@ -1,6 +1,6 @@
 const Minesweeper = (function () {
   let sizeX, sizeY, numberOfMines;
-  let data = []; // 1 indicates mine present ex: data = [[0,0,1,0,], [...]]
+  let mineMap = {}; // sample: {21: 1, 3: 1, 6: 1} mines are present in the positions 21, 6, 3
   let randomMines = [];
   let gameOver = false;
   const errorDiv = document.getElementById('errorMessage');
@@ -14,8 +14,6 @@ const Minesweeper = (function () {
     7: 'HOTPINK',
     8: 'LIGHTSALMON'
   };
-  let x = Math.floor(Math.random() * sizeX);
-  let y = Math.floor(Math.random() * sizeY);
 
   function init(x, y, n) {
     sizeX = x;
@@ -23,36 +21,33 @@ const Minesweeper = (function () {
     numberOfMines = n;
     clearData();
     createDOM();
-    generateRandomPositions();
-    setMinesData();
+    setMines();
     handleClick();
     // revealMines(); //for testing sake
   }
 
   /**
-   * Method to set 'data' with randomly generated number of mines as input by user. 1 indicates mine, 0 indicates otherwise.
+   * Method to set 'mineMap' with mines data
    */
-  function setMinesData() {
-    for (let i = 0; i < sizeX; i++) {
-      data.push([]);
-      for (let j = 0; j < sizeY; j++) {
-        data[i].push(0);
-      }
+  function setMines() {
+    // set randomMines array with unique list of randomly chosen positions
+    for (let i = 0; i < numberOfMines; i++) {
+      randomMines.push(getRandom());
     }
     for (let pos of randomMines) {
-      const x = getX(pos);
-      const y = getY(pos);
-      data[x][y] = 1;
+      mineMap[pos] = 1;
     }
   }
 
   /**
-   * Method to generate an array of unique random positions to set mines in it
+   * Method to get a unique random number that is not already chosen
    */
-  function generateRandomPositions() {
-    for (let i = 0; i < numberOfMines; i++) {
-      randomMines.push(getRandom());
+  function getRandom() {
+    const rand = Math.ceil(Math.random() * (sizeX * sizeY));
+    if (randomMines.indexOf(rand) !== -1) {
+      return getRandom();
     }
+    return rand;
   }
 
   /**
@@ -68,17 +63,6 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to get a unique random number that is not already chosen
-   */
-  function getRandom() {
-    const rand = Math.ceil(Math.random() * (sizeX * sizeY));
-    if (randomMines.indexOf(rand) !== -1) {
-      return getRandom();
-    }
-    return rand;
-  }
-
-  /**
    * Method to handle showing/hiding of message (error, success etc) to the user
    * @param msg - message to display
    * @param state - show/hide
@@ -91,12 +75,12 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to reset the data every time user clicks 'generate' button i.e., when user plays a new game.
+   * Method to reset the mineMap and other data every time user clicks 'generate' button i.e., when user plays a new game.
    */
   function clearData() {
     const container = document.getElementById('mineSweeper');
     container.innerHTML = '';
-    data = [];
+    mineMap = {};
     randomMines = [];
     handleMessage('', 'hide');
     gameOver = false;
@@ -130,29 +114,23 @@ const Minesweeper = (function () {
   function clickSquare() {
     if (!gameOver && !this.classList.contains('opened')) {
       this.classList.add('opened');
-      const pos = this.dataset.position;
-      const x = getX(pos);
-      const y = getY(pos);
+      const clickedNodePosition = this.dataset.position;
 
-      if (data[x][y]) {
+      if (mineMap.hasOwnProperty(clickedNodePosition)) {
         // square contains mine
         handleMessage('Sorry that you lost! Game over, better luck next time!');
         revealMines();
       } else {
-        const neighbors = getAdjacents(x, y);
-        let adjacentMines = 0;
-        for (let square of neighbors) {
-          adjacentMines += data[square[0]][square[1]];
-        }
+        const neighborPositions = getAdjacents(clickedNodePosition);
+        let adjacentMines = neighborPositions.reduce((acc, pos) => acc + (mineMap[pos] || 0), 0);
         if (adjacentMines > 0) {
           this.innerText = adjacentMines;
           this.style.color = colorMap[adjacentMines];
         } else {
           // 3rd condition, no mine in it nor any adjacent mines
           this.classList.add('empty');
-          for (let square of neighbors) {
-            const pos = square[2];
-            const div = document.querySelector(`[data-position='${pos}']`);
+          for (let position of neighborPositions) {
+            const div = document.querySelector(`[data-position='${position}']`);
             clickSquare.call(div);
           }
         }
@@ -182,7 +160,7 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to get row index of position in the 'data' array
+   * Method to get row index of the position in the matrix
    * @param position - takes value between 1 and sizeX * sizeY
    * @returns {number}
    */
@@ -191,7 +169,7 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to get column index of position in the 'data' array
+   * Method to get column index of the position in the matrix
    * @param position - takes value between 1 and sizeX * sizeY
    * @returns {number}
    */
@@ -222,18 +200,19 @@ const Minesweeper = (function () {
 
   /**
    * Method to get neighbor node indexes
-   * @param x - row index of clicked node
-   * @param y - column index of clicked node
+   * @param pos - position of node (value between 1 and sizeX * sizeY)
    * @returns {Array} - adjacent nodes (max can be 8)
    */
-  function getAdjacents(x, y) {
+  function getAdjacents(pos) {
     const neighbours = [];
+    const x = getX(pos);
+    const y = getY(pos);
     for (let i = clamp(x - 1, sizeX); i <= clamp(x + 1, sizeX); i++) {
       for (let j = clamp(y - 1, sizeY); j <= clamp(y + 1, sizeY); j++) {
         if (i === x && j === y) {
           continue;
         }
-        neighbours.push([i, j, getPosition(i, j)]);
+        neighbours.push(getPosition(i, j));
       }
     }
     return neighbours;

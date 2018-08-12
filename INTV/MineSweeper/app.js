@@ -12,3 +12,13 @@ document.getElementById('generateBtn').addEventListener('click', function (event
     Timer.init(5);
   }
 });
+
+/*
+TODO
+unit testing
+internationalization of messages
+MVC framework use - think it's an overkill for this requirement, did not use on purpose
+better UX - more fun and cool, more animations
+variable timer
+current clicked node indication on the UI
+ */

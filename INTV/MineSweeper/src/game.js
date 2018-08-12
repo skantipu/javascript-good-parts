@@ -200,7 +200,7 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to get position value from (row, column) index value
+   * Method to get position value from row and column indices
    * @param x - between 0 and sizeX-1
    * @param y - between 0 and sizeY-1
    * @returns {number} - position value between 1 and sizeX * sizeY
@@ -210,9 +210,10 @@ const Minesweeper = (function () {
   }
 
   /**
-   * Method to clamp a value to the range 0 - (sizeX-1)
-   * @param num
-   * @returns {number}
+   * Method to clamp a value to a range, so it is not outside the range
+   * @param num - number to be clamped
+   * @param max - max in the range, min is 0
+   * @returns {number} - clamped number
    */
   function clamp(num, max) {
     const maxX = max - 1;

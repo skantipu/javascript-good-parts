@@ -37,7 +37,7 @@
         background: white;
       }
       #userInput  { display: table; margin-bottom: 5px }
-      div.item-row  { display: table-row; height: 25px; }
+      div.item-row  { display: table-row; height: 25px; transition: display 2s linear }
       label { display: table-cell; width: 230px; }
       input { display: table-cell; }
       #errorMessage { color: red; }
@@ -52,6 +52,7 @@
           let data = []; // 1 indicates mine present ex: data = [[0,0,1,0,], [...]]
           let randomMines = [];
           let gameOver = false;
+          const errorDiv = document.getElementById('errorMessage');
           const colorMap = {
             1: 'RED',
             2: 'PURPLE',
@@ -74,7 +75,7 @@
             setRandomMineSlots();
             setMinesData();
             handleClick();
-            // revealMines();
+            //revealMines();
           }
           function setMinesData() {
             for (let i = 0; i < sizeX; i++) {
@@ -108,15 +109,17 @@
             }
             return rand;
           }
+          function handleErrorMessage(msg, state = 'open') {
+            errorDiv.innerText = msg;
+            state === 'hide' ? errorDiv.classList.add('hide') : errorDiv.classList.remove('hide');
+          }
           function clearData() {
             const container = document.getElementById('mineSweeper');
             container.innerHTML = '';
             data = [];
             randomMines = [];
             gameOver = false;
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.innerText = '';
-            errorDiv.classList.add('hide');
+            handleErrorMessage('', 'hide');
           }
           function createDOM() {
             const container = document.getElementById('mineSweeper');
@@ -144,7 +147,7 @@
               if (data[x][y]) {
                 // square contains mine
                 gameOver = true;
-                document.getElementById('errorMessage').innerText = 'Sorry that you lost! Better luck next time!';
+                handleErrorMessage('Sorry that you lost! Better luck next time!');
                 revealMines();
               } else {
                 const neighbors = getAdjacents(x, y);
@@ -171,7 +174,7 @@
           function checkUserWin() {
             const openedDivs = document.querySelectorAll('.row div.opened');
             if (openedDivs.length + randomMines.length === (sizeX * sizeY)) {
-              document.getElementById('errorMessage').innerText = 'Congrats! You won!!';
+              handleErrorMessage('Congrats! You won!!');
             }
           }
           function handleClick() {
@@ -210,7 +213,8 @@
             return neighbours;
           }
           return {
-            init
+            init,
+            errorMsgHandler: handleErrorMessage
           };
 
         })();
@@ -220,9 +224,9 @@
           const mines = Number(document.getElementById('mineCount').value);
           const errorMsgElm = document.getElementById('errorMessage');
           if (!rowVal || !colVal || !mines) {
-            errorMsgElm.innerText = 'Please enter all the three input values.'
+            Minesweeper.errorMsgHandler('Please enter all the three input values.');
           } else if (mines > (rowVal * colVal)) {
-            errorMsgElm.innerText = 'Number of mines cannot exceed total number of available slots';
+            Minesweeper.errorMsgHandler('Number of mines cannot exceed total number of available slots.');
           } else {
             Minesweeper.init(rowVal, colVal, mines);
           }

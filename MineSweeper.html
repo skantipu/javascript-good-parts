@@ -24,11 +24,12 @@
         cursor: pointer;
         font-size: 12px;
         font-weight: bold;
-        -webkit-transition: background-color 1s linear, color 2s linear;
-        -moz-transition: background-color 1s linear, color 2s linear;
-        transition: background-color 1s linear, color 2s linear;
+        -webkit-transition: background-color 1s linear, color 1s linear;
+        -moz-transition: background-color 1s linear, color 1s linear;
+        transition: background-color 1s linear, color 1s linear;
         color: #D2D2D2;
         border: 1px solid #D2D2D2;
+        border-radius: 2px;
       }
       .row div.mine-clicked {
         color: black;
@@ -37,7 +38,7 @@
         background: white;
       }
       #userInput  { display: table; margin-bottom: 5px }
-      div.item-row  { display: table-row; height: 25px; transition: display 2s linear }
+      div.item-row  { display: table-row; height: 25px; transition: display 1s linear }
       label { display: table-cell; width: 230px; }
       input { display: table-cell; }
       #errorMessage { color: red; }
@@ -47,6 +48,9 @@
     </style>
     <script>
       window.onload = function () {
+        const timer = (function() {
+
+        })();
         const Minesweeper = (function(){
           let sizeX, sizeY, numberOfMines;
           let data = []; // 1 indicates mine present ex: data = [[0,0,1,0,], [...]]
@@ -132,7 +136,7 @@
             for (let i = 0; i < rows.length; i++) {
               for (let j = 1; j <= sizeY; j++) {
                 const div = document.createElement('div');
-                div.setAttribute('data-position', (sizeY * i) + j);
+                div.setAttribute('data-position', (sizeY * i + j).toString());
                 rows[i].appendChild(div);
               }
             }
@@ -147,7 +151,7 @@
               if (data[x][y]) {
                 // square contains mine
                 gameOver = true;
-                handleErrorMessage('Sorry that you lost! Better luck next time!');
+                handleErrorMessage('Sorry that you lost! Game over, better luck next time!');
                 revealMines();
               } else {
                 const neighbors = getAdjacents(x, y);
@@ -173,8 +177,10 @@
           }
           function checkUserWin() {
             const openedDivs = document.querySelectorAll('.row div.opened');
-            if (openedDivs.length + randomMines.length === (sizeX * sizeY)) {
-              handleErrorMessage('Congrats! You won!!');
+            if (!gameOver && openedDivs.length + randomMines.length === (sizeX * sizeY)) {
+              gameOver = true;
+              handleErrorMessage("Congrats!!! You won!! Game over, we'd love to see you again!!");
+              revealMines();
             }
           }
           function handleClick() {
@@ -206,7 +212,7 @@
             const neighbours = [];
             for (let i = clampX(x-1); i <= clampX(x+1); i++) {
               for (let j=clampY(y-1); j <= clampY(y+1); j++) {
-                if (i == x && j == y) continue;
+                if (i === x && j === y) continue;
                   neighbours.push([i, j, getPosition(i, j)]);
               }
             }
@@ -218,6 +224,7 @@
           };
 
         })();
+
         document.getElementById('generateBtn').addEventListener('click', function (event) {
           const rowVal = Number(document.getElementById('rowCount').value);
           const colVal = Number(document.getElementById('colCount').value);
@@ -251,10 +258,10 @@
     <div class="item-row">
       <button type="button" id="generateBtn">Generate</button>
     </div>
-    <div class="item-row" id="errorMessage">
-
-    </div>
   </section>
+  <div class="item-row" id="errorMessage">
+
+  </div>
   <section id="mineSweeper">
   </section>
 </body>

@@ -1,7 +1,6 @@
 const Minesweeper = (function () {
   let sizeX, sizeY, numberOfMines;
   let mineMap = {}; // sample: {21: 1, 3: 1, 6: 1} mines are present in the positions 21, 6, 3
-  let randomMines = [];
   let gameOver = false;
   const errorDiv = document.getElementById('errorMessage');
   const colorMap = {
@@ -30,12 +29,8 @@ const Minesweeper = (function () {
    * Method to set 'mineMap' with mines data
    */
   function setMines() {
-    // set randomMines array with unique list of randomly chosen positions
     for (let i = 0; i < numberOfMines; i++) {
-      randomMines.push(getRandom());
-    }
-    for (let pos of randomMines) {
-      mineMap[pos] = 1;
+      mineMap[getRandom()] = 1;
     }
   }
 
@@ -44,7 +39,7 @@ const Minesweeper = (function () {
    */
   function getRandom() {
     const rand = Math.ceil(Math.random() * (sizeX * sizeY));
-    if (randomMines.indexOf(rand) !== -1) {
+    if (mineMap.hasOwnProperty(rand)) {
       return getRandom();
     }
     return rand;
@@ -54,12 +49,11 @@ const Minesweeper = (function () {
    * Method to show mines in the game when user wins or loses a game
    */
   function revealMines() {
-    for (let mine of randomMines) {
+    for (let mine in mineMap) {
       const div = document.querySelector(`[data-position='${mine}']`);
       div.classList.add('mine-clicked');
       div.innerHTML = '<img class="bomb" src="img/bomb.png"></img>';
     }
-
   }
 
   /**
@@ -81,7 +75,6 @@ const Minesweeper = (function () {
     const container = document.getElementById('mineSweeper');
     container.innerHTML = '';
     mineMap = {};
-    randomMines = [];
     handleMessage('', 'hide');
     gameOver = false;
   }
@@ -144,7 +137,7 @@ const Minesweeper = (function () {
    */
   function checkUserWin() {
     const openedDivs = document.querySelectorAll('.row div.opened');
-    if (!gameOver && openedDivs.length + randomMines.length === (sizeX * sizeY)) {
+    if (!gameOver && openedDivs.length + Object.keys(mineMap).length === (sizeX * sizeY)) {
       handleMessage("Congrats!!! You won!! Game over, we'd love to see you again!!");
       revealMines();
     }

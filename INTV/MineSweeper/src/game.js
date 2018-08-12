@@ -26,7 +26,7 @@ const Minesweeper = (function () {
     generateRandomPositions();
     setMinesData();
     handleClick();
-    //revealMines(); //for testing sake
+    // revealMines(); //for testing sake
   }
 
   /**
@@ -73,7 +73,7 @@ const Minesweeper = (function () {
   function getRandom() {
     const rand = Math.ceil(Math.random() * (sizeX * sizeY));
     if (randomMines.indexOf(rand) !== -1) {
-      return getRandom(); // return stmt is important here
+      return getRandom();
     }
     return rand;
   }

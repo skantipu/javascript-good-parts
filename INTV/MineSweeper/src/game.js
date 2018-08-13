@@ -14,10 +14,14 @@ const Minesweeper = (function () {
     8: 'LIGHTSALMON'
   };
 
-  function init(x, y, n) {
+  function initState(x, y, n) {
     sizeX = x;
     sizeY = y;
     numberOfMines = n;
+  }
+
+  function init(x, y, n) {
+    initState(x, y, n);
     clearData();
     createDOM();
     setMines();
@@ -184,7 +188,7 @@ const Minesweeper = (function () {
    * Method to clamp a value to a range, so it is not outside the range
    * @param num - number to be clamped
    * @param max - max in the range, min is 0
-   * @returns {number} - clamped number
+   * @returns {number} - clamped number between (0, max-1)
    */
   function clamp(num, max) {
     const maxX = max - 1;
@@ -213,7 +217,17 @@ const Minesweeper = (function () {
 
   return {
     init,
-    errorMsgHandler: handleMessage
+    errorMsgHandler: handleMessage,
+    test: {
+      initState,
+      clamp,
+      getX,
+      getY,
+      getPosition,
+      getAdjacents,
+      getRandom,
+      setMines
+    }
   };
 
 })();

@@ -280,6 +280,118 @@
       CSS grid layout **
        */
 
+      //informatica - object equality with nested objects, arrays, func how to test
+      //informatica
+
+      (function(){
+        class NumberCollection {
+          constructor(){
+            // initialize any internal variables for NumberCollection class
+            this.elementColMap = {};
+            this.min = Number.MAX_SAFE_INTEGER;
+            this.max = Number.MIN_SAFE_INTEGER;
+          }
+          /**
+           * Adds the element into the NumberCollection. Duplicates will be ignored.
+           */
+          addElement (element) {
+            if (!Object.hasOwnProperty(element)) {
+              this.elementColMap[element] = element;
+              if (element < this.min) {
+                this.min = element;
+              }
+              if (element > this.max) {
+                this.max = element;
+              }
+            }
+          }
+
+          /**
+           * Manipulates this NumberCollection so that it becomes the union between
+           * itself and input NumberCollection. The resulting this NumberCollection
+           * should contain unique numbers.
+           */
+          union (input){
+            //input.elementColMap = {2: 2, 3: 3, 6: 6, 8: 8};
+            for(const key in input.elementColMap) {
+              this.elementColMap[key] = key;
+            }
+          }
+
+          /**
+           * Returns a new NumberCollection contains elements that fall into the
+           * overlapping range between this NumberCollection and input
+           * NumberCollection, inclusive.
+           **/
+          rangeOverlap(input) {
+            const rangeMin = Math.max(this.min, input.min);
+            const rangeMax = Math.min(this.max, input.max);
+            const newCol = new NumberCollection();
+            for (const key in this.elementColMap) {
+              if (key >= rangeMin && key <= rangeMax) {
+                newCol.addElement(key);
+              }
+            }
+            for (const key in input.elementColMap) {
+              if (key >= rangeMin && key <= rangeMax) {
+                newCol.addElement(key);
+              }
+            }
+            return newCol;
+          }
+        }
+        //-------------------------------------------
+        //Union:
+        let NC1 = new NumberCollection();
+        NC1.addElement(1);
+        NC1.addElement(3);
+        NC1.addElement(7);
+        console.log('NC1 ', JSON.stringify(NC1));
+
+        let NC2 = new NumberCollection();
+        NC2.addElement(2);
+        NC2.addElement(3);
+        NC2.addElement(6);
+        NC2.addElement(8);
+        console.log('NC2 ', JSON.stringify(NC2));
+
+        NC1.union(NC2); // results in NC1 having elements {1,2,3,7,6,8} (in any order)
+        console.log('UNION ', JSON.stringify(NC1));
+        //-----------------------------
+
+        let NC3 = new NumberCollection();
+        NC3.addElement(1);
+        NC3.addElement(3);
+        NC3.addElement(7);
+        NC3.addElement(12);
+
+        let NC4 = new NumberCollection();
+        NC4.addElement(2);
+        NC4.addElement(8);
+        NC4.addElement(6);
+        NC4.addElement(9);
+        let NC5 = NC3.rangeOverlap(NC4); // NC3 has elements {2, 3, 6, 7, 8, 9} (in any order)
+        // the elements of NC1 and NC2 could be added in any order and the output, NC3, would not change
+        console.log('rangeover1', JSON.stringify(NC5.elementColMap));
+        //----------------------------
+        let NC6 = new NumberCollection();
+        NC6.addElement(4);
+        NC6.addElement(5);
+        NC6.addElement(9);
+        NC6.addElement(12);
+
+        let NC7 = new NumberCollection();
+        NC7.addElement(3);
+        NC7.addElement(5);
+        NC7.addElement(6);
+        NC7.addElement(10);
+        NC7.addElement(11);
+
+        let NC8 = NC6.rangeOverlap(NC7); // NC3 has elements {4, 5, 6, 9, 10, 11} (in any order)
+        console.log('rangeover2', JSON.stringify(NC8.elementColMap));
+      })();
+
+
     </script>
   </head>
   <body>

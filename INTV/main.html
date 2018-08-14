@@ -391,6 +391,91 @@
         console.log('rangeover2', JSON.stringify(NC8.elementColMap));
       })();
 
+      /*
+      SQUARE
+       */
+      (function(){
+        const queryString = 'key1=value1&key2=value2';
+        const queryString2 = 'key1=value1&key2=value2&key3[]=value3a&key3[]=value3b';
+
+        /*
+
+        const qs =  {
+          key1: 'value1',
+          key2: 'value2',
+          key3: ['value3a', 'value3b']
+        }
+
+        */
+
+        const res = getKeyValMap(queryString2);
+        console.log(res);
+
+        function getKeyValMap(str) {
+          const pairMap = {};
+          const keyValPairs = str.split("&"); // ['key=value1', 'key=value2',..]
+          for (const pair of keyValPairs) {
+            const parts = pair.split("=");  // ['key', 'value1']
+            const key = parts[0];
+            const val = parts[1];
+            addKeyValue(pairMap, key, val);
+          }
+          return pairMap;
+        }
+
+        // addKeyValue(map, key, value) -> map
+        // addKeyValue(myMap, 'key5[]', 'newValue')
+        function addKeyValue(map, key, value) {
+          const newMap = JSON.parse(JSON.stringify(map));
+          if (key.indexOf('[]') !== -1) {
+            const myKey = key.replace('[]','');
+            if (myKey in map) {
+              map[myKey].push(value);
+            } else {
+              map[myKey] = [value];
+            }
+          } else {
+            map[key] = value;
+          }
+          return map;
+        }
+
+        console.log('----', addKeyValue({}, 'key5[]', 'newValue'));
+
+        /*
+        input:
+        { key1: 'value1',
+          key2: 'value2',
+          key3: [ 'value3a', 'value3b' ]
+        }
+        output: 'key1=value1&key2=value2&key3[]=value3a&key3[]=value3b'
+        */
+        // toQueryString(map) -> string
+        function toQueryString(map) {
+          let result = [];
+          for (const key in map) {
+            const val = map[key]; //[]
+            if (Array.isArray(val)) {
+              for (const elem of val) {
+                result.push(`${key}[]=${elem}`);
+              }
+            } else {
+              result.push(`${key}=${val}`);
+            }
+
+          }
+          // ['key1=value1', 'key2=value2', 'key3=[..]')];
+          return result.join('&');
+        }
+
+        console.log(toQueryString({ key1: 'value1',
+          key2: 'value2',
+          key3: [ 'value3a', 'value3b' ]
+        }));
+
+
+        console.log(Array.isArray(0), Array.isArray(null), Array.isArray(''))
+      })();
 
     </script>
   </head>

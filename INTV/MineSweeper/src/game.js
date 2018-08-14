@@ -1,6 +1,7 @@
 const Minesweeper = (function () {
   let sizeX, sizeY, numberOfMines;
   let mineMap = {}; // sample: {21: 1, 3: 1, 6: 1} mines are present in the positions 21, 6, 3
+  let flagMap = {}; // has mine positions as guessed by user
   let gameOver = false;
   const errorDiv = document.getElementById('errorMessage');
   const colorMap = {
@@ -26,7 +27,7 @@ const Minesweeper = (function () {
     createDOM();
     setMines();
     handleClick();
-    // revealMines(); //for testing sake
+    //revealMines(); //for testing sake
   }
 
   /**
@@ -55,8 +56,11 @@ const Minesweeper = (function () {
   function revealMines() {
     for (let mine in mineMap) {
       const div = document.querySelector(`[data-position='${mine}']`);
-      div.classList.add('mine-clicked');
-      div.innerHTML = '<img class="bomb" src="img/bomb.png"></img>';
+      if (flagMap.hasOwnProperty(mine)) {
+        div.innerHTML = '<img class="icon" src="img/bomb.png"></img>';
+      } else {
+        div.innerHTML = '<img class="icon" src="img/bomb-red.png"></img>';
+      }
     }
   }
 
@@ -76,9 +80,9 @@ const Minesweeper = (function () {
    * Method to reset the mineMap and other data every time user clicks 'generate' button i.e., when user plays a new game.
    */
   function clearData() {
-    const container = document.getElementById('mineSweeper');
-    container.innerHTML = '';
+    document.getElementById('mineSweeper').innerHTML = '';
     mineMap = {};
+    flagMap = {};
     handleMessage('', 'hide');
     gameOver = false;
   }
@@ -110,9 +114,8 @@ const Minesweeper = (function () {
    */
   function clickSquare() {
     if (!gameOver && !this.classList.contains('opened')) {
-      this.classList.add('opened');
       const clickedNodePosition = this.dataset.position;
-
+      this.classList.add('opened');
       if (mineMap.hasOwnProperty(clickedNodePosition)) {
         // square contains mine
         handleMessage('Sorry that you lost! Game over, better luck next time!');
@@ -121,11 +124,16 @@ const Minesweeper = (function () {
         const neighborPositions = getAdjacents(clickedNodePosition);
         let adjacentMines = neighborPositions.reduce((acc, pos) => acc + (mineMap[pos] || 0), 0);
         if (adjacentMines > 0) {
-          this.innerText = adjacentMines;
-          this.style.color = colorMap[adjacentMines];
+          if (!flagMap.hasOwnProperty(clickedNodePosition)) {
+            this.innerText = adjacentMines;
+            this.style.color = colorMap[adjacentMines];
+          }
         } else {
+          console.log(flagMap)
           // 3rd condition, no mine in it nor any adjacent mines
-          this.classList.add('empty');
+          if (!flagMap.hasOwnProperty(clickedNodePosition)) {
+            this.classList.add('empty');
+          }
           for (let position of neighborPositions) {
             const div = document.querySelector(`[data-position='${position}']`);
             clickSquare.call(div);
@@ -147,11 +155,34 @@ const Minesweeper = (function () {
     }
   }
 
+  /**
+   * Method to handle a right click event on square
+   */
+  function rightClickSquare() {
+    if (!gameOver && !this.classList.contains('opened')) {
+      flagMap[this.dataset.position] = 1;
+      this.innerHTML = '<img class="icon flag" src="img/flag.png"></img>';
+    }
+  }
+
   function handleClick() {
     const squares = document.querySelectorAll('.row div');
     for (let square of squares) {
       square.addEventListener('click', function (event) {
-        clickSquare.call(this);
+        const pos = this.dataset.position;
+        if (flagMap.hasOwnProperty(pos) && !gameOver) {
+          delete flagMap[pos];
+          this.innerHTML = '';
+          this.classList.remove('opened');
+        } else {
+          clickSquare.call(this);
+        }
+      });
+      square.addEventListener('contextmenu', function (event) {
+        if (event.which === 3 || event.button === 2) {
+          rightClickSquare.call(this);
+          event.preventDefault(); //to not open browser native context menu
+        }
       });
     }
   }

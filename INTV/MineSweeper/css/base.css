@@ -4,9 +4,13 @@
   font-size: 14px;
 }
 
-img.bomb {
-  width: 18px;
+img.icon {
+  width: 14px;
   margin-left: 2px;
+}
+
+img.icon:not(.flag) {
+ transform: rotate(30deg);
 }
 
 .row {
@@ -30,10 +34,6 @@ img.bomb {
   color: #D2D2D2;
   border: 1px solid #D2D2D2;
   border-radius: 2px;
-}
-
-.row div.mine-clicked {
-  color: black;
 }
 
 .row div.empty {

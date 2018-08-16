@@ -473,8 +473,6 @@
           key3: [ 'value3a', 'value3b' ]
         }));
 
-
-        console.log(Array.isArray(0), Array.isArray(null), Array.isArray(''))
       })();
 
       //Chronicle - Google X company
@@ -534,6 +532,12 @@
           console.log(get(10));
         }, 4000);
       })();
+      //why you choose one vs. other (setTimeout vs w/o using it) - use 2 (https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
+      //in the first case, after handle = setTimeout(function(){..} say you have a blocking statement (like an intensive operation - a loop with 10 million iterations)
+      //it's going to execute first and only after it finishes setTimeout callback will be executed. By that time, it might be a time well past the timer timeout.
+      //so you can't expect precise results here.
+      //Point to note is, once you hit asynchronous method setTimeout, browser web API takes over and callback will be added to the message queue after the timeout.
+      //messages/items in the message queue gets added to the call stack for execution, only if call stack is empty.
 
     </script>
   </head>

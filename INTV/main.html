@@ -477,6 +477,64 @@
         console.log(Array.isArray(0), Array.isArray(null), Array.isArray(''))
       })();
 
+      //Chronicle - Google X company
+
+      /**
+       * Create a key-value map
+       * Expected behavior example:
+       *
+       * 12:00:00 - put(10, 25, 5000)
+       * 12:00:04 - get(10) -> 25
+       * 12:00:06 - get(10) -> null
+       */
+      //map has to null the key after the timeout
+
+      (function(){
+        let obj = {};
+        let handle;
+        function put(key, val, timeout) {
+          obj[key] = val;
+          if (handle && Object.hasOwnProperty(key)) {
+            clearTimeout(handle);
+          }
+          handle = setTimeout(function(){
+            obj[key] = null;
+          }, timeout);
+        }
+        function get(key) {
+          return obj[key];
+        }
+
+        put(10, 25, 3000); //after 3 sec, obj[10] should return null
+        console.log(get(10));
+        setTimeout(() => {
+          console.log('--',get(10));
+        }, 2000); //try timeout as 4000, you get null
+      })();
+
+
+      (function(){
+        let obj = {}; // key value pairs key, val - {val:val, timeout:timeout, currentTimeStamp}
+        function put(key, val, timeout) {
+          obj[key] = { val, timeout, currentTimeStamp: new Date().getTime() };
+          // { 12: {val: 13, timeout: 7000, currentTimeStamp: 4234 } }
+
+        }
+        function get(key) {
+          const timeNow = new Date().getTime();
+          const timeDiff = timeNow - obj[key].currentTimeStamp; //timeDiff in millisec
+          if (timeDiff >= obj[key].timeout) {
+            obj[key].val = null;
+          }
+          return obj[key].val;
+        }
+        put(10, 25, 3000);
+        console.log(get(10));
+        setTimeout(() => {
+          console.log(get(10));
+        }, 4000);
+      })();
+
     </script>
   </head>
   <body>

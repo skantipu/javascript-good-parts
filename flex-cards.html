@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      margin: 10px;
+    }
+    .card {
+      flex: 0 0 25%;
+      min-width: 200px;
+      height: 160px;
+      line-height: 160px;
+      background: tomato;
+      color: white;
+      font-family: sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      text-align: center;
+      border: 1px solid white;
+    }
+    /*
+      ##Device = Tablets, Ipads (landscape)
+      ##Screen = B/w 768px to 1024px
+    */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .card {
+        flex: 0 0 33.33%;
+      }
+    }
+    /*
+      ##Device = Mobiles
+     */
+    @media (max-width: 767px) {
+      .card {
+        flex: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">1</div>
+    <div class="card">2</div>
+    <div class="card">3</div>
+    <div class="card">4</div>
+    <div class="card">5</div>
+    <div class="card">6</div>
+    <div class="card">7</div>
+    <div class="card">8</div>
+    <div class="card">9</div>
+    <div class="card">10</div>
+    <div class="card">11</div>
+  </div>
+</body>
+</html>

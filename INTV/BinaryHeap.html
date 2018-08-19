@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Heap</title>
   <script>
-    //----------------------------------------------------
     console.log('--------------------------MAX HEAP (stores node as an object)--------------------------');
     // Priority Queue using binary heap, here we store tree element as an object (key, val)
     // Binary heap maintains order or priority of its data, and has efficient insert time - O(logn)
@@ -17,7 +16,7 @@
       }
     }
 
-    class PriorityQueue {
+    class BinaryHeap {
       constructor() {
         this.heap = [null]
       }
@@ -57,7 +56,7 @@
       }
     }
 
-    var heap = new PriorityQueue();
+    var heap = new BinaryHeap();
     var map = {
       'hi': 9,
       'hello': 11,

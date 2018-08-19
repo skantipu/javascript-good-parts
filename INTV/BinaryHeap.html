@@ -152,10 +152,7 @@
         this.heap.push(newNode);
         let currentNodeIdx = this.heap.length - 1;
         let currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
-        while (
-          this.heap[currentNodeParentIdx] &&
-          newNode.priority > this.heap[currentNodeParentIdx].priority
-          ) {
+        while (this.heap[currentNodeParentIdx] && newNode.priority > this.heap[currentNodeParentIdx].priority) {
           [this.heap[currentNodeParentIdx], this.heap[currentNodeIdx]] = [this.heap[currentNodeIdx], this.heap[currentNodeParentIdx]];
           currentNodeIdx = currentNodeParentIdx;
           currentNodeParentIdx = Math.floor(currentNodeIdx / 2);

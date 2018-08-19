@@ -80,7 +80,10 @@
     console.log(JSON.stringify(heap));
 
     /*
-      Binary heap (min/max) stores priority of its data and has O(1) for findMin()/findMax(), O(log n) for insertion, deletion
+      Binary heap (min/max) stores priority of its data and has
+      O(1) for findMin()/findMax() (peek() - without actually removing element from the tree),
+      O(log n) for insertion, deletion, update
+      Building a heap takes O(n) for an array of size n - sounds like O(nlogn) as it is n inserts, but actually it's O(n)
       Efficient way to store data when order matters.
       You can use max heap for the following:
         1. Find k most repeating words in a big string (you can use hashmap(key: word, val: frequency) and construct max heap from map). Then pop k times.

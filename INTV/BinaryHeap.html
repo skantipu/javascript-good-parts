@@ -131,6 +131,7 @@
     //----------------------------------------------------
     console.log('--------------------------MAX HEAP (stores node as an object)--------------------------');
     // Priority Queue using binary heap, here we store tree element as an object (key, val)
+    // Binary heap maintains order or priority of its data, and has efficient insert time - O(logn)
     //reference: https://codeburst.io/implementing-a-complete-binary-heap-in-javascript-the-priority-queue-7d85bd256ecf
 
     class Node {
@@ -146,6 +147,7 @@
       }
 
       push(value, priority) {
+        //bubble up operation (cascade up)
         const newNode = new Node(value, priority);
         this.heap.push(newNode);
         let currentNodeIdx = this.heap.length - 1;
@@ -154,15 +156,14 @@
           this.heap[currentNodeParentIdx] &&
           newNode.priority > this.heap[currentNodeParentIdx].priority
           ) {
-          const parent = this.heap[currentNodeParentIdx];
-          this.heap[currentNodeParentIdx] = newNode;
-          this.heap[currentNodeIdx] = parent;
+          [this.heap[currentNodeParentIdx], this.heap[currentNodeIdx]] = [this.heap[currentNodeIdx], this.heap[currentNodeParentIdx]];
           currentNodeIdx = currentNodeParentIdx;
           currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
         }
       }
 
       pop() {
+        // has bubble down/cascade down/trickle down operation
         if (this.heap.length < 3) {
           const toReturn = this.heap.pop();
           this.heap[0] = null;
@@ -190,12 +191,15 @@
       'and': 13,
       'to': 4,
       'dictionary': 1,
-      'media': 2
+      'media': 2,
+      'the': 21
     }
     for (let key in map) {
       heap.push(key, map[key]);
     }
     console.log(JSON.stringify(heap));
+    console.log(heap.pop());
+    console.log(heap.pop());
     console.log(heap.pop());
     console.log(heap.pop());
     console.log(JSON.stringify(heap));

@@ -4,130 +4,6 @@
   <meta charset="UTF-8">
   <title>Heap</title>
   <script>
-
-    class BinaryHeap {
-      constructor() {
-        this.content = [];
-      }
-
-      push(element) {
-        // Add the new element to the end of the array.
-        this.content.push(element);
-        // Allow it to bubble up.
-        this.bubbleUp(this.content.length - 1);
-      }
-
-      pop() {
-        // Store the first element so we can return it later.
-        var result = this.content[0];
-        // Get the element at the end of the array.
-        var end = this.content.pop();
-        // If there are any elements left, put the end element at the
-        // start, and let it sink down.
-        if (this.content.length > 0) {
-          this.content[0] = end;
-          this.sinkDown(0);
-        }
-        return result;
-      }
-
-      remove(node) {
-        var length = this.content.length;
-        // To remove a value, we must search through the array to find
-        // it.
-        for (var i = 0; i < length; i++) {
-          if (this.content[i] != node) continue;
-          // When it is found, the process seen in 'pop' is repeated
-          // to fill up the hole.
-          var end = this.content.pop();
-          // If the element we popped was the one we needed to remove,
-          // we're done.
-          if (i == length - 1) break;
-          // Otherwise, we replace the removed element with the popped
-          // one, and allow it to float up or sink down as appropriate.
-          this.content[i] = end;
-          this.bubbleUp(i);
-          this.sinkDown(i);
-          break;
-        }
-      }
-
-      size() {
-        return this.content.length;
-      }
-
-      bubbleUp(n) {
-        // Fetch the element that has to be moved.
-        var element = this.content[n];
-        // When at 0, an element can not go up any further.
-        while (n > 0) {
-          // Compute the parent element's index, and fetch it.
-          var parentN = Math.floor((n + 1) / 2) - 1,
-            parent = this.content[parentN];
-          // If the parent has a lesser score, things are in order and we
-          // are done.
-          if (element >= parent)
-            break;
-
-          // Otherwise, swap the parent with the current element and
-          // continue.
-          this.content[parentN] = element;
-          this.content[n] = parent;
-          n = parentN;
-        }
-      }
-
-      sinkDown(n) {
-        // Look up the target element and its score.
-        var length = this.content.length,
-          element = this.content[n];
-
-        while (true) {
-          // Compute the indices of the child elements.
-          var child2N = (n + 1) * 2, child1N = child2N - 1;
-          // This is used to store the new position of the element,
-          // if any.
-          var swap = null;
-          // If the first child exists (is inside the array)...
-          if (child1N < length) {
-            // Look it up and compute its score.
-            var child1 = this.content[child1N];
-            // If the score is less than our element's, we need to swap.
-            if (child1 < element)
-              swap = child1N;
-          }
-          // Do the same checks for the other child.
-          if (child2N < length) {
-            var child2 = this.content[child2N];
-            if (child2 < (swap == null ? element : child1))
-              swap = child2N;
-          }
-
-          // No need to swap further, we are done.
-          if (swap == null) break;
-
-          // Otherwise, swap and continue.
-          this.content[n] = this.content[swap];
-          this.content[swap] = element;
-          n = swap;
-        }
-      }
-    }
-
-    //And a simple test...
-
-    var heap = new BinaryHeap();
-    [6, 11, 12, 7, 8, 10, 4].forEach(elem => {
-      heap.push(elem);
-    });
-    console.log(JSON.stringify(heap))
-    heap.remove(4);
-    console.log(JSON.stringify(heap))
-    while (heap.size() > 0) {
-      heap.pop();
-    }
-    console.log(JSON.stringify(heap))
-
     //----------------------------------------------------
     console.log('--------------------------MAX HEAP (stores node as an object)--------------------------');
     // Priority Queue using binary heap, here we store tree element as an object (key, val)
@@ -172,10 +48,10 @@
         let [left, right] = [2 * currentIdx, 2 * currentIdx + 1];
         let currentChildIdx = this.heap[right] && this.heap[right].priority >= this.heap[left].priority ? right : left;
         while (this.heap[currentChildIdx] && this.heap[currentIdx].priority <= this.heap[currentChildIdx].priority) {
-          let currentNode = this.heap[currentIdx];
-          let currentChildNode = this.heap[currentChildIdx];
-          this.heap[currentChildIdx] = currentNode;
-          this.heap[currentIdx] = currentChildNode;
+          [this.heap[currentIdx], this.heap[currentChildIdx]] = [this.heap[currentChildIdx], this.heap[currentIdx]];
+          currentIdx = currentChildIdx;
+          [left, right] = [2 * currentIdx, 2 * currentIdx + 1];
+          currentChildIdx = this.heap[right] && this.heap[right].priority >= this.heap[left].priority ? right : left;
         }
         return toRemove;
       }
@@ -189,7 +65,8 @@
       'to': 4,
       'dictionary': 1,
       'media': 2,
-      'the': 21
+      'the': 21,
+      'while': 10
     }
     for (let key in map) {
       heap.push(key, map[key]);
@@ -199,7 +76,18 @@
     console.log(heap.pop());
     console.log(heap.pop());
     console.log(heap.pop());
+    console.log(heap.pop());
+    console.log(heap.pop());
     console.log(JSON.stringify(heap));
+
+    /*
+      Binary heap (min/max) stores priority of its data and has O(1) for findMin()/findMax(), O(log n) for insertion, deletion
+      Efficient way to store data when order matters.
+      You can use max heap for the following:
+        1. Find k most repeating words in a big string (you can use hashmap(key: word, val: frequency) and construct max heap from map). Then pop k times.
+        2. Find k most repeating numbers in an array
+        3. LFU cache - least frequently used cache (construct min heap)
+     */
 
   </script>
 </head>

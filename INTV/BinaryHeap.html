@@ -113,19 +113,93 @@
         }
       }
     }
+
     //And a simple test...
 
     var heap = new BinaryHeap();
-    [10, 3, 4, 8, 2, 9, 7, 1, 2, 6, 5].forEach(elem => {
+    [6, 11, 12, 7, 8, 10, 4].forEach(elem => {
       heap.push(elem);
     });
     console.log(JSON.stringify(heap))
-    heap.remove(2);
+    heap.remove(4);
     console.log(JSON.stringify(heap))
     while (heap.size() > 0) {
       heap.pop();
     }
     console.log(JSON.stringify(heap))
+
+    //----------------------------------------------------
+    console.log('--------------------------MAX HEAP (stores node as an object)--------------------------');
+    // Priority Queue using binary heap, here we store tree element as an object (key, val)
+    //reference: https://codeburst.io/implementing-a-complete-binary-heap-in-javascript-the-priority-queue-7d85bd256ecf
+
+    class Node {
+      constructor(val, priority) {
+        this.value = val;
+        this.priority = priority;
+      }
+    }
+
+    class PriorityQueue {
+      constructor() {
+        this.heap = [null]
+      }
+
+      push(value, priority) {
+        const newNode = new Node(value, priority);
+        this.heap.push(newNode);
+        let currentNodeIdx = this.heap.length - 1;
+        let currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
+        while (
+          this.heap[currentNodeParentIdx] &&
+          newNode.priority > this.heap[currentNodeParentIdx].priority
+          ) {
+          const parent = this.heap[currentNodeParentIdx];
+          this.heap[currentNodeParentIdx] = newNode;
+          this.heap[currentNodeIdx] = parent;
+          currentNodeIdx = currentNodeParentIdx;
+          currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
+        }
+      }
+
+      pop() {
+        if (this.heap.length < 3) {
+          const toReturn = this.heap.pop();
+          this.heap[0] = null;
+          return toReturn;
+        }
+        const toRemove = this.heap[1];
+        this.heap[1] = this.heap.pop();
+        let currentIdx = 1;
+        let [left, right] = [2 * currentIdx, 2 * currentIdx + 1];
+        let currentChildIdx = this.heap[right] && this.heap[right].priority >= this.heap[left].priority ? right : left;
+        while (this.heap[currentChildIdx] && this.heap[currentIdx].priority <= this.heap[currentChildIdx].priority) {
+          let currentNode = this.heap[currentIdx];
+          let currentChildNode = this.heap[currentChildIdx];
+          this.heap[currentChildIdx] = currentNode;
+          this.heap[currentIdx] = currentChildNode;
+        }
+        return toRemove;
+      }
+    }
+
+    var heap = new PriorityQueue();
+    var map = {
+      'hi': 9,
+      'hello': 11,
+      'and': 13,
+      'to': 4,
+      'dictionary': 1,
+      'media': 2
+    }
+    for (let key in map) {
+      heap.push(key, map[key]);
+    }
+    console.log(JSON.stringify(heap));
+    console.log(heap.pop());
+    console.log(heap.pop());
+    console.log(JSON.stringify(heap));
+
   </script>
 </head>
 <body>

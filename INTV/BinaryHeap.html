@@ -23,11 +23,10 @@
 
       push(value, priority) {
         //bubble up operation (cascade up)
-        const newNode = new Node(value, priority);
-        this.heap.push(newNode);
+        this.heap.push(new Node(value, priority));
         let currentNodeIdx = this.heap.length - 1;
         let currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
-        while (this.heap[currentNodeParentIdx] && newNode.priority > this.heap[currentNodeParentIdx].priority) {
+        while (this.heap[currentNodeParentIdx] && this.heap[currentNodeIdx].priority > this.heap[currentNodeParentIdx].priority) {
           [this.heap[currentNodeParentIdx], this.heap[currentNodeIdx]] = [this.heap[currentNodeIdx], this.heap[currentNodeParentIdx]];
           currentNodeIdx = currentNodeParentIdx;
           currentNodeParentIdx = Math.floor(currentNodeIdx / 2);
@@ -65,7 +64,8 @@
       'dictionary': 1,
       'media': 2,
       'the': 21,
-      'while': 10
+      'while': 10,
+      'gain': 5
     }
     for (let key in map) {
       heap.push(key, map[key]);

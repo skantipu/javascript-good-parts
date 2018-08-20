@@ -8,29 +8,27 @@ either vertical or horizontal.  Each new rectangle should support similar click 
   <title>3rd Question</title>
   <style>
     .rectangle {
+      display: flex;
+      flex-flow: row nowrap; /* default */
+      flex: 1;
+      border: 1px solid red;
+      padding: 5px;
+    }
+    .container {
       width: 600px;
       height: 400px;
-      display: inline-block;
-      border: 1px solid red;
-      margin: 5px;
     }
   </style>
   <script>
     window.onload = function() {
-      document.querySelectorAll(".rectangle")[0].onclick = function(event) {
-        console.log(this.classList) // this is a event listener of original parent (with dummy class).  event.target however maintains reference to the div where
+      document.querySelector(".container").onclick = function(event) {
+        // this is a event listener of original parent (with container class).  event.target however maintains reference to the div where
         //click happened (target). So you click on a child div, event starts propagating from that div to the parent (event bubbling phase) and when it goes to
         //the parent, this method executes, but we maintain a reference to target using event.target.
         var rec1 = document.createElement("div");
         var rec2 = document.createElement("div");
         rec1.classList.add("rectangle");
-        rec1.style.height = (event.target.offsetHeight - 20) + 'px';   //only offsetSet works
-        rec1.style.width = event.target.offsetWidth / 2 - 30 + 'px';
-
         rec2.classList.add("rectangle");
-        rec2.style.height = (event.target.offsetHeight - 20) + 'px';
-        rec2.style.width = event.target.offsetWidth / 2 - 30 + 'px';
-
         event.target.appendChild(rec1);
         event.target.appendChild(rec2);
       }
@@ -38,8 +36,6 @@ either vertical or horizontal.  Each new rectangle should support similar click 
   </script>
 </head>
 <body>
-<div class="rectangle dummy">  <!-- dummy is not required, just to show -->
-
-</div>
+<div class="container rectangle"></div>
 </body>
 </html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Copper</title>
+  <script>
+    //copper
+
+    // class instance, static, private and local properties
+    // debounce and a flavor of it
+    /*
+
+  //Traditional Debounce logic
+
+  (function(){
+       const evntFn = () => { console.log ('logging event'); }
+       const doDeBounce = (fn, timeout) => {
+         let handle;
+         return function() {
+             if (handle) {
+                clearTimeout(handle);
+             }
+             handle = setTimeout(fn, timeout);
+         }
+       };
+       const debounce = doDeBounce(evntFn, 2000);
+       debounce();
+       debounce();
+       debounce();
+       debounce();
+       debounce();
+       debounce();
+       debounce();
+
+       //By closure, handle stays in the environment
+  })();
+  */
+    //A flavor of debounce
+    //first time, you execute the method, and you don't consider any method execution requests in the next timeout sec, and then you entertain a method
+    // execution request followed by idle period of timeout sec.
+    (function () {
+      const evntFn = () => {
+        console.log('logging event');
+      };
+      const doDeBounceLike = (fn, timeout) => {
+        let enable = true;
+        return function () {
+          if (enable) {
+            fn();
+            enable = false;
+            setTimeout(() => {
+              enable = true;
+            }, timeout);
+          }
+
+        }
+      };
+      const myDebounce = doDeBounceLike(evntFn, 2000);
+      myDebounce();
+      myDebounce();
+      myDebounce();
+      myDebounce();
+      myDebounce();
+      myDebounce();
+      myDebounce();
+      setTimeout(myDebounce, 1000); ///nope as it's in the idle period
+      setTimeout(myDebounce, 2200); //prints - it's after idle period of 2 sec
+      myDebounce(); //idle period started again - nope
+      myDebounce(); //nope
+
+    })();
+
+    (function(){
+      // Design and implement
+      // 1. least frequently used cache
+      // 2. least recently used cache
+
+      //1. cache has maxSize limit, and once it exceeds, you got to replace least frequently used key with the new key.
+      // cache.put(key, val); cache.get(val)
+
+      //2. cache has maxSize limit, and once it exceeds, you got to replace least recently used key with the new key. Also here, you have expiry
+      // time along with key while putting, after the expirty, you need to get the value of key as null.
+      // cahce.put(key, val, expiry);  cache.get(key); // val or null based on expiry
+
+    })();
+  </script>
+</head>
+<body>
+
+</body>
+</html>

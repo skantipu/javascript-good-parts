@@ -16,10 +16,11 @@
      }, 0);
      // total is 6
      */
-    const res = persons.reduce((prev,cur) => ({
-      fname: prev.fname ? prev.fname + cur.fname + ' ' : cur.fname + ' ',
-      lname: prev.lname ? prev.lname + cur.lname + ' ' : cur.lname + ' '
-    }),{});
+    const res = persons.reduce((acc,elem) => {
+      acc.fname = acc.fname ? acc.fname + ' ' + elem.fname : elem.fname;
+      acc.lname = acc.lname ? acc.lname + ' ' + elem.lname : elem.lname;
+      return acc;
+    },{});
     //Using arrow function, if you want to return an object, then wrap in (). Without (), it is considered as function block.
     // Parenthesize the body of function to return an object literal expression: params => ({foo: bar})
     console.log("result", res);

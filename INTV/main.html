@@ -3,6 +3,25 @@
     <style>
     </style>
     <script>
+      // find common elements in two sorted arrays
+      (function(){
+        let arr1 = [1, 4, 9, 11, 19];
+        let arr2 = [2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 19];
+        const result = [];
+        for (let i = arr1[0], j = arr2[0]; i < arr1.length && j < arr2.length;) {
+          if (arr1[i] < arr2[j]) {
+            i++;
+          } else if (arr1[i] > arr2[j]) {
+            j++;
+          } else {
+            result.push(arr1[i]);
+            i++;
+            j++;
+          }
+        }
+        console.log(result);
+      })();
+
       /*
         VmWare
         1. two arrays sorted, find common elements
@@ -37,7 +56,7 @@
         FACEBOOK - http://codereview.stackexchange.com/questions/86334/given-a-sequence-of-positive-integers-a-and-an-integer-t-return-true-if-a-conti
 
         MICROSOFT
-        1. write code to find first duplicate element in the array if all the elements are smaller than the array
+        1. write code to find first duplicate element in the array if all the elements are smaller than the array size
         2. Given infinite stream of integers, find kth largest element at any point of time
 
 
@@ -538,6 +557,58 @@
       //so you can't expect precise results here.
       //Point to note is, once you hit asynchronous method setTimeout, browser web API takes over and callback will be added to the message queue after the timeout.
       //messages/items in the message queue gets added to the call stack for execution, only if call stack is empty.
+
+/*
+      'use strict'
+
+      const colors = ["aliceblue","antiquewhite","aqua","aquamarine","azure","beige","bisque","black","blanchedalmond","blue","blueviolet",
+      "brown","burlywood","cadetblue","chartreuse","chocolate","coral","cornflowerblue","cornsilk","crimson","cyan","darkblue","darkcyan",
+      "darkgoldenrod","darkgray","darkgreen","darkgrey","darkkhaki","darkmagenta","darkolivegreen","darkorange","darkorchid","darkred","darksalmon",
+      "darkseagreen","darkslateblue","darkslategray","darkslategrey","darkturquoise","darkviolet","deeppink","deepskyblue","dimgray","dimgrey","dodgerblue",
+      "firebrick","floralwhite","forestgreen","fuchsia","gainsboro","ghostwhite","gold","goldenrod","gray","green","greenyellow","grey","honeydew","hotpink",
+      "indianred","indigo","ivory","khaki","lavender","lavenderblush","lawngreen","lemonchiffon","lightblue","lightcoral","lightcyan","lightgoldenrodyellow",
+      "lightgray","lightgreen","lightgrey","lightpink","lightsalmon","lightseagreen","lightskyblue","lightslategray","lightslategrey","lightsteelblue",
+      "lightyellow","lime","limegreen","linen","magenta","maroon","mediumaquamarine","mediumblue","mediumorchid","mediumpurple","mediumseagreen",
+      "mediumslateblue","mediumspringgreen","mediumturquoise","mediumvioletred","midnightblue","mintcream","mistyrose","moccasin","navajowhite","navy",
+      "oldlace","olive","olivedrab","orange","orangered","orchid","palegoldenrod","palegreen","paleturquoise","palevioletred","papayawhip","peachpuff",
+      "peru","pink","plum","powderblue","purple","red","rosybrown","royalblue","saddlebrown","salmon","sandybrown","seagreen","seashell","sienna","silver",
+      "skyblue","slateblue","slategray","slategrey","snow","springgreen","steelblue","tan","teal","thistle","tomato","turquoise","violet","wheat","white",
+      "whitesmoke","yellow","yellowgreen"]
+
+      function findColor(str) {
+        const result = [];
+        for (const color of colors) {
+          if (hasString(color, str)) {
+            result.push(color);
+          }
+        }
+        return result;
+      }
+      //returns true if str is part of word
+      function hasString(word, str) { //word: darkturquoise
+        const chars = str.split(''); // ['u', 'q', 'i'];
+        let prevIndex = -2;
+        let currIndex = -1;
+        for (let char of chars) {
+          currIndex = word.indexOf(char, prevIndex); //7
+          if (currIndex === -1 || currIndex <= prevIndex) {
+            return false;
+          }
+          prevIndex = currIndex; //7
+        }
+        return true;
+      }
+
+
+      console.log(findColor('uqi')); // u q i should appear in sequence in the string, can be other characters in between
+      // [ 'darkturquoise', 'mediumaquamarine', 'mediumturquoise', 'paleturquoise', 'turquoise' ]
+
+      console.log(findColor('zre'))
+      // [ 'azure' ]
+
+      console.log(findColor('gold'))
+      // [ 'darkgoldenrod', 'gold', 'goldenrod', 'lightgoldenrodyellow', 'palegoldenrod' ]
+**/
 
     </script>
   </head>

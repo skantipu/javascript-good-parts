@@ -37,55 +37,11 @@
         FACEBOOK - http://codereview.stackexchange.com/questions/86334/given-a-sequence-of-positive-integers-a-and-an-integer-t-return-true-if-a-conti
 
         MICROSOFT
-        1. write code to find first duplicate element in the array if all the elements are smaller than the array
+        1. write code to find first duplicate element in the array if all the elements are smaller than the array size
         2. Given infinite stream of integers, find kth largest element at any point of time
 
-
-
       Service Now
-
-      Given 2 arrays, write function which would give the Union and Intersection Set operations. You can’t use any inbuilt data structures or functions provided by the language which would do the operations.(example Sets, Maps etc.. in java language)
-      A = [2,1,1,4,2,3,7,7,7]
-      B = [5,1,2,6,8,5,5,2]
-
-      Intersection = [1,2]
-      Union = [2,1,3,5,4,6,7,8]
-
-      Union = []
      //*** find union and intersection of two sorted arrays (https://www.geeksforgeeks.org/union-and-intersection-of-two-sorted-arrays-2/)
-
-      Union Result = findUniques in A (which are not present in B) + whole B array
-        [1,2,3,4,7] - uniques in A
-        [1,2,5,6,8] - uniques in B
-      var result = [];
-
-      A = [1,1,2,2,3,4,7,7,7]
-      B = [1,2,5,5,5,6,8]
-
-      result = [1, 2, 3, 4, 5, 6, 7, 8];
-      var i=0, j=0;
-      var result = [], elem;
-      while(i<A.length || j<B.length) {
-        //1. if both elements are same
-        if(A[i] === B[j]) {
-          elem = result.pop();
-          if(A[i] !== elem) {
-            result.push(elem);
-          }
-          i++;
-          j++;
-        }
-
-        //2. if A elem smaller than B elem
-
-        else if(A[i] < B[j]) {
-          //add smaller element, again if it's not present in the result array
-
-        }
-
-
-      }
-
 
       Amazon:
       1)

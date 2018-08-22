@@ -97,7 +97,7 @@
           "homeNumber":123,
           "work":{
             "mobileNumber":234,
-            "faxNUmber":34243
+            "faxNumber":34243
           }
         }
       };
@@ -114,6 +114,7 @@
       });
       return newWords.join("");
     }
+    // overkill - above. check format(x) method for elegant solution
     /*
     // alternate way
     function formatKey(key) {
@@ -121,6 +122,19 @@
         return str[1].toUpperCase();
       })
     }
+    // one more way - good way
+    function format(x) {
+      if (typeof x !== 'object') return x;
+      const obj = {};
+      for (let key in x) {
+        const newKey = key.replace(/(_)([a-z])/g, function(match, p1, p2) {
+          return p2.toUpperCase();
+        });
+        obj[newKey] = format(x[key]);
+      }
+      return obj;
+    }
+    format(x)
     */
     function parseObj(obj) {
       const res = {};

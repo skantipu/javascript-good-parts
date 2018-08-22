@@ -66,6 +66,21 @@
 
       //Get top 3 purchased items of all customers - id2 (4 times), id5 (3 times), id4 (2 times)
 
+      const map = {};
+     for (let cust of input) {
+         for (let item of cust.producs) {
+             if(map.hasOwnProperty(item)) {
+                map[item]++;
+             } else {
+                 map[item] = 1;
+             }
+         }
+     }
+     map -> {id1: 1, id2: 2, id3: 1, id4: 2, id5: 3, id6: 1}
+     now to get top 3 purchased items, construct a max heap and do 3 pop operations
+     or construct a min heap of size 3 with the first three items, and if new item value is less than or equal to root (min value in the tree), ignore.
+     If it's greater than root, then pop root and heapify with newly inserted value.
+
       2)
       Move a circle from one point to right
 

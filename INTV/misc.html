@@ -6,32 +6,12 @@
 </head>
 <body>
 <script>
-  /*
-   Return the sum of all integers from a random String. Continuous Integers must be considered as one number.
-   If the input String does not have any Integers, return 0.
-   You may ignore decimals, float, and other non-integer numbers
-   @param str : Input String
-   Given the following inputs, we expect the corresponding output:
-   "1a2b3c" => 6        (1+2+3)
-   "123ab!45c" => 168   (123+45)
-   "abcdef" => 0        (no Integers in String)
-   "0123.4" => 127      (0123+4)
-   "dFD$#23+++12@#T1234;/.,10"  => 1279  (23+12+1234+10)
-   */
-  (function(){
-    const input = "dFD$#23+++12@#T1234;/.,10";
-    const arr = input.match(/\d+/g) || new Array();  // note that the + is important in regex, even /\d{1,}/gi/ will work. If /\d/g or /[0-9]/g is used, matching set would be [1,2,3,4,0]
-    const res = arr.reduce((sum, val)=>parseInt(sum)+parseInt(val),0);
-    console.log(res);
-  })();
-
   //-----------------------------------------------------------
   //Longest palindrome substring - DP related
   //GeeksforGeeks - classic DP problems, others - leetcode
   //-----------------------------------------------------------
 
   /*
-   // package whatever; // don't place package name!
    // Move Zeros to End of Array
    // Given an array of random numbers, Push all the zero’s of a given array to the end of the array.
    // For example, if the given arrays is:
@@ -117,7 +97,7 @@
           "homeNumber":123,
           "work":{
             "mobileNumber":234,
-            "faxNUmber":34243
+            "faxNumber":34243
           }
         }
       };
@@ -134,6 +114,7 @@
       });
       return newWords.join("");
     }
+    // overkill - above. check format(x) method for elegant solution
     /*
     // alternate way
     function formatKey(key) {
@@ -141,6 +122,19 @@
         return str[1].toUpperCase();
       })
     }
+    // one more way - good way
+    function format(x) {
+      if (typeof x !== 'object') return x;
+      const obj = {};
+      for (let key in x) {
+        const newKey = key.replace(/(_)([a-z])/g, function(match, p1, p2) {
+          return p2.toUpperCase();
+        });
+        obj[newKey] = format(x[key]);
+      }
+      return obj;
+    }
+    format(x)
     */
     function parseObj(obj) {
       const res = {};
@@ -160,7 +154,7 @@
   (function() {
 
     function myFun(fn, delay) {
-      var ctr = 0;
+      let ctr = 0;
       return function() {
         setTimeout(function() {
           fn(ctr, delay);
@@ -173,12 +167,14 @@
       console.log('Hi', x, y, x*y);
     }
 
-    var x = myFun(callBack, 1000);
+    let x = myFun(callBack, 1000);
     x(); // to be called after 1 sec
    // x(); to be called after 2 sec
    // x(); to be called after 3 sec
    //...
     // enter x() one after other in the console.
+
+    //x() has access to ctr variable by closure
   })();
 
   // -------------------------------------------

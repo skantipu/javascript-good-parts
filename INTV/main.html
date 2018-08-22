@@ -530,8 +530,6 @@
       //messages/items in the message queue gets added to the call stack for execution, only if call stack is empty.
 
 /*
-      'use strict'
-
       const colors = ["aliceblue","antiquewhite","aqua","aquamarine","azure","beige","bisque","black","blanchedalmond","blue","blueviolet",
       "brown","burlywood","cadetblue","chartreuse","chocolate","coral","cornflowerblue","cornsilk","crimson","cyan","darkblue","darkcyan",
       "darkgoldenrod","darkgray","darkgreen","darkgrey","darkkhaki","darkmagenta","darkolivegreen","darkorange","darkorchid","darkred","darksalmon",
@@ -558,14 +556,14 @@
       //returns true if str is part of word
       function hasString(word, str) { //word: darkturquoise
         const chars = str.split(''); // ['u', 'q', 'i'];
-        let prevIndex = -2;
+        let prevIndex = -1;
         let currIndex = -1;
         for (let char of chars) {
-          currIndex = word.indexOf(char, prevIndex); //7
-          if (currIndex === -1 || currIndex <= prevIndex) {
+          currIndex = word.indexOf(char, prevIndex);
+          if (currIndex === -1 || currIndex < prevIndex) {
             return false;
           }
-          prevIndex = currIndex; //7
+          prevIndex = currIndex;
         }
         return true;
       }

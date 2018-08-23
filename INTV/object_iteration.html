@@ -40,6 +40,22 @@
     console.log(iterate(myObj))
     iterate(myObj);
 
+    (function(){
+      var arr = [1, [2], [3, [[4]]], [[[5]]]];
+      function iterate(arr) {
+        let res = [];
+        for(let el of arr) {
+          if (!Array.isArray(el)) {
+            res.push(el);
+          } else {
+            res = [...res, ...iterate(el)];
+          }
+        }
+        return res;
+      }
+      console.log(iterate(arr)); // [1,2,3,4,5];
+    })();
+
   </script>
 </head>
 <body>

@@ -86,7 +86,7 @@
     for (var i = 0; i < 3; i++) {
       funcs[i] = function(x) {
         console.log("Approach 4: My value: " + x);
-      }.bind(null, i); //here this argument does not matter, so null can be passed
+      }.bind(null, i); //here 'this' argument does not matter, so null can be passed
     }
     for (var j = 0; j < 3; j++) {
       funcs[j]();
@@ -94,7 +94,8 @@
 
     /** ------------------------------------------------------------------------------------- **/
 
-    /* Solve the below problem, which prints 10 10times after 1 sec. We want it to print 0 to 9 with a gap of 1 sec for each number */
+    /* Solve the below problem, which prints 10 10times after 1 sec.
+    We want it to print 0 to 9 with a gap of 1 sec for each number */
     for(var i = 0; i < 10; i++) {
       setTimeout(function() {
         console.log(i);
@@ -128,7 +129,7 @@
     //using bind
 
     function solution3() {
-      //bind can only be applied on function expressions
+      //bind can only be applied on function expressions ***
       for(var i = 0; i < 10; i++) {
         var a = function(j) {
           setTimeout(function() {
@@ -159,7 +160,6 @@
       //you can combine the above two loops to one loop which has helper(i)();
 
     }
-
     solution4();
 
 
@@ -184,7 +184,7 @@
 
     testList() //logs "item2 undefined" 3 times
 
-    // now repeat the same buildList() with lets
+    // now repeat the same buildList() with let
     //reference: https://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1
 
   </script>

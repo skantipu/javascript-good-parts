@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prototypes Questions</title>
-    <script>
-        var myObj = {
-            name: "geeta",
-            place: "gudivada",
-            education: {
-                university: {
-                    name: "VIT",
-                    fullName: "Vellore Institute of Technology",
-                    state: "TN"
-                },
-                degree: "MS",
-                branch: "CS",
-                fullDegree: function() {
-                    return this.degree + " " + this.branch;
-                }
-            },
-            age: 23,
-            salaryPerHour: 45.5,
-            getMonthlySalary: function() {
-                return this.salaryPerHour*8*22;
-            }
-        };
-
-        /*
-        for(key in myObj) {
-            if(typeof myObj[key] !== "object") {
-                console.log(key + ": " + myObj[key]);
-            }
-            else {
-                for(myKey in myObj[key]) {
-                    console.log(myKey + ": " + myObj[key][myKey]);
-                }
-            }
+  <title>Recursion</title>
+  <script>
+    var myObj = {
+      name: "geeta",
+      place: "gudivada",
+      education: {
+        university: {
+          uname: "VIT",
+          fullName: "Vellore Institute of Technology",
+          state: "TN"
+        },
+        degree: "MS",
+        branch: "CS",
+        fullDegree: function () {
+          return this.degree + " " + this.branch;
         }
-        */
+      },
+      age: 23,
+      salaryPerHour: 45.5,
+      getMonthlySalary: function () {
+        return this.salaryPerHour * 8 * 22;
+      }
+    };
+    // print only properties that are not objects or functions. assume unique property names so they don't replace.
 
-        function iterate(obj) {
-            if(typeof obj === "string" || typeof obj === "number" || typeof obj === "function")
-                return obj;
-            for(key in obj) {
-                console.log(key + " " + iterate(obj[key]));
-            }
+    function iterate(obj) {
+      if (typeof obj !== 'object') return obj;
+      let result = {};
+      for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+          result = {...result, ...iterate(obj[key])};
+        } else if (typeof obj[key] !== 'function') {
+          result[key] = obj[key];
         }
-        iterate(myObj);
-    </script>
+      }
+      return result;
+    }
+
+    iterate(myObj);
+
+  </script>
 </head>
 <body>
 </body>

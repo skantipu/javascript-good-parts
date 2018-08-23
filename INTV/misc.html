@@ -379,7 +379,7 @@
   //Binary Search O(logn) time complexity
 
   (function(){
-    const arr = [2, 3, 9, 12, 44, 233, 999]; // required arr to be sorted
+    const arr = [2, 3, 9, 12, 44, 233, 999]; // requires arr to be sorted
     const elm = 32;
     function binarySearch(first, last) {
       if (last - first <= 1) {
@@ -402,7 +402,7 @@
   })();
 
   //----------------------------------------------------------
-  // Objective: to find sum of negative numbers in a matrix.
+  // Objective: to find total number of negative numbers in a matrix. Elements in each row sorted asc.
 
   (function(){
     // Returns index of right most negative number in the array. Assumes array is sorted asc. If no negative number present, returns -1

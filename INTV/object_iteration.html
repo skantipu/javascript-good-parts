@@ -95,7 +95,7 @@
         for (let el of arr) {
           res.push({value: el.value});
           if (el.children && el.children.length > 0) {
-            res = [...res, ...iterate(el.children)];
+            res = [...res, ...iterate(el.children)]; // (or) res = res.concat(iterate(el.children));
           }
         }
         return res;

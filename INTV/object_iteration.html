@@ -56,6 +56,53 @@
       console.log(iterate(arr)); // [1,2,3,4,5];
     })();
 
+    (function(){
+      var arr = [
+        {
+          value: 'child 1',
+          children: [
+            {
+              value: 'child 1.1',
+              children: [
+                {
+                  value: 'child 1.1.1',
+                  children: []
+                }
+              ]
+            },
+            {
+              value: 'child 1.2',
+              children: []
+            }
+          ]
+        },
+        {
+          value: 'child 2',
+          children: []
+        }
+      ];
+      /*
+      output: [
+          {value: 'child 1'},
+          {value: 'child 1.1'},
+          {value: 'child 1.1.1'},
+          {value: 'child 1.2'},
+          {value: 'child 2'}
+      ];
+      */
+      function iterate(arr) {
+        let res = [];
+        for (let el of arr) {
+          res.push({value: el.value});
+          if (el.children && el.children.length > 0) {
+            res = [...res, ...iterate(el.children)];
+          }
+        }
+        return res;
+      }
+      console.log(iterate(arr))
+    })();
+
   </script>
 </head>
 <body>

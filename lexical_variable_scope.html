@@ -4,34 +4,42 @@
   <title>Test</title>
   <script>
     var test = "global"
+
     function b() {
       console.log(test);  //global.
       // Variable scope chain is lexically defined in JS. As test is not found in the current scope, then as b() sits lexically in the global scope,
       // global scope is consulted and not a() scope though it is invoked from a().
     }
+
     function a() {
       var test = "local";
       b();
     }
+
     a();
 
-   // ------------------------------------------------------------------------------------------
-   var bar = 'moo';
-   function test3() {
-    console.log(bar, coo);
-   }
-   function test1() {
-    var bar = "foo";
-    function test2() {
-      var coo = "poo";
-      test3();
-      console.log(bar);
+    // ------------------------------------------------------------------------------------------
+    var bar = 'moo';
+
+    function test3() {
+      console.log(bar, coo);
     }
-    test2();
-   }
-   test1(); // uncaught reference error - coo is not defined
-   //if in global scope coo variable is declared (but not assigned), then
-   // moo undefined foo is printed
+
+    function test1() {
+      var bar = "foo";
+
+      function test2() {
+        var coo = "poo";
+        test3();
+        console.log(bar);
+      }
+
+      test2();
+    }
+
+    test1(); // uncaught reference error - coo is not defined
+    //if in global scope coo variable is declared (but not assigned), then
+    // moo undefined foo is printed
   </script>
 </head>
 <body>

@@ -135,34 +135,54 @@
 
       */
 
-      var node = {
-        left: 5,
-        right: {
-          left: 3,
-          right: 5,
-          op: "multiply"
-        },
-        op: "add"
-      }
-      function compute(operation, operand1, operand2) {
-        switch(operation) {
-          case "add":
-            return operand1 + operand2;
-          case "multiply":
-            return operand1 * operand2;
+      (function(){
+        // 5 + (3 * 5) = 20
+        // 5 + (((3 * 5)/3) - 1) = 9
+        const exp1 = {
+          left: 5,
+          right: {
+            left: 3,
+            right: 5,
+            op: "multiply"
+          },
+          op: "add"
+        };
+        const exp2 = {
+          left: 5,
+          right: {
+            left: {
+              left: {
+                left: 3,
+                right: 5,
+                op: "multiply"
+              },
+              right: 3,
+              op: "divide"
+
+            },
+            right: 1,
+            op: "subtract"
+
+          },
+          op: "add"
+        };
+        const opMap = {
+          'add': '+',
+          'multiply': '*',
+          'subtract': '-',
+          'divide': '/'
+        };
+        // javascript: eval('3 * 4') = 12
+        function evaluate(node) {
+          if (typeof node !== 'object') return node;
+          const left = evaluate(node.left);
+          const right = evaluate(node.right);
+          const res = eval(`${left} ${opMap[node.op]} ${right}`);
+          return res;
         }
-      }
-      function evaluate(node) {
-        if(typeof node === "number") {  //base case
-          return node;
-        }
-        else {
-          var left = evaluate(node.left);
-          var right = evaluate(node.right);
-          return compute(node.op, left, right)
-        }
-      }
-      console.log(evaluate(node));
+        console.log(evaluate(exp1));
+        console.log(evaluate(exp2));
+      })();
     })();
     //--------------------------------------------------
 

@@ -148,7 +148,21 @@
     console.log(parseObj(x));
 
   })();
-
+  //-----------------------------------------------
+  (function(){
+    var arr = [1, [2], [3, [[4]]], [[[5]]]];
+    //output - [1, 2, 3, 4, 5]
+    function compute(arr) {
+      if (!Array.isArray(arr)) return arr;
+      let res = [];
+      for(let el of arr) {
+        res = res.concat(compute(el));
+        //Note that it's concat (and not push with les res = [] inside recursive function) and how it's reassigned, as concat returns a new array
+      }
+      return res;
+    }
+    console.log(compute(arr));  // [1, 2, 3, 4, 5]
+  })();
   //-----------------------------------------------
 
   (function() {

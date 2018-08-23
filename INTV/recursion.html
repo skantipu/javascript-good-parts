@@ -1,70 +1,167 @@
-<!-- Medallia interview question -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Recursion</title>
-        <style>
+<head>
+  <title>Recursion</title>
+  <script>
+    var myObj = {
+      name: "geeta",
+      place: "gudivada",
+      education: {
+        university: {
+          uname: "VIT",
+          fullName: "Vellore Institute of Technology",
+          state: "TN"
+        },
+        degree: "MS",
+        branch: "CS",
+        fullDegree: function () {
+          return this.degree + " " + this.branch;
+        }
+      },
+      age: 23,
+      salaryPerHour: 45.5,
+      getMonthlySalary: function () {
+        return this.salaryPerHour * 8 * 22;
+      }
+    };
+    // print only properties that are not objects or functions. assume unique property names so they don't replace.
 
-        </style>
-        <script>
+    function iterate(obj) {
+      let res = {};
+      for (let key in obj) {
+        if (typeof obj[key] !== 'object' && typeof obj[key] !== 'function') {
+          res[key] = obj[key];
+        } else if (typeof obj[key] !== 'function') {
+          res = {...res, ...iterate(obj[key])};
+        }
+      }
+      return res;
+    }
+    console.log(iterate(myObj))
+    iterate(myObj);
 
-        // 5 + 3 * 5
-        // 5 + (3 * 5) = 5 + 15 = 20
+    (function(){
+      var arr = [1, [2], [3, [[4]]], [[[5]]]];
+      function iterate(arr) {
+        let res = [];
+        for(let el of arr) {
+          if (!Array.isArray(el)) {
+            res.push(el);
+          } else {
+            res = [...res, ...iterate(el)];
+          }
+        }
+        return res;
+      }
+      console.log(iterate(arr)); // [1,2,3,4,5];
+    })();
 
-        /*
-
-        node == number
-             == object
-                .left == node
-                .right == node
-                .operation == function(a,b) -> result
-
-                             +
-                       5          *
-                               3     5
-
+    (function(){
+      var arr = [
         {
-          left: 5
-          right: {
-              left: 3,
-              right: 5
-              op: multiply
-          },
-          op: add
-        }
-
-        */
-
-        var node = {
-            left: 5,
-            right: {
-                left: 3,
-                right: 5,
-                op: "multiply"
+          value: 'child 1',
+          children: [
+            {
+              value: 'child 1.1',
+              children: [
+                {
+                  value: 'child 1.1.1',
+                  children: []
+                }
+              ]
             },
-            op: "add"
-        }
-        function compute(operation, operand1, operand2) {
-            switch(operation) {
-                case "add":
-                    return operand1 + operand2;
-                case "multiply":
-                    return operand1 * operand2;
+            {
+              value: 'child 1.2',
+              children: []
             }
+          ]
+        },
+        {
+          value: 'child 2',
+          children: []
         }
-        function evaluate(node) {
-            if(typeof node === "number") {  //base case
-                return node;
-            }
-            else {
-                var left = evaluate(node.left);
-                var right = evaluate(node.right);
-                return compute(node.op, left, right)
-            }
+      ];
+      /*
+      output: [
+          {value: 'child 1'},
+          {value: 'child 1.1'},
+          {value: 'child 1.1.1'},
+          {value: 'child 1.2'},
+          {value: 'child 2'}
+      ];
+      */
+      function iterate(arr) {
+        let res = [];
+        for (let el of arr) {
+          res.push({value: el.value});
+          if (el.children && el.children.length > 0) {
+            res = [...res, ...iterate(el.children)]; // (or) res = res.concat(iterate(el.children));
+          }
         }
-        console.log(evaluate(node));
-        </script>
-    </head>
-    <body>
-    </body>
+        return res;
+      }
+      console.log(iterate(arr))
+    })();
+
+    (function(){
+      // 5 + 3 * 5
+      // 5 + (3 * 5) = 5 + 15 = 20
+
+      /*
+
+      node == number
+           == object
+              .left == node
+              .right == node
+              .operation == function(a,b) -> result
+
+                           +
+                     5          *
+                             3     5
+
+      {
+        left: 5
+        right: {
+            left: 3,
+            right: 5
+            op: multiply
+        },
+        op: add
+      }
+
+      */
+
+      var node = {
+        left: 5,
+        right: {
+          left: 3,
+          right: 5,
+          op: "multiply"
+        },
+        op: "add"
+      }
+      function compute(operation, operand1, operand2) {
+        switch(operation) {
+          case "add":
+            return operand1 + operand2;
+          case "multiply":
+            return operand1 * operand2;
+        }
+      }
+      function evaluate(node) {
+        if(typeof node === "number") {  //base case
+          return node;
+        }
+        else {
+          var left = evaluate(node.left);
+          var right = evaluate(node.right);
+          return compute(node.op, left, right)
+        }
+      }
+      console.log(evaluate(node));
+    })();
+  </script>
+</head>
+<body>
+</body>
 </html>

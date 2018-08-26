@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lyft</title>
+  <script>
+    /*
+     1. https://jsfiddle.net/skantipu/ts8xpoLj/
+     2. implement JSON.stringify() functionality
+     3. https://jsfiddle.net/skantipu/cbeo9k8p/2
+     print current time as old digital display
+     */
+
+    //-------------------
+    // JSON.stringify like
+
+    function stringify(json) {
+      let res = '';
+      if (json === null) {
+        return `${json}`;
+      }
+      if (typeof json === 'object') {
+        let newRes = '';
+        for (let key in json) {
+          if (newRes && typeof json[key] !== 'undefined') {
+            newRes += ','
+          }
+          if (json[key] === null) {
+            newRes += `"${key}"` + ':' + null;
+          } else if (typeof json[key] !== 'undefined') {
+            newRes += `"${key}"` + ':' + stringify(json[key]);
+          }
+        }
+        res += `{${newRes}}`;
+      } else {
+        //base conditions
+        if (typeof json === 'undefined') {
+          return;
+        }
+
+        if (res) {
+          res += ',';
+        }
+        if (typeof json === 'string') {
+          res += `"${json}"`;
+        } else {
+          res += json;
+        }
+      }
+      return res;
+    }
+
+    const json = {
+      name: 'sachin',
+      age: 28,
+      address: {
+        street: 'abc',
+        location: 'xxy',
+        remoteAddress: {
+          isRemote: true,
+          xyx: undefined,
+          nullable: null,
+        }
+      }
+    }
+    console.log(stringify(json), JSON.stringify(json));
+    console.log(stringify(json) === JSON.stringify(json));
+
+    console.log(stringify(undefined) === JSON.stringify(undefined), undefined);
+    console.log(stringify(null) === JSON.stringify(null), null);
+    console.log(stringify(true) === JSON.stringify(true), 'boolean');
+
+    console.log('------------------------');
+    console.log(JSON.stringify(undefined), stringify(undefined));
+    console.log(JSON.stringify(null), stringify(null));
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

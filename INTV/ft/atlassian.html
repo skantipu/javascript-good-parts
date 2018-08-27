@@ -2,7 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Atlassian</title>
+  <script>
+    (function() {
+      var input = [{
+        value: "value1",
+        children: [{
+          value: "value2",
+          children: [{
+            value: "value3",
+            children: []
+          }]
+        }, {
+          value: "value4",
+          children: []
+        }]
+      }, {
+        value: "value5",
+        children: []
+      }];
+      /*
+       Expected result:
+       [
+       {"value":"value1"},
+       {"value":"value2"},
+       {"value":"value3"},
+       {"value":"value4"},
+       {"value":"value5"}
+       ]
+       */
+
+      function parseRes(input) {
+        let res = [];
+        for (let item of input) {
+          res.push({value: item.value});
+          if (item.children.length > 0) {
+            res = res.concat(parseRes(item.children));
+          }
+        }
+        return res;
+      }
+      console.log(parseRes(input));
+    })();
+
+
+
+  </script>
 </head>
 <body>
 $END$

@@ -25,6 +25,12 @@
     firstChild, lastChild, nextSibling, previousSibling properties return that corresponding node (can be text, comment or element)
     firstElementChild, lastElementChild, nextElementSibling, previousElementSibling properties return that corresponding element (excludes text and comment nodes)
 
+
+  Refer: https://github.com/mdn/learning-area/blob/master/css/css-layout/practical-positioning-examples/info-box.html
+  Above considers Web Accessibility - does not use display: none as assistive technologies and screen readers skip hidden blocks. It uses position: absolute,
+  with z-index: 1 to display active tab content.
+  https://developer.mozilla.org/en-US/docs/Learn/Accessibility/CSS_and_JavaScript
+  Notice usage of section, article semantic tags.
 -->
 <!DOCTYPE html>
 <html lang="en">

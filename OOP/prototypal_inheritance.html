@@ -1,108 +1,220 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JS Prototypal Inheritance</title>
-    <script>
-        // GREAT READ!!
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
-        function Animal() {
-            this.eatsVeggies = "maybe";
-            this.eatsMeat = "maybe";
-        }
-        Animal.prototype.toplevel = "false";
+  <title>JS Prototypal Inheritance</title>
+  <script>
+    // GREAT READ!!
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+    function Animal() {
+      this.eatsVeggies = "maybe";
+      this.eatsMeat = "maybe";
+    }
+    Animal.prototype.toplevel = "false";
 
-        function Herbivore() {
-            Animal.call(this); //call to super constructor (try commenting this and run)
-            this.eatsMeat = false;
-        }
-        Herbivore.prototype = Object.create(Animal.prototype);
+    function Herbivore() {
+      Animal.call(this); //call to super constructor (try commenting this and run)
+      this.eatsMeat = false;
+    }
+    Herbivore.prototype = Object.create(Animal.prototype);
 
-        function Carnivore() {
-            this.eatsMeat = true;
-        }
-        Carnivore.prototype = new Animal();
+    function Carnivore() {
+      this.eatsMeat = true;
+    }
+    Carnivore.prototype = new Animal();
 
-        var rabbit = new Herbivore();
-        var bear = new Carnivore();
+    var rabbit = new Herbivore();
+    var bear = new Carnivore();
 
-        console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel);
-        console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel);
-        console.log(rabbit, bear);
+    console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel);
+    console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel);
+    console.log(rabbit, bear);
 
-        //----------------------------------------------------------
-        // Object oriented JS using object constructor function
-        //ref: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
-        function Person(fname, lname, age, gender) {
+    //----------------------------------------------------------
+    // Object oriented JS using object constructor function
+    //ref: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance
+    function Person(fname, lname, age, gender) {
+      this.fname = fname;
+      this.lname = lname;
+      this.age = age;
+      this.gender = gender;
+    }
+    Person.prototype.fullName = function () {
+      return `${this.fname} ${this.lname}`;
+    }
+    Person.prototype.isAbove60 = function () {
+      return this.age > 60;
+    }
+    Person.prototype.greeting = function () {
+      return `Hello, this is ${this.fullName()}`;
+    }
+
+    function Teacher(fname, lname, age, gender, subject) {
+      Person.call(this, fname, lname, age, gender);
+      this.subject = subject;
+    }
+
+    Teacher.prototype = Object.create(Person.prototype);
+    //this prototype assignment has to happen before you define greeting() on Teacher prototype
+
+    Teacher.prototype.greeting = function () {
+      return `Hello, this is ${this.gender === 'm' ? 'Mr' : 'Mrs'}.${this.fullName()} and I teach ${this.subject}`;
+    }
+
+    let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
+
+    //--------------------------------------------------
+
+    (function(){
+      // Object oriented JS - Class
+      // JS classes are syntactical sugar over JavaScript's existing prototype-based inheritance using object constructor functions
+      //ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+      class Person {
+        constructor(fname, lname, age, gender) {
           this.fname = fname;
           this.lname = lname;
           this.age = age;
           this.gender = gender;
         }
-        Person.prototype.fullName = function() {
+
+        //getter
+        get fullName() {
           return `${this.fname} ${this.lname}`;
         }
-        Person.prototype.isAbove60 = function() {
+
+        //instance method (called with an instance)
+        isAbove60() {
           return this.age > 60;
         }
-        Person.prototype.greeting = function() {
-          return `Hello, this is ${this.fullName()}`;
-        }
 
-        function Teacher(fname, lname, age, gender, subject) {
-          Person.call(this, fname, lname, age, gender);
+        //instance method
+        greeting() {
+          return `Hello, this is ${this.fullName}`;
+        }
+      }
+      class Teacher extends Person {
+        constructor(fname, lname, age, gender, subject) {
+          super(fname, lname, age, gender);
           this.subject = subject;
         }
 
-        Teacher.prototype = Object.create(Person.prototype);
-        //this prototype assignment has to happen before you define greeting() on Teacher prototype
-
-        Teacher.prototype.greeting = function() {
-          return `Hello, this is ${this.gender === 'm' ? 'Mr': 'Mrs'}.${this.fullName()} and I teach ${this.subject}`;
+        greeting() {
+          return `Hello, this is ${this.gender === 'm' ? 'Mr' : 'Mrs'}.${this.fullName} and I teach ${this.subject}`;
         }
+      }
+      let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
+      // later if you want to add more methods to the prototype of Teacher, do so using Teacher.prototype.myMethod = function() {...}
+      Teacher.prototype.myMethod = function () {
+        return 'test';
+      }
+    })();
 
-        let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
 
-        //--------------------------------------------------
-
-        /*
-        // Object oriented JS - Class
-        // JS classes are syntactical sugar over JavaScript's existing prototype-based inheritance using object constructor functions
-        //ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
-        class Person {
-          constructor(fname, lname, age, gender) {
-            this.fname = fname;
-            this.lname = lname;
-            this.age = age;
-            this.gender = gender;
-          }
-          //getter
-          get fullName() {
-            return `${this.fname} ${this.lname}`;
-          }
-          //instance method (called with an instance)
-          isAbove60() {
-            return this.age > 60;
-          }
-          //instance method
-          greeting() {
-            return `Hello, this is ${this.fullName}`;
+    // Hospital Management System
+    (function () {
+      class Address {
+        constructor(street, city, state) {
+          this.street = street;
+          this.city = city;
+          this.state = state;
+        }
+      }
+      class Person {
+        constructor(fname, lname, age, gender, address) {
+          this.fname = fname;
+          this.lname = lname;
+          this.age = age;
+          this.gender = gender;
+          this.address = address;
+        }
+        getFullName() {
+          return this.fname + ' ' + this.lname;
+        }
+        getAddress() {
+          return this.address;
+        }
+        getAge() {
+          return this.age;
+        }
+        getGender() {
+          return this.gender;
+        }
+      }
+      class Patient extends Person {
+        constructor(p_id, fname, lname, age, gender, address) {
+          super(fname, lname, age, gender, address);
+          this.id = p_id;
+        }
+      }
+      class Doctor extends Person {
+        constructor(d_id, fname, lname, age, gender, address) {
+          super(fname, lname, age, gender, address);
+          this.id = d_id
+        }
+      }
+      class Hospital {
+        constructor(name) {
+          this.name = name;
+          this.patientList = [];
+          this.doctorList = [];
+          this.doctorPatientMap = {};
+        }
+        getAllDoctors() {
+          return this.doctorList;
+        }
+        getAllPatients() {
+          return this.patientList;
+        }
+        addPatient(p) {
+          this.patientList.push(p);
+        }
+        addDoctor(d) {
+          this.doctorList.push(d);
+        }
+        assignPatientToDoctor(pid, did) {
+          if (this.doctorPatientMap.hasOwnProperty(did)) {
+            this.doctorPatientMap[did].push(pid);
+          } else {
+            this.doctorPatientMap[did] = [pid];
           }
         }
-        class Teacher extends Person {
-          constructor (fname, lname, age, gender, subject) {
-            super(fname, lname, age, gender);
-            this.subject = subject;
-          }
-          greeting() {
-            return `Hello, this is ${this.gender === 'm' ? 'Mr': 'Mrs'}.${this.fullName} and I teach ${this.subject}`;
-          }
+        getListOfPatients(did) {
+          const patientList = this.doctorPatientMap[did];
+          return this.patientList.filter(item => patientList.indexOf(item.id) !== -1);
         }
-        let t1 = new Teacher('Mary', 'Williams', 45, 'f', 'Mathematics');
-        // later if you want to add more methods to the prototype of Teacher, do so using Teacher.prototype.myMethod = function() {...}
-        Teacher.prototype.myMethod = function() {return 'test';}
+      }
+      const p1Address = new Address('rashelle', 'san ramon', 'ca');
+      const p1 = new Patient(1, 'mani', 'palli', 27, 'male', p1Address);
 
-        */
-    </script>
+      const p2Address = new Address('dougherty', 'san ramon', 'ca');
+      const p2 = new Patient(2, 'hari', 'kishore', 29, 'male', p2Address);
+
+      const p3Address = new Address('market street', 'san ramon', 'ca');
+      const p3 = new Patient(3, 'midhula', 'k', 19, 'female', p3Address);
+
+      const d1Address = new Address('bishop ranch', 'san ramon', 'ca');
+      const d1 = new Doctor(1, 'marissa', 'mayor', 67, 'female', d1Address);
+
+      const d2 = new Doctor(2, 'jacky', 'lee', 45, 'female', d1Address);
+
+      const h1 = new Hospital('kaiser');
+
+      h1.addPatient(p1);
+      h1.addPatient(p2);
+      h1.addPatient(p3);
+
+      h1.addDoctor(d1);
+      h1.addDoctor(d2);
+
+      h1.assignPatientToDoctor(1, 2);
+      h1.assignPatientToDoctor(2, 2);
+      h1.assignPatientToDoctor(3, 1);
+
+      console.log(h1.getAllDoctors(), h1.getAllPatients());
+      console.log(h1.getListOfPatients(1), h1.getListOfPatients(2));
+
+    })();
+
+  </script>
 </head>
 <body>
 </body>

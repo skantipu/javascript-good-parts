@@ -1,18 +1,33 @@
+<!--
+
+1. see below on how you can listen to multiple event types - each event type requires it's own listener in vanilla JS
+2. see how you made #tooltipLink keyboard accessible by making it tabbable (originally <a> is not tabbable) by adding tabindex="0". Test with keyboard.
+3. see how you made #tooltip not keyboard accessible by adding tabindex="-1" (you can programmatically make it tabbable)
+4. see how you use aria tags (aria-labelledby, aria-controls, aria-expanded)
+5. see how you hide #tooltipInfo by NOT using visibility: hidden or display: none. You used asbolute positioning and gave a
+  value so it's outside the viewport. So it's accessible/visible only to screen readers and assistive technologies.
+6. notice how you position ::after (triangle pointer) -- absolute positioned element is taken out of normal flow of document and is placed in relation
+  to its closest non-static positioned parent element (relative/absolute). If such a parent do not exist, body will be used as a reference.
+7. see how you created triangle pointer by setting border color and width
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Tooltip</title>
   <style>
+    #wrapper {
+      display: flex;
+      justify-content: center;
+      flex-flow: row nowrap;
+    }
     .visibility-hidden {
       visibility: hidden;
     }
     .tooltip-link {
-      display: flex;
-      justify-content: center;
-      margin-top: 80px;
+      margin-top: 100px;
     }
-    .tooltip-link__info-text {
+    .viewport-hide {
       position: absolute;
       left: -500px;
     }
@@ -22,6 +37,7 @@
       border: 1px solid black;
       box-shadow: 0 0 3px;
       z-index: 1;
+      background: white; /* otherwise background is set to default - transparent */
     }
     #tooltip::after {
       content: '';
@@ -31,16 +47,20 @@
       position: absolute;
       left: 100%;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY(-50%); /* to exactly make it vertically center */
     }
   </style>
 </head>
 <body>
-  <div class="tooltip-link">
-    <span class="tooltip-link__info-text" id="tooltipInfo">Hover on the link below to display tooltip</span>
-    <a href="#" id="tooltipLink" aria-labelledby="tooltipInfo" aria-controls="tooltip" aria-expanded="false" tabindex="0">My Info</a>
+  <div id="wrapper">
+    <div class="tooltip-link">
+      <h2>Tool tip</h2>
+      <span class="viewport-hide" id="tooltipInfo">Hover on the link below to display tooltip</span>
+      <a href="#" id="tooltipLink" aria-labelledby="tooltipInfo" aria-controls="tooltip" aria-expanded="false" tabindex="0">My Info</a>
+    </div>
+    <div id="tooltip" class="visibility-hidden" role="tooltip" tabindex="-1"></div>
   </div>
-  <div id="tooltip" class="visibility-hidden" role="tooltip" tabindex="-1"></div>
+
   <script>
     const Tooltip = (function() {
       const tooltipLink = document.getElementById('tooltipLink');
@@ -48,9 +68,11 @@
       const infoMap = {};
       function showTooltip() {
         tooltip.style.visibility = 'visible';
+        tooltipLink.setAttribute('aria-expanded', true);
       }
       function hideTooltip() {
         tooltip.style.visibility = 'hidden';
+        tooltipLink.setAttribute('aria-expanded', false);
       }
       async function loadData() {
         let userInfo;

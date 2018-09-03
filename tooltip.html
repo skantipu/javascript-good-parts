@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tooltip</title>
+  <style>
+    .visibility-hidden {
+      visibility: hidden;
+    }
+    .tooltip-link {
+      display: flex;
+      justify-content: center;
+      margin-top: 80px;
+    }
+    .tooltip-link__info-text {
+      position: absolute;
+      left: -500px;
+    }
+    #tooltip {
+      position: absolute;
+      width: 350px;
+      border: 1px solid black;
+      box-shadow: 0 0 3px;
+      z-index: 1;
+    }
+    #tooltip::after {
+      content: '';
+      display: block;
+      border: 10px solid black;
+      border-color: transparent transparent transparent black;  /* left is black */
+      position: absolute;
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="tooltip-link">
+    <span class="tooltip-link__info-text">Hover on the link below to display tooltip</span>
+    <a href="#" id="tooltipLink" aria-labelledby="tooltipInfo" aria-controls="tooltip" aria-expanded="false">My Info</a>
+  </div>
+  <div id="tooltip" class="visibility-hidden" role="tooltip" tabindex="-1"></div>
+  <script>
+    const Tooltip = (function() {
+      const tooltipLink = document.getElementById('tooltipLink');
+      const tooltip = document.getElementById('tooltip');
+      const infoMap = {};
+      function showTooltip() {
+        tooltip.style.visibility = 'visible';
+      }
+      function hideTooltip() {
+        tooltip.style.visibility = 'hidden';
+      }
+      async function loadData() {
+        let userInfo;
+        if (!infoMap.hasOwnProperty(1)) {
+          const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+          userInfo = await res.json();
+          infoMap[userInfo.userId] = userInfo;
+        } else {
+          userInfo = infoMap[1];
+        }
+        tooltip.innerHTML = JSON.stringify(userInfo);
+        const toolTipLinkPos = tooltipLink.getBoundingClientRect();
+        const tpTop = toolTipLinkPos.top - tooltip.offsetHeight / 2 + 10;
+        tooltip.style.top = `${tpTop}px`;
+        const tpLeft = toolTipLinkPos.left - tooltip.offsetWidth - 15;
+        tooltip.style.left = `${tpLeft}px`;
+        showTooltip();
+      }
+
+      function create() {
+        tooltipLink.addEventListener('mouseover', function(event) {
+          loadData();
+        });
+        tooltipLink.addEventListener('mouseout', function(event) {
+          hideTooltip();
+        });
+      }
+      return {
+        init: create
+      }
+    })();
+
+    Tooltip.init();
+
+  </script>
+</body>
+</html>

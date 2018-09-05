@@ -67,44 +67,8 @@
     car.move(2, 3);
     car2.move(4, 5);
 
-    console.log(car.logPosition());  //Car Fittipaldi is at 6,8
-    console.log(car2.logPosition()); // Car Senna is at 6,8
-
-//    *****NOTE: Both log the same, as both car and car2 objects share the SAME prototype.
-//    For both objects having different instances of move(), it needs to be defined not in the prototype but in the constructor function itslef.
-
-
-//      /* FINAL SOLUTION */
-//    function Car(name) {
-//      this.name = name;
-//      this.position = {
-//        x: 0,
-//        y: 0
-//      };
-//      this.move = function(x, y) {
-//        this.position.x += x;
-//        this.position.y += y;
-//      }
-//    }
-//
-//    Car.prototype.logPosition = function() {
-//      return ('Car ' + this.name + ' is at ' + [this.position.x, this.position.y].join(',') );
-//    }
-//
-//    // If Crockford was your boss, you couldn’t use `new`. How would you create new instances of Car?
-//    //var car = new Car('Fittipaldi');
-//    //var car2 =  new Car('Senna');
-//
-//    var car = Object.create(Car.prototype);  //small p
-//    Car.call(car, 'Fittipaldi')
-//    var car2 = Object.create(Car.prototype);
-//    Car.call(car2, 'Senna');
-//
-//    car.move(2, 3);
-//    car2.move(4, 5);
-//
-//    console.log(car.logPosition());  //Car Fittipaldi is at 2,3
-//    console.log(car2.logPosition()); // Car Senna is at 4,5
+    console.log(car.logPosition());  //Car Fittipaldi is at 2,3
+    console.log(car2.logPosition()); //Car Senna is at 4,5
 
 //----------------------------------------------------------------------------
 //    Question:

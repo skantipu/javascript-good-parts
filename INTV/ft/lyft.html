@@ -43,7 +43,7 @@
             break;
           case 'object':
             if (obj === null) {
-              result += 'null';
+              result += obj;
             } else if (Array.isArray(obj)) {
               result += `[${obj}]`;
             } else if (typeof obj.getMonth === 'function') {

@@ -78,13 +78,13 @@
       console.log(stringify(false) === JSON.stringify(false));
       console.log(stringify(6) === JSON.stringify(6));
       console.log(stringify(null) === JSON.stringify(null));
-      console.log(stringify('sachin') === JSON.stringify('sachin'), stringify('sachin'));
+      console.log(stringify('sachin') === JSON.stringify('sachin'), stringify('sachin')); // we only add one set of quotes. JS while displaying strings, it adds another set of quotes
       console.log(stringify([1,2,3]) === JSON.stringify([1,2,3]));
       console.log(stringify(function(){}) === JSON.stringify(function(){})); // JSON.stringify(function(){}) == undefined
       console.log(stringify(new Date()) === JSON.stringify(new Date()));
       console.log(JSON.stringify({name: 'sachin', age: 23, isMarried: true}), stringify({name: 'sachin', age: 23, isMarried: true}));
       console.log(stringify({name: 'sachin', age: 23, isMarried: true}) === JSON.stringify({name: 'sachin', age: 23, isMarried: true}))
-
+      console.log(stringify(json)); //TODO handle undefined value case (remove key from obj)
     })();
 
 

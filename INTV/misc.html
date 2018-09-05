@@ -224,7 +224,7 @@
        }
      ]
      */
-    // below solution can be improved - it's a working one
+    // below solution works if output includes only one object with type and color
     // you can safely assume that in exclude array, key values will be one of type/color
 
     //returns {color: silver, type: radio}
@@ -327,7 +327,6 @@
     //output:  thereisaboynamedandheisstudying (after removing hcinas anagrams from the sentence)
 
     var longStr = 'thereisaboynamedschainheisstudying', anagram = 'hcinas';
-    // may be you can try binary search algo too
     function isAnagram(wordA, wordB) {
       if (wordA === wordB) {
         return true;

@@ -36,10 +36,10 @@
         let result = '';
         switch (type) {
           case 'string':
-            result = `"${obj}"`;
+            result += `"${obj}"`;
             break;
           case 'number':
-            result = `${obj}`;
+            result += `${obj}`;
             break;
           case 'object':
             if (obj === null) {
@@ -78,7 +78,7 @@
       console.log(stringify(false) === JSON.stringify(false));
       console.log(stringify(6) === JSON.stringify(6));
       console.log(stringify(null) === JSON.stringify(null));
-      console.log(stringify('sachin') === JSON.stringify('sachin'));
+      console.log(stringify('sachin') === JSON.stringify('sachin'), stringify('sachin'));
       console.log(stringify([1,2,3]) === JSON.stringify([1,2,3]));
       console.log(stringify(function(){}) === JSON.stringify(function(){})); // JSON.stringify(function(){}) == undefined
       console.log(stringify(new Date()) === JSON.stringify(new Date()));

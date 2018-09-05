@@ -32,7 +32,7 @@
         if (typeof obj[key] !== 'object' && typeof obj[key] !== 'function') {
           res[key] = obj[key];
         } else {
-          res = {...res, ...iterate(obj[key])};
+          res = {...res, ...iterate(obj[key])};  // there is no concat() defined on objects, it's for only strings and arrays. Had it been an array, you could have also used res = res.concat(...);
         }
       }
       return res;

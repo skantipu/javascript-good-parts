@@ -374,7 +374,7 @@
   //Binary Search O(logn) time complexity
 
   (function(){
-    const arr = [2, 3, 9, 12, 44, 233, 999]; // requires arr to be sorted
+    const arr = [2, 3, 9, 12, 44, 233, 999]; // requires arr to be sorted (JS array sort() works only on strings, for non-strings, you got to pass custom comparator function to sort())
     const elm = 32;
     function binarySearch(first, last) {
       if (last - first <= 1) {

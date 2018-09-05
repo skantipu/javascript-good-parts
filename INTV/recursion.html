@@ -31,7 +31,7 @@
       for (let key in obj) {
         if (typeof obj[key] !== 'object' && typeof obj[key] !== 'function') {
           res[key] = obj[key];
-        } else if (typeof obj[key] !== 'function') {
+        } else {
           res = {...res, ...iterate(obj[key])};
         }
       }

@@ -112,8 +112,7 @@
         //uses Array to reverse, returns a new LinkedList that is reversed
         if(!this.head || !this.head.next) return this;
 
-        var nodes=[],
-          current = this.head;
+        var nodes = [], current = this.head;
         //storing all the nodes in an array
         while(current){
           nodes.push(current);
@@ -129,7 +128,7 @@
         reversedLL.length++;
         //make sure to make next of the newly inserted node to be null
         //other wise the last node of your SLL will retain its old next.
-        while(node){
+        while(node) {
           node.next = null;
           current.next = node;
 

@@ -313,9 +313,9 @@
       }, {});
       items.forEach(elem => {
         if (excludeMap.type.indexOf(elem.type) == -1 && excludeMap.color.indexOf(elem.color) == -1) {
-        result.push(elem);
-      }
-    });
+          result.push(elem);
+        }
+      });
       console.log(result);
     })(items, exclude);
   })();

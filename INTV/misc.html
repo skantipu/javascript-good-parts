@@ -452,9 +452,7 @@
     console.log(map);
     const freqArr = [];
     for (let word in map) {
-      const wordList = freqArr[map[word]] || [];
-      wordList.push(word);
-      freqArr[map[word]] = wordList;
+      freqArr[map[key]] ? freqArr[map[key]].push(key) : freqArr[map[key]] = [key];
     }
     console.log(freqArr);
     const result = computeRes(freqArr, 5);

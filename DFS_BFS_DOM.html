@@ -31,18 +31,21 @@ Knowledge:
 
             /* Depth first search (DFS)    */
             var str = "";
+
             function visitDfs(node) {
               str += node.nodeName + " ";
-              for(var i=0; i<node.children.length; i++) {
+              for (var i = 0; i < node.children.length; i++) {
                 visitDfs(node.children[i]);
               }
               return str;
             }
+
             visitDfs(elems)
-            console.log(str);
+            console.log('DFS -->', str);
 
             //BFS using queue (non-recursion)
             var str = "";
+
             function visitBfs(node) {
               var q = [node];
               while (q.length > 0) {
@@ -50,7 +53,7 @@ Knowledge:
 
                 str += node.nodeName + ' ';
 
-                for(var i=0; i<node.children.length; i++) {
+                for (var i = 0; i < node.children.length; i++) {
                   q.push(node.children[i]);
                   /*
                     //check if span tag exists
@@ -59,9 +62,10 @@ Knowledge:
                   }
                   */
                 }
+              }
+              visitBfs(elems)
+              console.log(str);
             }
-            visitBfs(elems)
-            console.log(str);
           }
         </script>
     </head>

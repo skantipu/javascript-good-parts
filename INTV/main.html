@@ -235,9 +235,9 @@
 
       // Uncomment this code when you are ready:
       const logMessage = (event) => { console.log('Function fired!') }
-      let handle;
       const callOnceAfter = (fn, time) => {
         // debounce logic
+        let handle;
         return function() {
           if (handle) {
             clearTimeout(handle)

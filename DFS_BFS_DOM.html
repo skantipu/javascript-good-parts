@@ -40,8 +40,7 @@ Knowledge:
               return str;
             }
 
-            visitDfs(elems)
-            console.log('DFS -->', str);
+            console.log('DFS -->', visitDfs(elems));
 
             //BFS using queue (non-recursion)
             var str = "";
@@ -63,9 +62,10 @@ Knowledge:
                   */
                 }
               }
-              visitBfs(elems)
-              console.log(str);
+              return str;
             }
+
+            console.log('BFS --> ', visitBfs(elems));
           }
         </script>
     </head>

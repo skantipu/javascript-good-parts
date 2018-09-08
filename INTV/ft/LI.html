@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LI</title>
+  <script>
+    /*
+    LinkedIn
+    1. accordion (accessibility)
+    2. calendar (js) - should have code for greying out days of prev and next month in my current month's calendar
+    3. conversion of number to words -
+      231 - two hundred and thirty one and 00/100
+      231.23 - two hundred and thirty one and twenty three/100
+    4. Design/Architecture round: Show new users popping up as pointers on the visible area of globe. Globe say finishes revolution in 1 hr.
+      ajax call and update UI
+      what if real time data I need?? -- web sockets (no multiple ajax calls here, session: keep-alive (outdated way of handling sessions)).
+      scalability - what if new user sing up rate explodes -- how to efficiently show it on UI (aggregation by city)
+    5. Product technical taste - name a product and what u like and what u dont like and how you can improve (flipkart lite - progressive app)
+
+    Square
+    --------------------
+    aabcabad - construct a char freq map and construct a tree from it.
+    {
+      a: 4,
+      b: 2,
+      c: 1,
+      d: 1
+    }
+
+    sorted map {d: 1, c: 1, b: 2, a: 4}
+
+         8
+               4
+                   2
+     a4    b2  c:1    d:1
+
+     start with d:1, nodify it (create object), then left child is c:1, and once you have right and left set, set parent 2 (sum of 1, 1).
+     Now get left child b:2, now left child is b:2, right child is 2 (sum node), and set parent 4.
+     setParent(a:4, 4) -- 8 ....
+
+     function nodify() {..}
+     function setParent(left, right){..}
+     function treeify(){...}
+
+     ------------------
+     hotel management system design (reserve, book use cases, how to handle concurrent user booking at same time? etc)
+     ------------------
+     implement webpack like
+     read files and filter for lines starting with import and extract the filepath from it. now go to that file path and do the same. finally print all file
+     paths starting from bottom. if a file does not have any import, return file name
+     used node js file methods.
+
+     import {} from 'filepath'
+     ------------------
+     */
+  </script>
+</head>
+<body>
+
+</body>
+</html>

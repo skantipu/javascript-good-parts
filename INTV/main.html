@@ -579,6 +579,26 @@
       // [ 'darkgoldenrod', 'gold', 'goldenrod', 'lightgoldenrodyellow', 'palegoldenrod' ]
 **/
 
+ /*
+
+    accordion - do it only with CSS (keep content of accordian tab within it and you can add class in JS to set as active)
+    hack - radio button or checkbox (checked property)
+
+    web sockets - real time communication - no lag like ajax
+
+    Edge case handling:
+    when you implement a method, take care of various test edge cases -
+    ex: function getWorkRate(workers, rates) {
+      return workers.length/rates/length;
+    }
+    //what if workers [] is empty or null etc...
+
+    Good idea to attach event listener to parent and get hold of clicked element by event.target (event bubbling) instead of attaching event listeners
+    to all children (it will burden the DOM and it gets heavy)
+    In accordion, if you do the same - say accordion tab has (icon, text) left aligned and upward/downward arrow to the right, what if you click on
+    icon or arrow, then even.target is that, but you have event listener to the parent of all tabs, then how you can change the color of clicked tab with
+    event.target being an element with in the clicked tab??
+ */
 
     </script>
   </head>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>circle move</title>
+  <style>
+    #circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: tomato;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+     const circleElem = document.getElementById('circle');
+     function circle(x, y) {
+       this.position = {
+         x, y
+       }
+     }
+     circle.prototype.move = function (x, y) {
+       this.position.x = x;
+       this.position.y = y;
+     }
+    }
+  </script>
+</head>
+<body>
+  <div id="circle"></div>
+</body>
+</html>

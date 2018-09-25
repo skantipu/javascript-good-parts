@@ -581,6 +581,24 @@
 
  // System design intv questions - https://www.quora.com/How-do-you-answer-the-interview-question-How-would-you-design-and-scale-a-platform-like-Twitter
  // Grokking the System Design Interview - https://www.educative.io/collection/5668639101419520/5649050225344512
+      
+ // Parallelism - https://davidwalsh.name/async-await 
+ // https://developers.google.com/web/fundamentals/primers/async-functions (refer Careful! Avoid going too sequential)
+      
+ /*
+ async function series() {
+  await wait(500); // Wait 500ms…
+  await wait(500); // …then wait another 500ms.
+  return "done!";
+ }
+ async function parallel() {
+  const wait1 = wait(500); // Start a 500ms timer asynchronously…
+  const wait2 = wait(500); // …meaning this timer happens in parallel.
+  await wait1; // Wait 500ms for the first timer…
+  await wait2; // …by which time this timer has already finished.
+  return "done!";
+ }
+*/
     </script>
   </head>
   <body>

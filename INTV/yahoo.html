@@ -12,18 +12,16 @@
      What about a nested array?
      var input = ['bye', 0, null, 'hi', ['World', 2.5], 'a'];
      Result: "World"
-
      */
 
     function longestString(input) {
-      var result = '';
+      let result = '';
       input.forEach(function(str) {
         if(typeof str === "string") {
           if(str.length > result.length) {
             result = str;
           }
-        }
-        else if(Array.isArray(str)) {
+        } else if(Array.isArray(str)) {
           // str.forEach
           if(longestString(str).length > result.length) {
             result = longestString(str);
@@ -34,10 +32,8 @@
       return result;
 
     }
-    var input = ['bye', 0, null, 'hi', ['World', 2.5], 'a'];
+    const input = ['bye', 0, null, 'hi', ['World', 2.5], 'a'];
     console.log(longestString(input))
-
-
 
     /*
      Write a function that finds the count of a number of times a word appears in a string.
@@ -45,16 +41,15 @@
      var input = "There is the house that they want the bobcat to live in."
      var word = "the"
      Result: 2
-
      */
 
-    var WordFrequency = (function() {
+    const WordFrequency = (function() {
       function frequencyOfWord(input, target) {
-        var words = input.split(/[\s.\?'",_-]/); //assumption: space and period as delimiters
-        var count = 0;
+        const words = input.split(/[\s.\?'",_-]/); //assumption: space and period as delimiters
+        let count = 0;
         words.forEach(function(word) {
           word = word.toLowerCase();
-          if(word === target) {
+          if (word === target) {
             count++;
           }
         });
@@ -65,12 +60,10 @@
       };
     })();
 
-    var str = "There is the house that they want the bobcat to live in.";
-    var target = "the";
-    var number = WordFrequency.count(str, target.toLowerCase());
+    const str = "There is the house that they want the bobcat to live in.";
+    const target = "the";
+    const number = WordFrequency.count(str, target.toLowerCase());
     console.log(number);
-
-
 
   </script>
 </head>

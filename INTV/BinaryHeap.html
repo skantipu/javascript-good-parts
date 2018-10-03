@@ -18,7 +18,7 @@
 
     class BinaryHeap {
       constructor() {
-        this.heap = [null]
+        this.heap = [null];
       }
 
       push(value, priority) {
@@ -35,7 +35,7 @@
 
       pop() {
         // has bubble down/cascade down/trickle down operation
-        if (this.heap.length < 3) {
+        if (this.heap.length < 3) { // two nodes
           const toReturn = this.heap.pop();
           this.heap[0] = null;
           return toReturn;
@@ -80,7 +80,7 @@
     console.log(JSON.stringify(heap));
 
     /*
-      Binary heap (min/max) stores priority of its data and has
+      Binary heap (min/max heap) stores priority of its data and has -
       O(1) for findMin()/findMax() (peek() - without actually removing element from the tree),
       O(log n) for insertion, deletion, update
       Building a heap takes O(n) for an array of size n - sounds like O(nlogn) as it is n inserts, but actually it's O(n)

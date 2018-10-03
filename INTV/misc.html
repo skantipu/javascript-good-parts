@@ -19,6 +19,8 @@
    // It should be changed to
    // {1, 9, 8, 4, 2, 7, 6, 0, 0, 0, 0}
    // The order of all other elements should remain the same.
+
+   https://www.geeksforgeeks.org/move-zeroes-end-array/
    */
 
   // input: [23, 3, 22, 13, 5, -9, 0], output: return index of 22 -> 2. For that, you need to sort the array and then do binary search
@@ -217,12 +219,12 @@
     /*
      output: [
        {
-       "type": "tv",
-       "color": "grey"
+         "type": "tv",
+         "color": "grey"
        }
      ]
      */
-    // below solution can be improved - it's a working one
+    // below solution works if output includes only one object with type and color
     // you can safely assume that in exclude array, key values will be one of type/color
 
     //returns {color: silver, type: radio}
@@ -258,7 +260,7 @@
   })();
 
   // -------------------------------------------
-
+  // variant of above but having multiple colors or types
   (function() {
     var items =
       [{
@@ -285,23 +287,17 @@
       }];
 
     /*
-     output: [
+     output: [{
+       "type": "tv",
+       "color": "grey"
+     }]
+
+    given 'key' values (color and type) in the exclude array will only be one of items keys.
+    have a map as below:
      {
-     "type": "tv",
-     "color": "grey"
+       color: [silver, blue],
+       type: [radio]
      }
-     ]
-     */
-    // given key values (color and type) in the exclude array will only be one of items keys.
-
-    /*
-     have a map as below:
-
-     {
-     color: [silver, blue],
-     type: [radio]
-     }
-
 
      Remember
      push() returns length of array
@@ -313,13 +309,13 @@
       const result = [];
       const excludeMap = exclude.reduce((acc, elem) => {
           acc[elem.key] ? acc[elem.key].push(elem.val) : acc[elem.key] = [elem.val];
-      return acc;
-    }, {});
+          return acc;
+      }, {});
       items.forEach(elem => {
         if (excludeMap.type.indexOf(elem.type) == -1 && excludeMap.color.indexOf(elem.color) == -1) {
-        result.push(elem);
-      }
-    });
+          result.push(elem);
+        }
+      });
       console.log(result);
     })(items, exclude);
   })();
@@ -331,7 +327,6 @@
     //output:  thereisaboynamedandheisstudying (after removing hcinas anagrams from the sentence)
 
     var longStr = 'thereisaboynamedschainheisstudying', anagram = 'hcinas';
-    // may be you can try binary search algo too
     function isAnagram(wordA, wordB) {
       if (wordA === wordB) {
         return true;
@@ -379,7 +374,7 @@
   //Binary Search O(logn) time complexity
 
   (function(){
-    const arr = [2, 3, 9, 12, 44, 233, 999]; // requires arr to be sorted
+    const arr = [2, 3, 9, 12, 44, 233, 999]; // requires arr to be sorted (JS array sort() works only on strings, for non-strings, you got to pass custom comparator function to sort())
     const elm = 32;
     function binarySearch(first, last) {
       if (last - first <= 1) {
@@ -457,9 +452,7 @@
     console.log(map);
     const freqArr = [];
     for (let word in map) {
-      const wordList = freqArr[map[word]] || [];
-      wordList.push(word);
-      freqArr[map[word]] = wordList;
+      freqArr[map[key]] ? freqArr[map[key]].push(key) : freqArr[map[key]] = [key];
     }
     console.log(freqArr);
     const result = computeRes(freqArr, 5);

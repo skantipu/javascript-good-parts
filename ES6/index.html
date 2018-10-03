@@ -33,7 +33,7 @@
 
   //fix the code below
   /*
-      class LateBloomer{
+      class LateBloomer {
           constructor() {
               this.petalCount = Math.ceil(Math.random() * 100);
           }
@@ -62,7 +62,7 @@
               setTimeout(this.declare.bind(this), 1000);
           }
           bloomArrow() {
-              //even this works as 'this' value inside arrow functions depend on surrounding context of arrow fn.
+              //'this' value inside arrow functions depend on surrounding context of arrow fn.
               setTimeout(() => {
                   console.log('I am a beautiful flower with ' + this.petalCount + ' petals!');
               }, 1000);

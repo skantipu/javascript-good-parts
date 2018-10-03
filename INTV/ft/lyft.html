@@ -15,65 +15,78 @@
     //-------------------
     // JSON.stringify like
 
-    function stringify(json) {
-      let res = '';
-      if (json === null) {
-        return `${json}`;
-      }
-      if (typeof json === 'object') {
-        let newRes = '';
-        for (let key in json) {
-          if (newRes && typeof json[key] !== 'undefined') {
-            newRes += ','
-          }
-          if (json[key] === null) {
-            newRes += `"${key}"` + ':' + null;
-          } else if (typeof json[key] !== 'undefined') {
-            newRes += `"${key}"` + ':' + stringify(json[key]);
+    (function(){
+      const json = {
+        name: 'sachin',
+        age: 28,
+        address: {
+          street: 'abc',
+          location: 'xxy',
+          remoteAddress: {
+            isRemote: true,
+            xyx: undefined,
+            nullable: null,
           }
         }
-        res += `{${newRes}}`;
-      } else {
-        //base conditions
-        if (typeof json === 'undefined') {
-          return;
-        }
-
-        if (res) {
-          res += ',';
-        }
-        if (typeof json === 'string') {
-          res += `"${json}"`;
-        } else {
-          res += json;
-        }
       }
-      return res;
-    }
 
-    const json = {
-      name: 'sachin',
-      age: 28,
-      address: {
-        street: 'abc',
-        location: 'xxy',
-        remoteAddress: {
-          isRemote: true,
-          xyx: undefined,
-          nullable: null,
+      // console.log(stringifyObj({name: 'sachin', age: 23, isMarried: true, address: {street: undefined, last: null}}))
+      function stringify(obj) {
+        const type = typeof obj;
+        let result = '';
+        switch (type) {
+          case 'string':
+            result += `"${obj}"`;
+            break;
+          case 'number':
+            result += `${obj}`;
+            break;
+          case 'object':
+            if (obj === null) {
+              result += obj;
+            } else if (Array.isArray(obj)) {
+              result += `[${obj}]`;
+            } else if (typeof obj.getMonth === 'function') {
+              //datetime
+              result += `"${obj.toISOString()}"`;
+            } else {
+              //object {...}
+              let newRes = '';
+              for (let key in obj) {
+                if (newRes) {
+                  newRes += ',';
+                }
+                newRes += `"${key}":${stringify(obj[key])}`;
+              }
+              result += `{${newRes}}`;
+            }
+            break;
+          case 'undefined':
+            result = obj;
+            break;
+          case 'boolean':
+            result += `${obj}`;
+            break;
+          default:
+            //function type
+            result = undefined;
+            break;
         }
+        return result;
       }
-    }
-    console.log(stringify(json), JSON.stringify(json));
-    console.log(stringify(json) === JSON.stringify(json));
+      console.log(stringify(undefined) === JSON.stringify(undefined));
+      console.log(stringify(false) === JSON.stringify(false));
+      console.log(stringify(6) === JSON.stringify(6));
+      console.log(stringify(null) === JSON.stringify(null)); // result is initialized to empty string, so result += null, returns stringified null
+      console.log(stringify('sachin') === JSON.stringify('sachin'), stringify('sachin')); // we only add one set of quotes. JS while displaying strings, it adds another set of quotes
+      console.log(stringify([1,2,3]) === JSON.stringify([1,2,3]));
+      console.log(stringify(function(){}) === JSON.stringify(function(){})); // JSON.stringify(function(){}) == undefined
+      console.log(stringify(new Date()) === JSON.stringify(new Date()));
+      console.log(JSON.stringify({name: 'sachin', age: 23, isMarried: true}), stringify({name: 'sachin', age: 23, isMarried: true}));
+      console.log(stringify({name: 'sachin', age: 23, isMarried: true}) === JSON.stringify({name: 'sachin', age: 23, isMarried: true}))
+      console.log(stringify(json)); //TODO handle undefined value case (remove key from obj)
+    })();
 
-    console.log(stringify(undefined) === JSON.stringify(undefined), undefined);
-    console.log(stringify(null) === JSON.stringify(null), null);
-    console.log(stringify(true) === JSON.stringify(true), 'boolean');
-
-    console.log('------------------------');
-    console.log(JSON.stringify(undefined), stringify(undefined));
-    console.log(JSON.stringify(null), stringify(null));
 
   </script>
 </head>

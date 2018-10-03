@@ -22,11 +22,11 @@
     }
     Carnivore.prototype = new Animal();
 
-    var rabbit = new Herbivore();
-    var bear = new Carnivore();
+    var rabbit = new Herbivore(); //{eatsMeat: false; eatsVeggies: 'maybe';} -> {toplevel: false}
+    var bear = new Carnivore(); // {eatsMeat: true;} -> {eatsVeggies: 'maybe', eatsMeat: 'maybe'} -> {toplevel: false}
 
-    console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel);
-    console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel);
+    console.log(rabbit.eatsVeggies, rabbit.eatsMeat, rabbit.toplevel); // maybe false false
+    console.log(bear.eatsVeggies, bear.eatsMeat, bear.toplevel); // maybe true false
     console.log(rabbit, bear);
 
     //----------------------------------------------------------

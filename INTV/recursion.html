@@ -31,8 +31,8 @@
       for (let key in obj) {
         if (typeof obj[key] !== 'object' && typeof obj[key] !== 'function') {
           res[key] = obj[key];
-        } else if (typeof obj[key] !== 'function') {
-          res = {...res, ...iterate(obj[key])};
+        } else {
+          res = {...res, ...iterate(obj[key])};  // there is no concat() defined on objects, it's for only strings and arrays. Had it been an array, you could have also used res = res.concat(...);
         }
       }
       return res;
@@ -40,6 +40,8 @@
     console.log(iterate(myObj))
     iterate(myObj);
 
+    //--------------------------------------------------
+      'sachin'.indexOf('a', 2); // -1  -> search for 'a' beginning from 2 index
     //--------------------------------------------------
     (function(){
       var arr = [1, [2], [3, [[4]]], [[[5]]]];

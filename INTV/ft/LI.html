@@ -52,6 +52,29 @@
 
      import {} from 'filepath'
      ------------------
+
+     facebook
+     const emitter = new Emitter();
+     // 1. Support subscribing to events.
+     const sub = emitter.subscribe('event_name', callback);
+
+     // 2. Support emitting events.
+     // This particular example should lead to the callback above being invoked with foo and bar as parameters.
+     emitter.emit('event_name', 'foo', 'bar');
+
+     // 3. Support unsubscribing existing subscriptions by releasing them.
+     sub.release(); // sub is the reference returned by subscribe above
+    -----------------
+     var store = new DOMStore();
+     // node is an HTML node (in javascript, it's an object)
+     store.get(node); //returns value
+     store.set(node, store.get(node)+1);
+     store.set(node, 3);
+     store.has(node); //true/false
+
+     object cannot have another another as a key. key has to be a string or symbol. (Look at Map, which allows object as a key)
+
+     so since node is an object, store a uniquely generated value as a property on the object and fetch node using that property.
      */
   </script>
 </head>

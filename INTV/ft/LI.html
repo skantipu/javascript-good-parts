@@ -79,6 +79,51 @@
      https://www.pubnub.com/blog/2015-01-05-websockets-vs-rest-api-understanding-the-difference/
 
      */
+
+    (function(){
+      class Emitter {
+        constructor() {
+          this.events = {
+
+          };
+        }
+        subscribe(eventName, callback) {
+          if (this.events.hasOwnProperty(eventName)) {
+            this.events[eventName].push(callback);
+          } else {
+            this.events[eventName] = [callback];
+          }
+          return {
+            release: () => {
+              delete this.events[eventName];
+            }
+          };
+          // try with 'this'
+        }
+        emit(eventName, ...params) {
+          if (this.events[eventName]) {
+            for (let callback of this.events[eventName]) {
+              const res = callback(...params);
+              console.log(res);
+            }
+          }
+        }
+      }
+      const emitter = new Emitter();
+      function sum(a, b) {
+        return a + b;
+      }
+      function multiply(a, b) {
+        return a * b;
+      }
+      const sub = emitter.subscribe('eventA', sum);
+      const sub1 = emitter.subscribe('eventA', multiply);
+      const sub2 = emitter.subscribe('eventB', multiply);
+      emitter.emit('eventA', 10, 20);
+      emitter.emit('eventB', 11, 20);
+      sub2.release();
+      emitter.emit('eventB', 2, 3);
+    })();
   </script>
 </head>
 <body>

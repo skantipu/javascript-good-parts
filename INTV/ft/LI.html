@@ -52,19 +52,7 @@
 
      import {} from 'filepath'
      ------------------
-
-     facebook
-     const emitter = new Emitter();
-     // 1. Support subscribing to events.
-     const sub = emitter.subscribe('event_name', callback);
-
-     // 2. Support emitting events.
-     // This particular example should lead to the callback above being invoked with foo and bar as parameters.
-     emitter.emit('event_name', 'foo', 'bar');
-
-     // 3. Support unsubscribing existing subscriptions by releasing them.
-     sub.release(); // sub is the reference returned by subscribe above
-    -----------------
+     --Facebook--
      var store = new DOMStore();
      // node is an HTML node (in javascript, it's an object)
      store.get(node); //returns value
@@ -81,11 +69,21 @@
      */
 
     (function(){
+      /*
+       const emitter = new Emitter();
+       // 1. Support subscribing to events.
+       const sub = emitter.subscribe('event_name', callback);
+
+       // 2. Support emitting events.
+       // This particular example should lead to the callback above being invoked with foo and bar as parameters.
+       emitter.emit('event_name', 'foo', 'bar');
+
+       // 3. Support unsubscribing existing subscriptions by releasing them.
+       sub.release(); // sub is the reference returned by subscribe above
+       */
       class Emitter {
         constructor() {
-          this.events = {
-
-          };
+          this.events = {};
         }
         subscribe(eventName, callback) {
           if (this.events.hasOwnProperty(eventName)) {

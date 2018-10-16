@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random programming questions</title>
+</head>
+<body>
+<script>
+  //1-------------------------
+  /*
+   Write a function that takes a list of strings an prints them, one per line, in a rectangular frame.
+   For example the list ["Hello", "World", "in", "a", "frame"] gets printed as:
+
+   *********
+   * Hello *
+   * World *
+   * in    *
+   * a     *
+   * frame *
+   *********
+
+   */
+  (function(){
+    const words = ["Hello", "World", "in", "a", "frame", "however"];
+    function getMaxLen(words) {
+      let max = 0;
+      for (const word of words) {
+        if (word.length > max) {
+          max = word.length;
+        }
+      }
+      return max;
+    }
+    function parseWords(words, maxLen) {
+      return words.slice().map(word => {
+        let str = " ".repeat(maxLen - word.length);
+        return `${word}${str}`;
+      });
+    }
+    const maxLen = getMaxLen(words);
+    const parsedWords = parseWords(words, maxLen);
+    //my original words array is not changed
+    let outputStr = '';
+    for (let i = 0; i  < maxLen + 4; i++) {
+      outputStr += '*';
+    }
+    outputStr += '\n';
+    for (let word of parsedWords) {
+      outputStr += `* ${word} *\n`;
+    }
+    for (let i = 0; i  < maxLen + 4; i++) {
+      outputStr += '*';
+    }
+    outputStr += '\n';
+    console.log(outputStr);
+  })();
+</script>
+
+</body>
+</html>

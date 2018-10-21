@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import SearchBar from './components/search_bar';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
+import VideoDetail from './components/video_detail';
 import '../style/style.scss';
 
 const key = 'AIzaSyDJ23y4_hQMa39dFM-1yxyT_RWgetg0yXk';
@@ -23,7 +24,7 @@ class App extends Component {
         </div>
         <div className="flex-video-container">
           <div className="video-detail">
-            video detail
+            <VideoDetail video={this.state.videos[0]} />
           </div>
           <div className="video-list">
             <VideoList videos={this.state.videos}/>

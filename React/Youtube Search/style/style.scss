@@ -22,6 +22,10 @@ body {
     padding: 10px;
     .video-detail {
       flex: 2;
+      iframe {
+        height: 400px;
+        width: 100%;
+      }
     }
     .video-list {
       flex: 1;

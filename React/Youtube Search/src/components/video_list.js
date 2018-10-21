@@ -1,3 +1,9 @@
-/**
- * Created by sachinkantipudi on 10/19/18.
- */
+import React from 'react';
+
+export default (props) => {
+  return (
+    <ul>
+      {props.videos.length}
+    </ul>
+  );
+}

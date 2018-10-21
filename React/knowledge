@@ -1,0 +1,51 @@
+React Udemy Course
+
+Component or View
+	snippets of JS code producing HTML. collection of JS functions producing HTML.
+
+JSX 	A subset or dialect of JS which lets us write HTML inside JS. Webpack and babel, transpires this JSX into vanilla JS which produce HTML.
+
+React vs React DOM
+	react creates and manages components whereas react-dom deals with rendering them in DOM.
+
+-> instantiate your components before you render them to the DOM
+-> using a tag (app is a type or class) <app /> (self closing tag - when you have a tag with no content in  it - <app></app>) inside JSX will instantiate it
+-> always one component per file
+
+Functional based component vs class based component: Whenever component needs to be aware of its state and communicate with other components —> we use class based component. Class based component should have render() and it should return JSX.
+
+State
+	Plain JS object that exists on any class based component. Each instance of class based component has its own copy of state (functional components do not have state).  whenever component state changes, it immediately re-renders and forces its children (components nested inside it) to re-render as well. Before we use state inside a component, we need to initialize state first. We initialize state as:
+class SearchBar extends React.component {
+	constructor (props) {
+		super(props);
+		this.state = {…}
+	}
+	render() {
+		return (
+			<div> Hello World! </div>
+		);
+	}
+}
+
+Manipulating state: Only inside constructor(), we’ll have something like this.state = {}. Everywhere else,  we’ll use this.setState() to modify state.
+ex: Let’s say we initialized state as
+class SearchBar extends React.component {
+constructor (props) {
+	super(props);
+	this.state = { term: ‘’};
+}
+render() {
+	return (
+		<input onChange = {this.onInputChange} />
+		<span> Value of Input: {this.state.term} </span>
+	);
+}
+onInputChange(event) {
+		this.state.term = event.target.value; // BAD!!!! DON’T DO IT
+	        this.setState( { term: event.target.value }); // GOOD!!
+		// while setting always use setState(), but while getting, you can use this.state.term
+}
+}
+
+Downward dataflow: Most parent component should be responsible for fetching data.

@@ -51,3 +51,5 @@ onInputChange(event) {
 Downward dataflow: Most parent component should be responsible for fetching data.
 
 Passing data from parent component to child component: by passing as a property (passing props)
+
+Stay away from JS for loop in JSX. Use built-in iterators (map ex.)

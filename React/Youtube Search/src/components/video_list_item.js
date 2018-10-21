@@ -1,3 +1,14 @@
-/**
- * Created by sachinkantipudi on 10/19/18.
- */
+import React, { Component } from 'react';
+
+export default class extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <li>
+        {this.props.video.snippet.channelTitle}
+      </li>
+    );
+  }
+}

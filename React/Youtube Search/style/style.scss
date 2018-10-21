@@ -19,12 +19,26 @@ body {
   .flex-video-container {
     display: flex;
     flex-flow: row nowrap;
-  }
-  .video-detail {
-    flex: 2;
-  }
-  .video-list {
-    flex: 1;
+    padding: 10px;
+    .video-detail {
+      flex: 2;
+    }
+    .video-list {
+      flex: 1;
+      li {
+        display: block;
+        list-style: none;
+        padding: 0;
+        margin: 15px;
+        img {
+          width: 100%;
+        }
+        .video-title {
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+    }
   }
 }
 .search-bar {

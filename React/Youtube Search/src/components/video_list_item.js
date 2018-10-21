@@ -5,9 +5,15 @@ export default class extends Component {
     super(props);
   }
   render() {
+    const snippet = this.props.video.snippet;
     return (
       <li>
-        {this.props.video.snippet.channelTitle}
+        <div>
+          <img src={snippet.thumbnails.medium.url} height='150px'/>
+        </div>
+        <div className='video-title'>
+          {snippet.title}
+        </div>
       </li>
     );
   }

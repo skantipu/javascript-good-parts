@@ -23,9 +23,11 @@ class App extends Component {
         </div>
         <div className="flex-video-container">
           <div className="video-detail">
+            video detail
+          </div>
+          <div className="video-list">
             <VideoList videos={this.state.videos}/>
           </div>
-          <div className="video-list">hi</div>
         </div>
       </div>
     );

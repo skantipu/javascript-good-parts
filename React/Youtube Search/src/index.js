@@ -12,7 +12,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = { videos: [], selectedVideo: null, term: 'yoga' };
-    YTSearch({ key, term: this.state.term}, videos => {
+    this.onTermChange(this.state.term);
+  }
+  onTermChange(term) {
+    YTSearch({ key, term }, videos => {
       this.setState({ videos, selectedVideo: videos[0] });
     });
   }
@@ -20,7 +23,7 @@ class App extends Component {
     return (
       <div className="flex-container">
         <div className="search-bar">
-          <SearchBar />
+          <SearchBar onSearchTermChange={ term => this.onTermChange(term)}/>
         </div>
         <div className="flex-video-container">
           <div className="video-detail">

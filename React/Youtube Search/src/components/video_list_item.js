@@ -7,7 +7,7 @@ export default class extends Component {
   render() {
     const snippet = this.props.video.snippet;
     return (
-      <li>
+      <li onClick={() => this.props.onVideoTap(this.props.video)}>
         <div>
           <img src={snippet.thumbnails.medium.url} height='150px'/>
         </div>
@@ -18,3 +18,5 @@ export default class extends Component {
     );
   }
 }
+
+// you can make this a functional component

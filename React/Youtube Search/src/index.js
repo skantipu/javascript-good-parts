@@ -11,9 +11,9 @@ const key = 'AIzaSyDJ23y4_hQMa39dFM-1yxyT_RWgetg0yXk';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { videos: [] };
+    this.state = { videos: [], selectedVideo: null };
     YTSearch({ key, term: 'yoga'}, videos => {
-      this.setState({ videos });
+      this.setState({ videos, selectedVideo: videos[0] });
     });
   }
   render() {
@@ -24,10 +24,10 @@ class App extends Component {
         </div>
         <div className="flex-video-container">
           <div className="video-detail">
-            <VideoDetail video={this.state.videos[0]} />
+            <VideoDetail video={this.state.selectedVideo} />
           </div>
           <div className="video-list">
-            <VideoList videos={this.state.videos}/>
+            <VideoList videos={this.state.videos} onVideoSelect={ selectedVideo => this.setState({selectedVideo}) } />
           </div>
         </div>
       </div>

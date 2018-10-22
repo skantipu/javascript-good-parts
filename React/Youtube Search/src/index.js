@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; // needed as when we use JSX, it gets turned to something like React.createElement(...) during transpilation of JSX to JS, generating HTML
 import ReactDOM from 'react-dom';
 import SearchBar from './components/search_bar';
-import YTSearch from 'youtube-api-search';
+import YTSearch from 'youtube-search';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import _ from 'lodash';
@@ -12,16 +12,16 @@ const key = 'AIzaSyDJ23y4_hQMa39dFM-1yxyT_RWgetg0yXk';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { videos: [], selectedVideo: null, term: 'yoga' };
+    this.state = { videos: [], selectedVideo: null, term: 'cat' };
     this.onTermChange(this.state.term);
   }
   onTermChange(term) {
-    YTSearch({ key, term }, videos => {
+    YTSearch(term, { maxResults: 10, key }, (err, videos) => {
       this.setState({ videos, selectedVideo: videos[0] });
     });
   }
   render() {
-    const search = _.debounce(term => { this.onTermChange(term)}, 1000);
+    const search = _.debounce(term => { this.onTermChange(term)}, 500);
     return (
       <div className="flex-container">
         <div className="search-bar">

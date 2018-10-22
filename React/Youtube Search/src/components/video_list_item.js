@@ -5,14 +5,13 @@ export default class extends Component {
     super(props);
   }
   render() {
-    const snippet = this.props.video.snippet;
     return (
       <li onClick={() => this.props.onVideoTap(this.props.video)}>
         <div>
-          <img src={snippet.thumbnails.medium.url} height='150px'/>
+          <img src={this.props.video.thumbnails.medium.url} height='150px'/>
         </div>
         <div className='video-title'>
-          {snippet.title}
+          {this.props.video.title}
         </div>
       </li>
     );

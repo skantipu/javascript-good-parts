@@ -4,6 +4,7 @@ import SearchBar from './components/search_bar';
 import YTSearch from 'youtube-api-search';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
+import _ from 'lodash';
 import '../style/style.scss';
 
 const key = 'AIzaSyDJ23y4_hQMa39dFM-1yxyT_RWgetg0yXk';
@@ -20,10 +21,11 @@ class App extends Component {
     });
   }
   render() {
+    const search = _.debounce(term => { this.onTermChange(term)}, 1000);
     return (
       <div className="flex-container">
         <div className="search-bar">
-          <SearchBar onSearchTermChange={ term => this.onTermChange(term)}/>
+          <SearchBar onSearchTermChange={ search }/>
         </div>
         <div className="flex-video-container">
           <div className="video-detail">

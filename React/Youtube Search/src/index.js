@@ -11,8 +11,8 @@ const key = 'AIzaSyDJ23y4_hQMa39dFM-1yxyT_RWgetg0yXk';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { videos: [], selectedVideo: null };
-    YTSearch({ key, term: 'yoga'}, videos => {
+    this.state = { videos: [], selectedVideo: null, term: 'yoga' };
+    YTSearch({ key, term: this.state.term}, videos => {
       this.setState({ videos, selectedVideo: videos[0] });
     });
   }

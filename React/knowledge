@@ -52,4 +52,6 @@ Downward dataflow: Most parent component should be responsible for fetching data
 
 Passing data from parent component to child component: by passing as a property (passing props)
 
-Stay away from JS for loop in JSX. Use built-in iterators (map ex.)
+Passing data from child component to parent component: by passing callbacks from parent to child
+
+Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)

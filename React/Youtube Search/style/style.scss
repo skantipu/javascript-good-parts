@@ -35,9 +35,11 @@ body {
       li {
         display: block;
         list-style: none;
-        padding: 0;
-        margin: 15px;
+        padding: 15px;
         cursor: pointer;
+        &:hover {
+          background: #eee;
+        }
         img {
           width: 100%;
         }

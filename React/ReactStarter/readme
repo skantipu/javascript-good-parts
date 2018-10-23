@@ -1,0 +1,9 @@
+It uses Webpack 4 + Babel 7 + React 16
+Ref: https://www.valentinog.com/blog/webpack-tutorial/
+With webpack4, no need to mention entry and output files.
+Default entry -> ./src/index.js
+Default output -> ./dist/main.js
+webpack 4 introduces production (npm run build) and development (npm run dev) modes. After ran, bundle will be in ./dist/main.js.
+Production mode enables all sorts of optimizations out of the box. Including minification, scope hoisting, tree-shaking and more
+Remember for local development, make sure index.html point to main.js and not dist/main.js. The former has always latest copy of your local changes.
+It uses SASS preprocessor for CSS. Needed loaders included in webpack.config.js

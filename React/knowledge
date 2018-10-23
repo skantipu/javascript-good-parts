@@ -55,3 +55,7 @@ Passing data from parent component to child component: by passing as a property 
 Passing data from child component to parent component: by passing callbacks from parent to child
 
 Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
+
+REDUX:
+
+ - refers to application level global state (data of our app)

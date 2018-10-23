@@ -1,9 +1,17 @@
 It uses Webpack 4 + Babel 7 + React 16
 Ref: https://www.valentinog.com/blog/webpack-tutorial/
+Webpack 4 -> zero configuration module bundler
 With webpack4, no need to mention entry and output files.
-Default entry -> ./src/index.js
-Default output -> ./dist/main.js
-webpack 4 introduces production (npm run build) and development (npm run dev) modes. After ran, bundle will be in ./dist/main.js.
-Production mode enables all sorts of optimizations out of the box. Including minification, scope hoisting, tree-shaking and more
-Remember for local development, make sure index.html point to main.js and not dist/main.js. The former has always latest copy of your local changes.
+Default entry -> ./src/index.js  (entry point is the file webpack looks for to start building your Javascript bundle.)
+Default output -> ./dist/main.js (this is created when you build you code)
+Webpack 4 introduces production (npm run build) and development (npm run dev) modes.
+Production mode enables all sorts of optimizations out of the box such as minification, scope hoisting, tree-shaking (removing unused exports) and more.
+Remember for local development, make sure index.html point to just main.js and not dist/main.js. The former has always latest copy of your local changes.
+For transformation work (transpiling from ES6 to ES5, SASS to CSS etc.), we need loaders for that, we need webpack.config.js file
 It uses SASS preprocessor for CSS. Needed loaders included in webpack.config.js
+Note, the order in which webpack applies loaders on the matching resources is from last to first.
+Ex: ["style-loader", "css-loader", "sass-loader"] First "sass-loader" is applied which converts SASS to CSS, followed by "css-loader" and "style-loader"
+
+Other misc:
+npm init -y (shorthand for yes) -> auto creates package.json file without asking questions
+npm i -D react -> shorthand for npm install --save-dev react

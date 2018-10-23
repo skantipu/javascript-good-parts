@@ -59,3 +59,8 @@ Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
 REDUX:
 
  - refers to application level global state (data of our app)
+
+
+ Reducer
+     function returning application state. we can have different reducers for various pieces of application state. reducers represent value of the state (in
+     a js object)

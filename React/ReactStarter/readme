@@ -1,4 +1,4 @@
-It uses Webpack 4 + Babel 7 + React 16
+It uses Webpack 4 + Babel 7 + React 16 + Redux 4
 Ref: https://www.valentinog.com/blog/webpack-tutorial/
 Webpack 4 -> zero configuration module bundler
 With webpack4, no need to mention entry and output files.

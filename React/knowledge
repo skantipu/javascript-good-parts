@@ -31,21 +31,21 @@ class SearchBar extends React.component {
 Manipulating state: Only inside constructor(), we’ll have something like this.state = {}. Everywhere else,  we’ll use this.setState() to modify state.
 ex: Let’s say we initialized state as
 class SearchBar extends React.component {
-constructor (props) {
-	super(props);
-	this.state = { term: ‘’};
-}
-render() {
-	return (
-		<input onChange = {this.onInputChange} />
-		<span> Value of Input: {this.state.term} </span>
-	);
-}
-onInputChange(event) {
-		this.state.term = event.target.value; // BAD!!!! DON’T DO IT
-	        this.setState( { term: event.target.value }); // GOOD!!
-		// while setting always use setState(), but while getting, you can use this.state.term
-}
+    constructor (props) {
+        super(props);
+        this.state = { term: ‘’};
+    }
+    render() {
+        return (
+            <input onChange = {this.onInputChange} />
+            <span> Value of Input: {this.state.term} </span>
+        );
+    }
+    onInputChange(event) {
+        this.state.term = event.target.value; // BAD!!!! DON’T DO IT
+        this.setState( { term: event.target.value }); // GOOD!!
+        // while setting always use setState(), but while getting, you can use this.state.term
+    }
 }
 
 Downward dataflow: Most parent component should be responsible for fetching data.

@@ -1,3 +1,5 @@
 Reducer
     function returning application state. we have different reducers for various pieces of application state. reducers represent value of the state (in
     a js object)
+Container
+    A component promoted as container that is aware of the state contained in the Redux

@@ -58,8 +58,15 @@ Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
 
 REDUX:
  Refers to application level global state (data of our app).
- Redux serves to construct application state and React provides the views to display that state.
- The two libraries are inherently disconnected and only through use of React-Redux, we can get clear connection between the two.
+ Redux serves to construct application state and React provides the views to display that state. We can bridge the two (two separate libraries react and redux)
+ to get a working usable app by using the libray 'react-redux'.
+ So, the two libraries are inherently disconnected and only through use of React-Redux library, we can get clear connection between the two.
+ A react component can connect to state (application state) by promoting it as a container.
+ dumb component - component not connected to redux (or not having access to app state)
+ smart component (container) - can access app level state
+ Only the most parent component that uses a particular piece of state needs to be made as a container (or connected to Redux). In the ex below,
+ BookList and BookDetail to be promoted as containers (not App, as it just renders both BookList and BookDetail components and not necessarily uses state),
+ though you can go that way as well.
 
 Application state is a big piece of object. Ex:
 {
@@ -71,6 +78,8 @@ Reducer
     A function returning a piece of application state.
     We have different reducers for various pieces of application state. For ex, one reducer fn for list of books, and one for activeBook (selectedBook).
     In the above ex, books piece of state is produced by BooksReducer and activeBook piece of state is produced by ActiveBookReducer.
+    Reducer function takes two arguments - state and action. Reducer function is invoked only when action is triggered. 'state' argument is not whole app level
+    state, but state that this reducer is responsible for.
 Container
     A component that has to be aware of the state contained in the Redux is promoted as a container.
     So, a container is a normal React component that gets bonded to the application state.

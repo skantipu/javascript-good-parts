@@ -23,8 +23,11 @@ body {
         margin: 5px;
         border: 1px solid #ddd;
         cursor: pointer;
+        &.active {
+          background: #ddd;
+        }
       }
-      li:hover {
+      li:not(.active):hover {
         background: #eee;
       }
     }

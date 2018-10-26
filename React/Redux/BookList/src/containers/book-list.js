@@ -9,17 +9,20 @@ const BookList = (props) => {
     return <BookItem
               book={book}
               key={index}
-              onBookSelect={ book => props.selectBook(book) }/>
+              selectedBook={props.selectedBook}
+              onBookSelect={ book => props.selectBook(book) } />
   });
   return (
     <ul>
       {booksList}
     </ul>
   );
-}
+};
 
-const mapStateToProps = (state) => ({
-  books: state.books,
+//const mapStateToProps = (state) => ({
+const mapStateToProps = ({ books, activeBook: selectedBook }) => ({
+  books,
+  selectedBook
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ selectBook }, dispatch);

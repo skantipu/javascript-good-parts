@@ -1,4 +1,4 @@
-export default () => [
+export default () => ([
   {
     title: 'Harry Potter 1',
     desc: 'Harry Potter and the Chamber of Secrets'
@@ -27,4 +27,4 @@ export default () => [
     title: 'Harry Potter 7',
     desc: 'Harry Potter and the Prisoner of Azkaban'
   },
-];
+]);

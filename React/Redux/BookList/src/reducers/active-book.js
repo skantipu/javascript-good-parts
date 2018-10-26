@@ -1,4 +1,8 @@
-export default () => ({
-  title: 'Harry Potter 1',
-  desc: 'Harry Potter and the Chamber of Secrets'
-});
+export default (state = null, action) => {
+  switch(action.type) {
+    case 'BOOK_SELECTED':
+      return action.payload;
+  }
+  return state;
+};
+

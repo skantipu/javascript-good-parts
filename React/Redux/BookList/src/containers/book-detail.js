@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const BookDetail = ({ book }) => {
   if (!book) {
-    return <div></div>;
+    return <div>Select a book</div>;
   }
   return (
     <div className="book-detail__holder">

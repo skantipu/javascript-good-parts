@@ -43,7 +43,7 @@ class SearchBar extends React.component {
     }
     render() {
         return (
-            <input onChange = {this.onInputChange} />
+            <input onChange = {this.onInputChange.bind(this)} />
             <span> Value of Input: {this.state.term} </span>
         );
     }
@@ -54,7 +54,7 @@ class SearchBar extends React.component {
     }
 }
 
-Downward dataflow: Most parent component should be responsible for fetching data.
+Downward data flow: Most parent component should be responsible for fetching data.
 
 Passing data from parent component to child component: by passing as a property (passing props)
 
@@ -65,16 +65,16 @@ Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
 REDUX:
  Refers to application level global state (data of our app).
  Redux serves to construct application state and React provides the views to display that state. We can bridge the two (two separate libraries react and redux)
- to get a working usable app by using the libray 'react-redux'.
+ to get a working usable app by using the library 'react-redux'.
  So, the two libraries are inherently disconnected and only through use of React-Redux library, we can get clear connection between the two.
  A react component can connect to state (application state) by promoting it as a container.
  dumb component - component not connected to redux (or not having access to app state)
  smart component (container) - can access app level state
- Only the most parent component that uses a particular piece of state needs to be made as a container (or connected to Redux). In the ex below,
- BookList and BookDetail to be promoted as containers (not App, as it just renders both BookList and BookDetail components and not necessarily uses state),
- though you can go that way as well.
+ * Only the most parent component that uses a particular piece of state needs to be made as a container (or connected to Redux). In the ex below,
+ BookList and BookDetail to be promoted as containers (not App, as it just renders both BookList and BookDetail components and not necessarily uses or cares
+ about state), though you can go that way as well.
 
-Application state is a big piece of object. Ex:
+Application state is one single piece of object. Ex:
 {
     books: [{title: 'Harry Potter 1', desc: 'Harry Potter and the Chamber of Secrets'}, {..}, ..],
     activeBook: {title: 'Harry Potter 6', desc: '...'}

@@ -9,7 +9,7 @@ const BookList = (props) => {
     return <BookItem
               book={book}
               key={index}
-              onBookSelect={book => props.selectBook(book) }/>
+              onBookSelect={ book => props.selectBook(book) }/>
   });
   return (
     <ul>

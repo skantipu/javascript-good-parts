@@ -21,7 +21,7 @@ class App extends Component {
     });
   }
   render() {
-    const search = _.debounce(term => { this.onTermChange(term)}, 300);
+    const search = _.debounce(term => { this.onTermChange(term)}, 500);
     return (
       <div className="flex-container">
         <div className="search-bar">

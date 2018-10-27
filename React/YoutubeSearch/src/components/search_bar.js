@@ -7,7 +7,7 @@ export default class SearchBar extends Component {
   }
   onInputChange(e) {
     this.setState({ term: e.target.value });
-    this.props.onSearchTermChange(e.target.value);
+    this.props.onSearchTermChange(e.target.value); //setState is an asynchronous operation, so do not use this.state.term in this method for correctness
   }
   render() {
     return (

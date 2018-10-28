@@ -23,7 +23,7 @@ class SearchBar extends Component {
     const term = e.target.value;
     this.setState({ term });
     this.debounceTermChange(term);
-    }
+  }
   render() {
     return (
       <div className="search-input-holder">

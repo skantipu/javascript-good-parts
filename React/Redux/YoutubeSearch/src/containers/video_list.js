@@ -5,7 +5,6 @@ import {bindActionCreators} from "redux";
 import { connect } from "react-redux";
 
 const VideoList = (props) => {
-  console.log('1', props.videos);
   const videoItemsList = props.videos.map((video, i) =>
     <VideoListItem video={video} key={i} onVideoTap={() => props.videoSelected(video)}/> );
   return (

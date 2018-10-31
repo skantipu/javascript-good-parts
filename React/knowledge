@@ -68,11 +68,12 @@ REDUX:
  to get a working usable app by using the library 'react-redux'.
  So, the two libraries are inherently disconnected and only through use of React-Redux library, we can get clear connection between the two.
  A react component can connect to state (application state) by promoting it as a container.
- dumb component - component not connected to redux (or not having access to app state)
- smart component (container) - can access app level state
+ Dumb component - component not connected to redux (or not having access to app state)
+ Smart component (container) - can access app level state
  * Only the most parent component that uses a particular piece of state needs to be made as a container (or connected to Redux). In the ex below,
  BookList and BookDetail to be promoted as containers (not App, as it just renders both BookList and BookDetail components and not necessarily uses or cares
  about state), though you can go that way as well.
+ Dispatching actions can modify state of our applications, so components only dispatching actions (and empty mapStateToProps()) should be promoted as containers.
 
 Application state is one single piece of object. Ex:
 {
@@ -95,6 +96,6 @@ Action & Action Creator
     Reducers can then use that action to produce a different value for that particular piece of state.
     An event (Direct like onClick, onKeyDown, onScroll etc or Indirect like ajax request sucess, page load etc.) will trigger an Action Creator.
     Action object will have type (mandatory) and payload (optional).
-
-
+API calls with Redux
+    We want react components to be responsible for showing data alone, not fetching data. We'll rely on Redux for that.
 

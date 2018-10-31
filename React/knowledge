@@ -68,7 +68,7 @@ REDUX:
  Redux serves to construct application state and React provides the views to display that state. We can bridge the two (two separate libraries react and redux)
  to get a working usable app by using the library 'react-redux'.
  So, the two libraries are inherently disconnected and only through use of React-Redux library, we can get clear connection between the two.
- Note that the component level state (refer State (component level)) is totally different from application level state provided by Redux.
+ Note that the component level state (refer State (component level)) is different from application level state provided by Redux.
  A react component can connect to state (application state) by promoting it as a container.
  Dumb component - component not connected to redux (or not having access to app state)
  Smart component (container) - can access app level state

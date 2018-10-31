@@ -13,60 +13,62 @@ React vs React DOM
 -> using a tag (app is a type or class) <app /> (self closing tag - when you have a tag with no content in  it - <app></app>) inside JSX will instantiate it
 -> always one component per file
 
-Functional based component vs class based component:
-Whenever component needs to be aware of its state and communicate with other components —> we use class based component.
-Class based component should have render() and it should return JSX.
+Controlled Field:
+    A form element where the value of the input is set by state of the component, not the other way around
 
-State
+Functional based component vs class based component:
+    Whenever component needs to be aware of its state and communicate with other components —> we use class based component.
+    Class based component should have render() and it should return JSX.
+
+State (component level)
 	Plain JS object that exists on any class based component. Each instance of class based component has its own copy of state
-	(functional components do not have state).  whenever component state changes, it immediately re-renders and forces its children
+	(functional components do not have state).  Whenever component state changes, it immediately re-renders and forces its children
 	(components nested inside it) to re-render as well. Before we use state inside a component, we need to initialize state first.
 	We initialize state as:
-class SearchBar extends React.component {
-	constructor (props) {
-		super(props);
-		this.state = {…}
-	}
-	render() {
-		return (
-			<div> Hello World! </div>
-		);
-	}
-}
+        class SearchBar extends React.component {
+            constructor (props) {
+                super(props);
+                this.state = { term: 'yoga', ...}
+            }
+            render() {
+                return (
+                    <div> Hello World! {this.state.term} </div>
+                );
+            }
+        }
 
-Manipulating state: Only inside constructor(), we’ll have something like this.state = {}. Everywhere else,  we’ll use this.setState() to modify state.
-ex: Let’s say we initialized state as
-class SearchBar extends React.component {
-    constructor (props) {
-        super(props);
-        this.state = { term: ‘’};
+Manipulating state:
+    Only inside constructor(), we’ll have something like this.state = {}. Everywhere else,  we’ll use this.setState() to modify state.
+    ex: Let’s say we initialized state as
+    class SearchBar extends React.component {
+        constructor (props) {
+            super(props);
+            this.state = { term: ‘’};
+        }
+        render() {
+            return (
+                <input onChange = {this.onInputChange.bind(this)} />
+                <span> Value of Input: {this.state.term} </span>
+            );
+        }
+        onInputChange(event) {
+            this.state.term = event.target.value; // BAD!!!! DON’T DO IT
+            this.setState( { term: event.target.value }); // GOOD!!
+            // while setting always use setState(), but while getting, you can use this.state.term
+        }
     }
-    render() {
-        return (
-            <input onChange = {this.onInputChange.bind(this)} />
-            <span> Value of Input: {this.state.term} </span>
-        );
-    }
-    onInputChange(event) {
-        this.state.term = event.target.value; // BAD!!!! DON’T DO IT
-        this.setState( { term: event.target.value }); // GOOD!!
-        // while setting always use setState(), but while getting, you can use this.state.term
-    }
-}
 
-Downward data flow: Most parent component should be responsible for fetching data.
-
-Passing data from parent component to child component: by passing as a property (passing props)
-
-Passing data from child component to parent component: by passing callbacks from parent to child
-
-Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
+-> Downward data flow: Most parent component should be responsible for fetching data.
+-> Passing data from parent component to child component: by passing as a property (passing props)
+-> Passing data from child component to parent component: by passing callbacks from parent to child
+-> Stay away from JS 'for' loop in JSX. Use built-in iterators (map ex.)
 
 REDUX:
  Refers to application level global state (data of our app).
  Redux serves to construct application state and React provides the views to display that state. We can bridge the two (two separate libraries react and redux)
  to get a working usable app by using the library 'react-redux'.
  So, the two libraries are inherently disconnected and only through use of React-Redux library, we can get clear connection between the two.
+ Note that the component level state (refer State (component level)) is totally different from application level state provided by Redux.
  A react component can connect to state (application state) by promoting it as a container.
  Dumb component - component not connected to redux (or not having access to app state)
  Smart component (container) - can access app level state

@@ -95,9 +95,14 @@ Container
     Whenever application state changes, the container will re-render as well.
 Action & Action Creator
     An 'Action Creator' is just a function that returns an action, and an 'Action' is just an object that flows through all of our reducers.
-    Reducers can then use that action to produce a different value for that particular piece of state.
     An event (Direct like onClick, onKeyDown, onScroll etc or Indirect like ajax request sucess, page load etc.) will trigger an Action Creator.
     Action object will have type (mandatory) and payload (optional).
+    Reducers can then use that action to produce a different value for that particular piece of state.
+
 API calls with Redux
     We want react components to be responsible for showing data alone, not fetching data. We'll rely on Redux for that.
-
+Middleware
+    Middleware has the ability to block, modify, or pass through actions as they are created before they hit any reducer. They act like gatekeepers.
+    'redux-promise' is the redux middleware. If the payload of an action is a promise, then redux-promise middleware stops the action, waits until promise
+    is resolved, and then it dispatches a new action with the same type and payload with resolved promise. In short, in unwraps the promise for us, so we only
+    work with data in our reducers, not promises.

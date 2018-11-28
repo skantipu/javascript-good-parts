@@ -95,7 +95,7 @@ Container
     Whenever application state changes, the container will re-render as well.
 Action & Action Creator
     An 'Action Creator' is just a function that returns an action, and an 'Action' is just an object that flows through all of our reducers.
-    An event (Direct like onClick, onKeyDown, onScroll etc or Indirect like ajax request sucess, page load etc.) will trigger an Action Creator.
+    An event (Direct like onClick, onKeyDown, onScroll etc or Indirect like ajax request success, page load etc.) will trigger an Action Creator.
     Action object will have type (mandatory) and payload (optional).
     Reducers can then use that action to produce a different value for that particular piece of state.
 

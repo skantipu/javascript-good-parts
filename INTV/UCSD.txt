@@ -1,0 +1,386 @@
+finally free of interviews but no more onsites and free trips :(
+
+also this prob means it's my last post here, it's been a fun ride
+
+𝐂𝐨𝐮𝐫𝐬𝐞𝐫𝐚
+
+Hackerrank
+Non-dominatable Entities - Given a set of tuples, a tuple (x1, y1) is non-dominatable if there exists no other tuple (x2, y2) in the set such that x2 > x1 and y2 > y1. Find the number of non-dominatable entities
+Splitting Pixels - Given a pixel color (24 bit integer), find the closest pixel color (black, white, red, green, blue) that it is closest to (Euclidean distance)
+
+𝐒𝐭𝐫𝐢𝐩𝐞
+Hackerrank
+Parse driver transactions, where Stripe takes a cut of each transaction, and output balances of each driver queried.
+
+Get rejected because they’re full for new grad 😠 (new grad onsites are only available after Nov 30 or something and only in Seattle)
+
+𝐒𝐧𝐚𝐩 𝐈𝐧𝐜.
+
+Round 1 Phone
+
+Given a set of word rings - you can rotate rings to build a word:
+Ex:
+T | A | S | N | T
+B | O | A | T | T
+S | I | L | S | N
+
+we can rotate this to spell out TOAST.
+
+Given the rings (any format you want) and the dictionary, determine all words you can create using all rings.
+
+Followup: What if you can skip specific rings? If the dictionary is small, how would you optimize this?
+
+Followup Pt 2: If you have a bunch of words w the same prefix that aren’t in the rings (SEAAA - SEZZZ), how would you optimize to easily detect that all these words can’t be made?
+
+Onsite (App Security)
+1. Define XSS injection, provide examples of it, how do we prevent XSS vulnerabilities and XSS forgeries?
+
+If we have a server endpoint of ads.sc.snap.com, you click a login button and it sends a GET request of /login?cid=ads to login.sc.snap.com, which sends a callback to ads.sc.snap.com with a token containing the uid, from where ads.sc.snap.com creates a session for the user.
+
+What are the vulnerabilities with this setup, and how do we prevent replay attacks?
+
+2. Design the backend to support playing Connect 4 between two Snapchat users, including the protocols, API methods, handle validation of edge cases, how to scale the product, how to write an AI for single-player mode, and what heuristics to play the AI with.
+
+3. Implement a sorted list where you need to support insert(), delete(elem), and read(i) methods, but only using distributed storage using the read(k) and write(k,v) functions. Optimize for a fast insert but slow read, and then optimize for a fast read but a slow insert.
+
+Followup: Add support for the pop() method - pops the minimum element of the list, returns its value, make it as fast as possible.
+
+𝐑𝐮𝐛𝐫𝐢𝐤
+Round 1 Phone
+
+Design a data structure that supports prefix-search queries: a prefix + the length of word should return a list of all words that begin with that prefix and have the specified length. The dictionary is loaded once before querying many unique word, how would you design/optimize this?
+
+Examples:
+Dictionary has words barn, bath, batter, zxy, promise.
+query("ba2") == false // more than 1 match found
+query("bat3") == true // 1 match found "batter"
+query("z1") == false // no match found
+query("promise0") == true // 1 match found “promise"
+
+Example interfaces to implement:
+void insertWord(String word) {
+// Adds word into your dictionary structure
+}
+bool query(String charPrefix, int singleDigit) {
+// Returns result of the query
+}
+
+Remote Onsite
+1. Given a 2d array of ints - remove any triplets that occur (triplets are 3+ consecutive same values in any row/column), remove by setting them to 0. 
+
+Followup: Now implement candy crush, where a user can make a move swapping two adjacent elements, and a move is legal if it creates a triplet that then is subsequently removed. How would you detect when no more legal moves are possible in O(1)?
+
+2. Given a binary tree, remove pointers to split it up into the maximum number of even components possible 
+
+Ex:
+1
+/ \
+2 3
+/
+4
+
+Can be split into two trees (1-2, and 3-4).
+
+Given a large graph that won’t fit in memory, how would you find the shortest distance between two nodes? Assume the graph is undirected/unweighted, and is highly connected, with millions of nodes.
+
+3. Given a threadpool that supports n threads, and has k queues with specified weight, given an add_work() function that adds a task to a specified queue by index, implement the pick_weighted() function, which takes in a list of queue weights, and randomly picks a queue (weighted by the parameter weights) to do work.  
+Ex:
+
+Threadpool
+n threads
+Queue 1, weight=1: [x] [ ] [ ]
+Queue 2, weight=2: [x] [x] [ ]
+
+class Threadpool():
+def add_work(fn, q_index)
+
+pick_weighted([1.0, 2.0]) -> index 0 should get work 1/3 of the time, index 1 should get work 2/3 of the time.
+
+Followup: Make this thread-safe. How would you make threads autoblock until they have work?
+
+𝐑𝐨𝐜𝐤𝐬𝐞𝐭
+
+Round 1
+Sort colors, how would you extend this to 4+ colors? How does the runtime compare to sorting by colors?
+
+Remote Onsite
+1a. House Robber
+1b. Given a BST, return the equivalent BST but without any left children, and without using any Node constructors.
+
+2. Palindrome Pairs 
+3. 1 on 1 with Venkat (CEO), he pretty much wants to answer any questions you have about Rockset/working at Rockset and is really smart with a really unique perspective on the industry, companies, and his experiences. 
+
+𝐏𝐚𝐥𝐚𝐧𝐭𝐢𝐫
+
+Hackerrank: Sick Travelers
+Given a list of employees, the offices they travel between every day, and their health status, one who is sick infects everyone else at the same office. People go from SICK->RECOVERING->HEALTHY each day, but SICK/RECOVERING are contagious. Return the minimum # of days for everyone to be healthy, or 365 if it’s longer than that.
+
+Round 1 Phone:
+
+1a. Why Computer Science? Favorite CS experience? What did you like about prior internships? What else are you looking for in your experiences? Why Palantir?
+
+1b. Given a string of input (representing bits), you’re given possible encodings for 1-byte, 2-byte, 3-byte encodings for UTF-8. A string is a valid UTF-8 encoding if it can be comprised of only 1-byte, 2-byte, 3-byte encodings, return if a string is a valid UTF-8 encoding.
+
+Ex:
+1-byte: 0xxxxxxx
+2-byte: 110xxxxx 10xxxxxx
+3-byte: 1110xxxx 10xxxxxx 10xxxxxx
+
+(strings already split by spaces)
+01010101 -> true
+11000000 10111111 00000000 -> true
+11111111 -> false
+
+Onsite:
+1: Design
+Design the architecture for a url shortener website. What features would you add to make it the best service possible and beat out all existing url shorteners?
+
+2: Algorithms
+Implement a map/dictionary with random remove
+
+3: Practical
+Given a codebase associated with identifying users in an email chain, implement features, debug existing features, etc.
+
+4: Algorithms
+
+Given a byte stream and a maximum window size w, you want to implement window compression:
+
+b’abcabc’, w=3 -> ‘abc33’
+
+The first number represents from the current pointer how many characters to move back (the pointer after ‘abc’ is pointing at the second ‘a’), the second number represents how many characters to move forward.
+
+Perform this in a greedy fashion (match as much as you can, e.g. ‘bbbb’ -> ‘bb22’ instead of ‘b11b11’), and we only match with w characters behind. (i.e. if w=2 with b’abcabc’, we return ‘abcabc’)
+
+5: Hiring Manager
+Given a real world problem, design a solution to this real world problem. How much would this cost to implement nationally? (Factor in everything - operational costs of like servers/databases, memory, power consumption) What about the time/speed of this solution?
+
+𝐆𝐨𝐨𝐠𝐥𝐞
+Intern a year ago - get no respect and I had to onsite with 4 (!!) rounds (and then they were super passive aggressive about offer deadlines and refuse to extend deadlines because they're Google 😞 )
+
+Onsite:
+1. determine if a string is smashable - you can remove a letter from it repeatedly to get to 1 letter word, and all words are in the dict.
+ex: sprint -> print -> pint -> pin -> in -> i, sprint is smashable
+
+2a. given three lists, one representing ordered ints from 0 to n-1, two being a shuffled version of list #1, three being a list of objects, the order of the objects in list 3 match the order of the ints in list 1. Reorder the objects in list 3 according to the order of the ints in list 2.
+ex: [0, 1, 2], [2, 0, 1], ["a", "b", "c"] -> ["c", "a", "b”]
+
+followups: what if the ints in list 1 are:
+not in order
+not between 0 and n-1
+have duplicates
+are objects (for list 1 and list 2)
+
+2b. Given a social network/graph of friends how would you represent it in memory?
+Given a user and the graph of users and their friends lists, return a recommended friend (someone who isn't on your friends list, but shares the most mutual friends with you)
+
+3. Given the position of a particle, the dimensions of the bounding box, the velocity vector of the particle (2 dimensions), and length of time, return the data about movement of the particle, including collisions, and its position/velocity. How many ways could you represent the data?
+
+4. Given a list of ints, these represent bags of candies. You're trying to distribute these candies among 2 people as equally as possible, without opening bags. Return the optimal totals of candies for the two people.
+ex: [1, 3, 5] -> return (4, 5) or (5, 4)
+
+Followup: We're now so lazy that we'll only return a contiguous subarray of ints, again return the optimal totals
+ex: [1, 3, 6, 3, 1] -> return (6, 8 )
+
+𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤
+Onsite:
+
+1a. Given a binary tree, return a boolean representing if it’s a Binary Search Tree (ValidateBST)
+1b. Count occurrences of a number in a sorted array.
+1c. Given a 2d sorted array sorted by rows/columns, find if a number is in the array or not.
+
+2a. Given an array of ints, find the increasing subarray of maximum length.
+2b. Find maximum increasing subsequence instead. What if the data came in a stream instead of an array?
+2c. What if you wanted the subarray with the maximum int sum?
+
+3: Hiring Manager: Questions about working with a team, team conflicts, a time you got criticism from a manager and how you responded, a time you disagreed with a manager and later you realized you were wrong, a time you were blocked by an external incident.
+
+Add binary
+
+𝐁𝐥𝐨𝐨𝐦𝐛𝐞𝐫𝐠
+Onsite:
+HR Cultural:
+
+Lots of question about past experiences/projects. Why Bloomberg? What are you looking for in full-time? How does Bloomberg rank in your companies you’re interviewing with? What was your favorite CS course and why? What are some projects you’ve worked on that you’re proud of? What did you like about Quora?
+
+Hiring Manager:
+Talk about a project of yours. How would you add testing support? What happens when stuff breaks? How would you automate this to prevent it, and with what type of tests? (he was looking for diff/coverage tests). If you treat your product’s features as a black box, how would you automate this system?
+
+Given two search ranking implementations, come up with a mathematical equation to determine which is better. What metrics would you consider and use and why?
+
+𝐑𝐨𝐛𝐢𝐧𝐡𝐨𝐨𝐝
+Round 1 Phone
+
+Spiral Matrix 2
+
+Given some code about bank transactions, find the issues with the code (same as last year, race conditions / doesn’t support database fault tolerance).
+
+Onsite
+
+1: Architecture
+Given two database tables, one containing users and the stocks they’re watching, and one containing users and all device ids associated with that user, design a notification system that processes StockEvents (stock ticker, stock opening price, stock current price) and will notify users who are watching specific stocks when that stock changes by 5% since the opening price, but only once per day. Design with correctness, speed, scalability, fault tolerance in mind.
+
+2: Coding
+Given a log of timestamp/price changes of a stock, print out intervals every 10 seconds of the start time of interval / first price/last price / max price / min price (with a few edge cases), this is done on a Hackerrank with someone supervising / sorta pair programming
+
+3: Algo Coding
+
+3a. How would you get the n largest elements from a list/stream?
+3b. Given a list of ints, return a new list representing the distance from an int to the largest int before it in the original list (assume Infinity is at -1)
+
+Ex:
+
+[4, 3, 2, 1, 1, 3, 5] -> [-1, 1, 1, 1, 2, 5, 7]
+
+4: Algorithms (focus purely on algorithms/correctness/runtime efficiency, nothing about scalability/architecture)
+
+4a. Implement stop loss orders (when a stock dips below a specified price specified by a user, sell that stock)
+
+4b. Given a string needle, return all substrings of haystack which are same length and are a permutation of needle (same character counts)
+
+4c. Given a 2d matrix of ints and a threshold, find the rectangle with maximum “area” (sum of all ints in the rectangle) that is under the threshold.
+
+𝐃.𝐄. 𝐒𝐡𝐚𝐰
+
+Behavioral questions throughout - mostly about the hardest challenge you’ve solved on some internship/project. Also lots about why D.E. Shaw/Finance, especially from a Computer Science heavy background.
+
+1a. Given a list of ints representing stick lengths, we can merge 2 sticks a and b by combining them into 1 stick of length a + b and paying the cost a+b. If we need to merge all sticks into one giant final stick, find the minimum cost needed.
+1b. Trapping rain water
+1c. Alien dictionary
+
+2a. Advantages/disadvantages of Java generics vs templates (sorry Gary I forgot this LUL). If you had 4 billion 32 byte integers in a file, find one integer that’s not in this file. If you had to do this in one pass, how would you implement this? What if you could use multiple passes, but had limited memory, and wanted to generate an approach that’s very likely (but not guaranteed) to work?
+
+2b. How do you implement polymorphism at runtime for parameters (vs compile time with virtual/abstract functions)?
+Ex: Given 3 subclasses which extend Shape - Square, Circle, Triangle, and 3 subclasses which extend GraphicDisplay - Printer, CalcDisplay, MacDisplay, if we had a method draw(Shape s, GraphicDisplay d), with C++ Templates we’d generate 9 versions of this method, one for each specific subclass (e.g. draw(Square s, Printer d) … draw (Triangle s, MacDisplay d).
+
+How do you implement this at runtime, without needing to have 9 different versions of methods? (Double dispatch)
+
+3a. Implement fib(n) iteratively and recursively, find runtime/space complexity.
+3b. Given a 2d sorted matrix sorted by rows/columns, find an element in the matrix
+3c. Design a bag (multiset - a set that can contain multiple copies of an element) API - what methods would you provide, what parameters would they take in, what would they return?
+
+Followup: What data structure would you use to implement this? Compare/contrast amortized/worst case runtimes of cuckoo hashing and separate chaining for a hashtable.
+
+4: Hiring manager - Talked about my Quora project of detecting security vulnerabilities in third-party libraries/dependencies. How would I prevent/minimize false positives? Why D.E. Shaw/Finance?
+
+4a. Given a jar of 1000 coins, where 999 are fair and 1 is a 2-headed coin, you pick a coin at random and flip it 10 times, getting 10 Heads. What’s the probability this coin is the 2-headed coin?
+
+4b. Horse racing - given 25 horses, we want to identify the 3 fastest horses. If we can only race 5 horses at a time, and don’t have a stopwatch, what’s the minimum number of races needed to determine the top 3 horses?
+
+5: Managing director - Most interesting challenge/project you got.
+
+5a. If you project $ 10 million of gains from a project over a year, and the trading system goes down for a day (can’t execute any trades), how would you compute the loss of the trading system downtime?
+
+5b. In the past, some users used Java Hashmaps to store user data, with usernames as the keys (values being their user data). Because the string hash function is very simple, attackers were able to generate a list of a bunch of strings with the same hash code, and spam queries to servers with these colliding strings, effectively causing a DDOS. How would you redesign the Hashmap to fix this?
+
+5c. How will you decide between offers/companies? What was your favorite language/tool and why? Lots of conversations about how architecture has changed in courses / over the years, favorite classes, etc.
+
+𝐒𝐜𝐚𝐥𝐞 𝐀𝐏𝐈
+Round 1
+What’s broken with calling json deserializing/serializing on an object? Implement a version of json deserializing/serializing that would fix this.
+
+Round 2 Practical
+Debug a build of the Flask app, where a test about Cookies in the Header is failing.
+
+𝐍𝐮𝐫𝐨
+Round 1
+Given a connected graph where all nodes can reach each other through some path on the graph (you decide how input’s processed), find all bridges - any edge that would disconnect the graph.
+
+𝐓𝐫𝐢𝐩𝐥𝐞𝐛𝐲𝐭𝐞
+Did this just for kicks, it’s pretty interesting and cool if you really want to target small startups, wasn’t too effective with larger well known startups/companies aside from a few like Flexport/Apple/Coinbase.
+
+Test - lots of rapidfire 1 min trivia, lots of emphasis on databases, web development, some very basic coding analysis (find min/max/etc.), some OS concepts, some data structures, etc. Tbh this describes most of the concepts they target
+
+2 hour assessment interview:
+
+Coding: Implement a tic tac toe console game + a simple AI
+
+Q&A Trivia:
+Lots of topics:
+
+Databases - normalization, foreign keys, indexing, tracking database queries
+HTTP - get vs post, payload, how are request/responses sent via TCP/IP
+Caches - what’s their purpose, how do we use them on the front-end and webservers?
+Security - how would you save passwords in a database, why do we salt?
+Data Structures - How do hash tables work? Discuss two implementations. Explain bloom filters, BSTs
+OS/low-level - Difference between malloc vs free, mutexes, deadlock, reader/writer locks, monitors vs mutexes
+
+Design: Your coworker wants to build a web service that scrapes Craigslist for used cars, with about 20 million cars on Craigslist. Queries include a list of key, value pairs (possible values are make, model, price, location, color, and mileage). Build an HTTP API to support these queries (ex: red civic, < 50,000 miles, sold in Baltimore). Support structured queries, fuzzy text search. How would you scale this up?
+
+Culture: Why computer science? What companies are you looking to target and why?
+
+----------------------------------------------
+
+SHAMELESS PLUG - Check out this interview guide acmurl.com/interviewprep written by Antony Nguyen and I
+
+Airbnb (iOS)
+1st round technical: Write a function that mimics auto layout in swift
+
+Amazon
+OA:
+https://leetcode.com/discuss/interview-question/373006
+https://leetcode.com/problems/subtree-of-another-tree/
+Virtual onsite:
+https://leetcode.com/problems/word-break/
+Given a binary tree, get the minimum weight subtree where the weight is the sum of all its descendants plus itself
+Search for a file in a file system given a predicate
+
+Apple (ML/AI)
+1st round - intro phone call with Siri engineer
+Take home assignment - https://leetcode.com/problems/word-search-ii/
+1st technical - OOD for tetris and dealing with piece rotations
+Onsite:
+https://leetcode.com/problems/number-of-islands/ + followups
+https://leetcode.com/problems/valid-parentheses/, https://leetcode.com/problems/course-schedule/
+Lunch interview
+Design FB/IG (terribly open-ended problem)
+Design Tic-Tac-Toe
+
+Facebook
+1st round technical - https://leetcode.com/problems/reorder-list/
+Onsite:
+behavioral questions + given a matrix with 0's and 1's and then given a sub matrix, return the number of 1's in the sub matrix
+https://leetcode.com/problems/generate-parentheses/solution/
+https://leetcode.com/problems/first-unique-character-in-a-string/, Given an array of ints of length n and an int k, return an array of ints with the maximum in each interval size k
+input: [1, 6, 4, 3, 7], k = 2 output: [1, 6, 6, 4, 7, 7]
+
+Google
+OA:
+https://leetcode.com/discuss/interview-question/394347/
+https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/
+1st round technical - How do you delete duplicate lines in a file? How do you do this without extra memory?
+Onsite:
+Given a binary tree, return the sum of the nodes at the deepest level
+This one is a lot easier to explain with an example
+[ . . . .          Can I fill this grid up with #'s using only
+  . . . .           L, O, and I shapes of #'s?
+  . ##.          DM me if you want to know more.
+  . . . .]
+   3) Given a list of stars, return k closest to the origin + follow ups
+   4) Given an int n, return the number of steps it takes to reduce it to 1 following these steps: If n is even, then divide by 2 else multiply by 3 and plus 1 + follow ups
+
+Lime
+1st round recruiter screen
+1st round technical - multiple iterations of the merge interval problem
+
+Plaid
+OA: Write a code editor that supports add, delete, undo, and redo (This was done on the hired and it is probably the worst coding challenge interface I've used)
+
+Robinhood (iOS)
+OA:
+Adding numbers using alternating signs
+Matching string patterns
+Comparing similar words
+Finding min number in 2d array after matrix operations
+1st round recruiter screen
+1st round technical - Given calendar events, set the correct position based on time. For instance if a calendar event is from 8-9 then we would give it a height of 1 and a width of 360px. and if we have another event from 8:30-9:30 then we have the shrink the 8-9 event to width of 180px because on a calendar they would be right next to each other. Again this one is kinda hard to explain so dm me if you want to know more
+Declined onsite
+
+Stripe
+OA: Parse and process invoice statements
+
+Yelp (iOS)
+1st round technical - Given a list of pairs of actions in a random order, find the first action to the last action. + follow ups
+["g", "d"], ["e", g"], ["d", "f"] -> start: e, end: f
+Declined onsite
+
+--------------------------------------------------------

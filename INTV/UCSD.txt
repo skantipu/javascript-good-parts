@@ -384,3 +384,160 @@ Yelp (iOS)
 Declined onsite
 
 --------------------------------------------------------
+
+Google
+CODING CHALLENGE
+Watering Flowers
+You have a bucket with a limited capacity k. You have to water an n array of flowers, each index in said array represents how many units of water is needed to completely water the flower. You start with a filled bucket. After emptying it you need to return to the spigot which is at the position before the array. Each time you move to/away from a flower/spigot it counts as a step. What are the minimum number of steps to water all the flowers?
+
+Solved in a couple lines using math.
+Turning Dominoes
+You are playing a game where you have n dominoes that are lined up. To win the game, you must turn the dominoes such that one side, top or bottom, is filled the same number. The dominoes are represented as two arrays, the first being the top row of numbers and the second being the bottom. Return the minimum number of turns needed to win the game. If it's impossible to win, return -1.
+
+Solved with a brute-force solution, but I can't see how overall runtime could be improved.
+ONSITE
+Tree as an Array
+You are given a tree which is represented as an array. Each index in the array contains the index of that node's parent. The root at index 0 has a value of -1. "Remove" a node and its sub-tree from the array by marking them as deleted.
+Followup: Actually remove a node and it's sub-tree from the array while maintaining the value-is-parent-index property of the tree.
+
+Initial was relatively straight forward. Got a linear time solution. Followup was more difficult. Came up with an incorrect solution as I didn't account for changing indices.
+Number of Times Outside
+You are walking around a set of offices in a specific order. Some buildings are connected while others are not. You want to determine ahead of time how many times you will need to go outside. You are given the coordinates of each building. A building is considered connected to another if they share a side. Corners do not count. Consider each building to be size 1x1. Given a list of buildings in order, return how many times you will need to step outside.
+
+Solved with quadratic runtime. Could be more efficient if you use a graph search.
+Error Output
+You are given a list of files which have been shown to have errors. Every time a file throws and error it is put on the list so there are repeats. You want to represent each file on this list as much, but as equally as possible. Return the highest number representing the number of times each file can be output while outputting all other files equally below or equal to a certain threshold k.
+Example 1:
+Input - [A,B,C,C], 2
+Output - 1
+Explanation: You can output A,B,C. Each file is output one time. Because A and B only show up once, that is the maximum that they can be output.
+Example 2:
+Input - [B,A,C,A,B,A,C,B,C], 2
+Output - 2
+Explanation: Each file can be output an equal amount of times up to a maximum of three, but the threshold is 2.
+
+Solved with a linear time solution. Pretty straight forward.
+Attendance Combinations
+At the end of each month, students are given a prize if they have a valid attendance record. A valid attendance record is one such that they don't have 2 or more tardies, and they don't have 3 absences in a row at any point. Assume the month is 30 days. Return the total number of valid attendance records.
+
+Interviewer stopped me when I tried to solve it using combinatorics so do it without that. Couldn't get recursive pattern.
+Googliness
+Asked about previous work experience and thoughts on diversity in a work environment.
+FOOD
+⭐⭐⭐⭐⭐
+I got two plates of really good chicken tikka masala and an iced hazelnut latte. I honestly shouldn't have eaten that much, I couldn't think clearly in my last three interviews. In between each interview I had the option to go to a kitchenette and grab snacks provided. They had the standard snack-type foods like rx bars and sodas. They had Mexican Coke which you know I copped.
+BATHROOMS
+⭐⭐⭐
+They aight. Better than the average public one but didn't feel too special. There were a bunch of employee toothbrushes and toothpaste in the corner in coffee mugs which I guess tells you about the work culture there but that's none of my business. 👀
+LOCATION
+⭐
+Sunnyvale, California. Boring as fuck. There's nothing around to do around the office area. It's all residential
+RESULT
+Rejected a week after onsite.
+
+Microsoft
+ONSITE
+Each interview started with my talking about myself and my experience.
+Alphabet Incrementing
+Given an alphabet, print out the pattern that matches the examples.
+Example 1:
+Alphabet - ab
+Output - a, b, aa, ab, bb, aaa, aab, ...
+Example 2:
+Alphabet - abb
+Output - a, b, b, ba, bb, bb, ba, bb, bb, aba, abb, ...
+I don't know a better way to explain it, sorry.
+
+Came up with some generic solution which wasn't perfect. Explained patterns that arose and how to code them.
+Matching Prefix
+Given a list of words, return all the words that match a given prefix.
+
+I tried solving this by designing a MWT similar to that one CSE 100 PA. I ended up arguing with my interviewer because she said it wasn't a MWT when it was. Couldn't get much code written.
+Binary Search Tree
+Design a binary search tree.
+Implement an insert and lookup.
+Print all elements in the BST in order.
+Iterate through the BST.
+No gimmicks.
+
+Ez monie. Only problem was he didn't want me to use recursion after the print step.
+Points Make a Square
+Given a set of Cartesian coordinates where each value is within the real numbers, determine if any 4 make a square.
+
+Brute force n^4 solution lul.
+FOOD
+⭐⭐⭐
+Standard coffee shop snacks in between interviews. They gave us a $10 gift card for their eating commons after the interviews. Large selection and reminded me of a mall's food court. I got a noodle bowl which was pretty good and filling. I grabbed a Dr. Pepper but I'm not too sure if it was free. ¯\_(ツ)_/¯
+BATHROOMS
+⭐⭐⭐⭐
+Pretty fancy for a 1 person. You could wave your hand over the door handle to open it. Provided free tampons and pads.
+LOCATION
+⭐⭐⭐
+Redmond, Washington. Everything is Microsoft. The campus has little shops and what not but it's still all Microsoft. Kinda weird, kinda cool. The area around Microsoft is not that exciting but Seattle is across the lake which is fun.
+RESULT
+Rejected a week after onsite.
+
+Facebook
+PHONESCREEN
+Given an alphabet and a list of words, sort the words based on the alphabet.
+
+Came up with a brute-force O(nmk) solution where:
+n - number of words
+m - length of longest work
+k - number of letters in the alphabet
+Was given a followup asking if there was a way to improve the run-time by calculating the values for the alphabet at the start. Proposed a O(nm + k) solution using a hashmap.
+RESULT
+Rejected 4 days after phone screen.
+
+
+Summer 2019 Internship
+Amazon
+ONLINE ASSESSMENT 1
+Debugging
+Debug 7 different programs. The bugs were very small mistakes like having = instead of +=.
+
+5/7
+SAT Style Pattern Recognition
+
+Felt really good
+ONLINE ASSESSMENT 2
+Item Warehouse
+You are given two lists of numbers. One represents weights of items and the other represents the integrity of pallets. Pair each item with another one, if possible, and store onto the pallets such that you use the least amount of pallets.
+Similar to Two Sum.
+
+Came up with a nothing-fancy answer. I think it was quadratic.
+Highest Average Weighted Subtree
+Given a binary tree, return the subtree which has the highest average weight. Average weight is calculated by adding the weights of all nodes of a tree and dividing by the number of nodes in the tree.
+
+Calculated the weight by checking each node's subtree, stored the pair of node and weight into a structure and returned the maximum. Not the most efficient, but it works. Didn't have time to improve by implementing a priority queue, but I mentioned it in the comments.
+VIRTUAL INTERVIEW
+Insert a string into a linked list containing other strings. No gimmicks.
+Followup: Implement a check that, in constant time, enforces you aren't inserting a duplicate item.
+
+Solved iteratively and with a hashtable for the followup. I was shocked at how easy this was.
+LRU Cache
+https://leetcode.com/problems/lru-cache/
+
+Interviewer asked whether I was familiar with what an LRU cache was as apparently it's something you learn in CSE 120. I told her no but that I did the leetcode problem. She let me skip this problem.
+Standard LP quesitons.
+FOOD
+⭐
+lol #frugality
+BATHROOMS
+⭐⭐⭐⭐⭐
+Best bathrooms I've been in. Stalls are from floor to ceiling and don't have gaps so you won't make awkward eye contact with someone outside while you're doing you're business. Stalls have this fancy looking handle which you turn to lock it and it's really satisfying to do so. Each gender-neutral, and I assume women's, bathroom included free pads and tampons. Amazing lighting too. I found myself taking many pictures of myself while in there. Examples below.
+LOCATION
+⭐⭐⭐⭐⭐
+Seattle, Washington. HQ is in the heart of Seattle. There are tons of things to do all around the city. Lot's of food trucks and eateries. Coffee shops are fantastic, my favorites are in U-District. Only problem is you shouldn't walk around the city with your badge on the weekend to avoid being harassed.
+RESULT
+Offered and accepted internship 4 days after interview.
+Offered and accepted return offer.
+
+https://www.geeksforgeeks.org/recursively-remove-adjacent-duplicates-given-string/
+Get all subsets with sum <= k
+Recursively remove substring consisting of same characters with length greater than k
+
+Microsoft:
+Find all subsets with sum == k
+Determine if strings are anagrams
+Given an array where neighboring elements differ by at most one, find an element in the array

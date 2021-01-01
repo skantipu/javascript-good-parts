@@ -2,6 +2,15 @@ import React, {useState} from 'react';
 import './App.css';
 import Validation from "./Validation/Validation";
 import Char from "./Char/Char";
+import styled from 'styled-components';
+
+const StyledInput = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: red;
+  border: 1px solid organge;
+  border-radius: 3px;
+`;
 
 function App() {
     const [input, setInput] = useState('');
@@ -15,7 +24,7 @@ function App() {
 
     return (
         <div className="App">
-            <input type="text" onChange={inputHandler} value={input}/>
+            <StyledInput type="text" onChange={inputHandler} value={input}/>
             <p>{input.length}</p>
             <Validation input={input}/>
             {chars}

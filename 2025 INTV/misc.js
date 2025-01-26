@@ -264,3 +264,125 @@ console.log(deepEqual({ id: 1 }, { id: 1 })); // true
 console.log(deepEqual([1, 2, 3], [1, 2, 3])); // true
 console.log(deepEqual([{ id: '1' }], [{ id: '2' }])); // false
 //-----------------------------------------------------
+
+(function() {
+  //find the key with the maximum array length
+  const obj = {
+    20: [{ name: 'aice' }, { name: 'adf' }],
+    22: [{ name: 'aicse' }, { name: 'a3df' }],
+    21: [{ name: 'aicsde' }, { name: 'ad3f' }, { name: 'aice' }, { name: 'adf' }]
+  };
+  console.log(Object.entries(obj).sort((a,b) => b[1].length - a[1].length)[0]);
+  /*
+  [
+    '21',
+    [
+      { name: 'aicsde' },
+      { name: 'ad3f' },
+      { name: 'aice' },
+      { name: 'adf' }
+    ]
+  ]
+  */
+  
+  var key = Object.keys(obj).reduce((acc, el) => {
+    return obj[el].length > obj[acc].length ? el : acc
+  }, Object.keys(obj)[0]);
+  
+  console.log('---',key) //21
+
+  var map = { sachin: 10, geeta: 12, meena: 1, karan: 23, harish: 2}
+  var keys = Object.keys(map);
+  const maxKey = keys.reduce((acc, el) => {
+    return map[el] > map[acc] ? el : acc;
+  }, keys[0]);
+  console.log('maxKey', maxKey);
+})();
+
+//-----------------------------------------------------
+
+(function() {
+    /*
+  Problem Statement:
+    •	You are given an array imageDim[] where each element represents the side length of a square-shaped chip.
+    •	A chip A can be hidden inside chip B if:
+    1.	The side length of chip B is at least k times larger than the side length of chip A.
+    2.	The total weight of chips in the system must not exceed 2 grams, meaning that at most one chip can be hidden inside another.
+
+  Goal:
+
+  Determine the maximum number of chips that can be identified as hidden inside other chips according to the above criteria.
+
+  Input:
+  imageDim = [4, 2, 6, 14], k = 3
+
+  Explanation:
+    1.	Chip with side length 2 can be hidden inside the chip with side length 6 (6 >= 3 * 2).
+    2.	Chip with side length 4 can be hidden inside the chip with side length 14 (14 >= 3 * 4).
+
+  Output:
+  2 (since two chips can be hidden).
+  */
+  function getMaxHiddenChips(imageDim, k) {
+    // Sort the chips by their side lengths in ascending order
+    imageDim.sort((a, b) => a - b);
+
+    let hiddenCount = 0; // To count the number of hidden chips
+    let i = 0; // Pointer for the smaller chip
+    let j = 1; // Pointer for the larger chip
+
+    while (i < imageDim.length && j < imageDim.length) {
+        // Check if the larger chip is at least k times bigger than the smaller chip
+        if (imageDim[j] >= k * imageDim[i]) {
+            hiddenCount++; // Chip `i` can be hidden inside chip `j`
+            i++; // Move to the next small chip
+        }
+        j++; // Move to the next larger chip
+    }
+
+    return hiddenCount;
+  }
+
+  // Example Usage:
+  const imageDim = [4, 2, 6, 4, 14];
+  // [2,4,4,6,14]
+  const k = 3;
+  console.log(getMaxHiddenChips(imageDim, k)); // Output: 2
+})();
+//-----------------------------------------------------
+/*
+Given an array of integers arr and a positive non-zero starting value x, calculate a running sum by consecutively adding each element of the array to x. 
+The objective is to determine the minimum value of x such that the running sum remains at least 1 after every iteration.
+Find the smallest positive integer x such that the running sum is never less than 1 at any point.
+arr = [-4, 3, 2, 1]
+Let x = 5: 5 is the smallest positive integer
+	5 + (-4) = 1
+	1 + 3 = 4
+	4 + 2 = 6
+	6 + 1 = 7
+*/ 
+function minStart(arr) {
+  let minSum = 0;  // To track the minimum sum at any point
+  let runningSum = 0;  // To calculate the running sum
+
+  // Iterate over each element in the array
+  for (let num of arr) {
+      runningSum += num;  // Add the current number to the running sum
+      minSum = Math.min(minSum, runningSum);  // Track the minimum running sum
+  }
+
+  // The minimum starting value `x` such that running sum is at least 1
+  return minSum < 0 ? 1 - minSum : 1;
+}
+
+// Example usage:
+console.log(minStart([-4, 3, 2, 1]));  // Output: 5
+console.log(minStart([3, -6, 5, -2, 1]));  // Output: 4
+console.log(minStart([5]));  // Output: 1
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
+//-----------------------------------------------------
